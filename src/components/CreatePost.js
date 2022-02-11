@@ -8,29 +8,66 @@ import { selectUser, logout, login } from '../features/userSlice';
 import { auth, db } from '../utils/firebase';
 import SignUp from './SignUp';
 import firebase from 'firebase/compat/app'
-import Editor from "react-markdown-editor-lite";
-import ReactMarkdown from "react-markdown";
-import "react-markdown-editor-lite/lib/index.css";
+// text editor dependancies
+
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import hljs from 'highlight.js'
+import "highlight.js/styles/github.css";
+// Text editor
+
+const TOOLBAR_OPTIONS = [
+  [{ header: [1, 2, 3, 4, 5, 6, false] }],
+  [{ font: [] }],
+  [{ list: "ordered" }, { list: "bullet" }],
+  ["bold", "italic", "underline"],
+  [{ color: [] }, { background: [] }],
+  [{ script: "sub" }, { script: "super" }],
+  [{ align: [] }],
+  ["image", "blockquote", "code-block"],
+  ["clean"],
+];
+
+hljs.configure({
+  languages: ["javascript", "ruby", "python", "rust"],
+});
+
+const modules = {
+  syntax: {
+    highlight: (text) => hljs.highlightAuto(text).value,
+  },
+  toolbar: [
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    [{ font: [] }],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["bold", "italic", "underline"],
+    [{ color: [] }, { background: ["red"] }],
+    [{ script: "sub" }, { script: "super" }],
+    [{ align: [] }],
+    ["image", "blockquote", "code-block"],
+    ["clean"],
+  ],
+};
 
 
 const CreatePost = () => {
+     // Accept user inputs of the actual blog
+    const [blogHeader, setBlogHeader] = useState("");
+    const [blogBody, setBlogBody] = useState("");
+    const [image, setImage] = useState(null)
     const [open, setOpen] = useState(true);
 
-    const mdEditor = useRef(null);
     const navigate = useNavigate()
+    // utilities
     const user = useSelector(selectUser)
     const dispatch = useDispatch();
 
 
-    // Accept user inputs of the actual blog
-    const [blogHeader, setBlogHeader] = useState("");
-    const [blogBody, setBlogBody] = useState("");
-    const [image, setImage] = useState(null)
-
-
+    const handleChange = (value, delta, source, editor) => {
+        setBlogBody(value );
+    };
 
     const publishBlog = (e) => {
-
         e.preventDefault();
         db.collection('posts').add({
             blogHeader: blogHeader,
@@ -42,12 +79,6 @@ const CreatePost = () => {
         setBlogHeader('');
         setBlogBody('');
     }
-
-    const handleEditorChange = ({ html, text }) => {
-        const newValue = text.replace(/\d/g, "");
-        console.log(newValue);
-        setBlogBody(newValue);
-    };
 
 
     //validate and keep the user loggedIn
@@ -65,6 +96,7 @@ const CreatePost = () => {
             }
         })
     }, [dispatch])
+
 
     return  (
         <>
@@ -110,19 +142,19 @@ const CreatePost = () => {
                                 </section>
 
                                 <section className="mx-wd2 mt-10 mx-auto">
-                                    <Editor
-                                        ref={mdEditor}
-                                        value={blogBody}
-                                        style={{
-                                            height: "500px"
-                                        }}
-                                        onChange={handleEditorChange}
-                                        renderHTML={text => <ReactMarkdown source={text} />}
-                                    />
+                                    <ReactQuill
+        value={blogBody || ""}
+        onChange={handleChange}
+        theme="snow"
+        modules={modules}
+        placeholder="Write Here.."
+        
+      />
+
+
+
                                 </section>
                             </main>
-
-
                         </Modal>
                     </div>
                 )

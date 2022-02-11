@@ -35,8 +35,8 @@ const Feed = ({id, timestamp, blogHeader, blogBody, description, profilePic }) =
             <section className="mt-2">
                 
                 <Link to={`/posts/${id}`} onClick={openBlog}>
-                    <h1 className="leading-9 text-2xl leading-none text-gray-800 hover:text-gray-500 cursor-pointer">{blogHeader}</h1>
-                    <p className="truncate pt-2 ">{blogBody}</p>
+                    <h1 className="leading-9 text-3xl leading-none text-gray-900 hover:text-gray-500 cursor-pointer">{blogHeader}</h1>
+                    <p className="truncate pt-2 " dangerouslySetInnerHTML={{ __html: blogBody }}></p>
                 </Link>
             </section>
 

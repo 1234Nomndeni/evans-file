@@ -19,3 +19,10 @@ This Project enables one to create account and write a blog to our website
 ## Learn More About EvansifyBlog Website
 
 [https://evansify.com]
+
+
+
+
+
+implementing the quill
+https://codesandbox.io/s/react-quill-add-tts-sound-qgkt2?file=/src/App.js

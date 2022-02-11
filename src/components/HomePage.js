@@ -129,7 +129,7 @@ const HomePage = () => {
               )}
             </div>
 
-            <div className="border-2 bg-white w-1/4 p-4  object-contain  ">
+            <div className="border-2 bg-white w-1/4 p-4  h-72 object-contain  ">
               <p className="text-sm">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Perferendis eligendi labore repellat, consequatur quisquam culpa

@@ -109,7 +109,7 @@ const Header = () => {
 
                                 </li>
 
-                                <p onClick={() => navigate("/new")} className="text-gray-700 border-4 px-6  hover:bg-gray-200 font-bold text-md p-2 cursor-pointer rounded-md" >Start Writing</p>
+                                <p onClick={() => navigate("/new")} className="text-gray-700 border px-6  hover:bg-gray-200 font-bold text-md p-2 cursor-pointer rounded-sm" >Start Writing</p>
                                 <span onClick={() => navigate('/notifications')} className="hidden cursor-pointer transform hover:scale-105  ml-12 mr-10 sm:block">
                                     <p className="absolute animate-pulse bg-c text-md text-center h-6 w-6 text-white rounded-full font-bold -mt-3 ml-4 z-50 ">
                                         7

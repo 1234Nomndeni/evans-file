@@ -68,7 +68,7 @@ const QuillEditor = () => {
         onChange={handleChange}
         theme="snow"
         modules={modules}
-        placeholder="Write Here.."
+        // placeholder="Write Here.."
         
       />
 

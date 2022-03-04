@@ -25,9 +25,9 @@ const ImageUpload = (props) => {
         let pickedFile;
         if (event.target.files && event.target.files.length === 1) {
             pickedFile = event.target.files[0]
-            setFile(pickedFile)
+            setFile(pickedFile);
             // props.setData((prev) => {
-            //     return { ...prev, image: pickedFile }
+            //     return {...prev,image:pickedFile}
             // })
         }
     }

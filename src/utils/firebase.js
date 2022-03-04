@@ -2,6 +2,7 @@ import firebase from "firebase/compat/app"
 import "firebase/compat/auth"
 import "firebase/compat/firestore"
 import "firebase/compat/storage"
+// import 
 // import { getAnalytics } from "firebase/analytics";
 
 
@@ -16,12 +17,11 @@ const firebaseApp = firebase.initializeApp({
     measurementId: "G-F92XYFF2VB"
 });
 
-// const app = firebaseApp()
 // const analytics = getAnalytics(app);
 const db = firebaseApp.firestore()
 const auth = firebase.auth();
 const storage = firebase.storage()
-const store = firebase.storage()
-const provider = new firebase.auth.GithubAuthProvider()
+const provider = new firebase.auth.GoogleAuthProvider()
+const gitProvider = new firebase.auth.GithubAuthProvider()
+export { db, storage, auth, provider, gitProvider }
 
-export { db, storage, store, auth, provider }

@@ -5,7 +5,7 @@ export const blogSlice = createSlice({
     name: "blog",
 
     initialState: {
-        selectedBlog: null,
+        selectedBlog: true,
         postComment: null,
     },
 

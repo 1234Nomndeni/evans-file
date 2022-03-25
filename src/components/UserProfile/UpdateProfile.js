@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/userSlice';
 import { auth, db } from '../../utils/firebase';
 
 const UpdateProfile = () => {
   const user = useSelector(selectUser);
+  const [userData, setUserData] = useState()
   const [tagName, setTagName] = useState("")
   const [website, setWebsite] = useState("")
   const [workExperience, setWorkExperience] = useState("")
@@ -28,10 +29,18 @@ const UpdateProfile = () => {
     setBiography("")
   }
 
+  // useEffect(() => {
+  //   db.collection('Users').doc(user.uid).onSnapshot((snapshot) => setUserData(
+  //     snapshot.docs.map((doc) => ({
+  //       id: doc.id,
+  //       data: doc.data()
+  //     }))
+  //   ))
+  // }, [])
 
   return (
-    <main className='pt-24 mx-wd2 flex justify-between mx-auto'>
-       <section className='w-2/3'>
+    <main className='pt-24 mx-wd1 flex justify-between mx-auto'>
+       <section className='w-2/3 mr-12'>
         <section className='bg-white rounded-sm border border-gray-300'>
             <div className='rounded-t-md bg-c flex items-center flex-col justify-center h-24'>
                 <img className='h-24 w-24 rounded-full cursor-pointer border-4 border-white -mb-9' src='https://media-exp1.licdn.com/dms/image/C5603AQHorwJKFNaR3Q/profile-displayphoto-shrink_200_200/0/1604525502427?e=1651104000&v=beta&t=qQWYuaSO3aJXzhEWBd1rH-Jckg6R407_GGU-2DMWhxw' alt=''/>
@@ -74,8 +83,16 @@ const UpdateProfile = () => {
        </section>
 
 
-       <section className='bg-white w-1/3 ml-20 p-3 h-72 rounded-sm border border-gray-300'>
-           <h3>My quick links</h3>
+       <section className='bg-white w-1/3 p-3 h-72 rounded-sm border border-gray-300'>
+          <h3 className='text-gray-700 text-xl pb-3'>My Profile preview</h3>
+          <span>
+            <p className='text-gray-900'>My Tag Name</p>
+            {/* <p>{userData?.tagName}</p> */}
+          </span>
+
+          <div></div>
+          
+          <button className='bg-c text-white p-1 w-full mt-5 font-bold'>My blogs</button>
        </section>
     </main>
   )

@@ -4,7 +4,10 @@ import { useNavigate } from 'react-router-dom';
 const AboutUs = () => {
   const navigate =  useNavigate()
   return (
-    <main className="mt-24 mx-wd1 bg-white mx-auto p-4 pt-12 pl-12 border rounded-md">
+    <main
+      onLoad={window.scroll(0, 0)}
+      className="mt-24 mx-wd1 bg-white mx-auto p-4 pt-12 pl-12 border rounded-md"
+    >
       <section className="bg mx-wd2">
         <h2 className="text-3xl text-gray-800">About Melbite</h2>
         <p className="mt-3 leading-7 text-md text-gray-900">
@@ -33,7 +36,9 @@ const AboutUs = () => {
           >
             try it out
           </p>
-          <p className="leading-7 text-md text-gray-900 mt-4">Welcome to melbite </p>
+          <p className="leading-7 text-md text-gray-900 mt-4">
+            Welcome to melbite{" "}
+          </p>
         </p>
       </section>
       <section></section>

@@ -5,6 +5,7 @@ import {
   HeartIcon,
   BookmarkIcon,
   UserCircleIcon,
+  ChatIcon,
   ShareIcon,
 } from "@heroicons/react/outline";
 
@@ -36,8 +37,10 @@ const modules = {
   ],
 };
 
-const SelectedBlog = forwardRef(({ timestamp, description, user }, ref) => {
+const SelectedBlog = forwardRef(({}, ref) => {
     const selectedBlog = useSelector(selectOpenBlog);
+
+    const [userProfile, setUserProfile] = useState([])
     // const showprofile = useSelector(selectViewProfile)
     // const postId = useSelector(selectPostComment);
 
@@ -145,28 +148,46 @@ const SelectedBlog = forwardRef(({ timestamp, description, user }, ref) => {
         console.error(err);
       });
   };
+
+
+  useEffect(() => {
+    db.collection("Users")
+      .onSnapshot((snapshot) =>
+        setUserProfile(
+          snapshot.docs.map((doc) => ({
+            id: doc.uid,
+            data: doc.data(),
+          }))
+        )
+      );
+  },[])
+ 
+  
     return (
       <main onLoad={window.scroll(0, 0)}
         className="pt-24 mx-wd1 mx-auto flex justify-between pb-24 wd-screen3"
         ref={ref}
       >
-        <section className="hidden w-28 mt-8 fixed lg:flex flex-col md:flex sm:hidden">
+        <section className="hidden w-28 mt-8 fixed lg:block flex-col md:block">
           <span className="flex flex-col items-center">
             <HeartIcon onClick={likePost} className="h-8 cursor-pointer hover:bg-red-100 duration-150 rounded-full p-1 hover:text-red-600" />
-            <p className="text-sm">{selectedBlog.likeCount}</p>
+            <p className="text-sm text-red-500 font-semibold">17 {selectedBlog.likeCount}</p>
+            <p>Likes</p>
           </span>
-          <span className="flex flex-col items-center mt-10">
-            <BookmarkIcon className="h-8 cursor-pointer hover:bg-green-100 duration-150 rounded-full p-1 hover:text-green-600" />
-            <p className="text-sm">Save </p>
+          <span href="comment" className="flex flex-col items-center mt-10">
+            {/* <BookmarkIcon className="h-8 cursor-pointer hover:bg-green-100 duration-150 rounded-full p-1 hover:text-green-600" /> */}
+            <ChatIcon className="h-8 cursor-pointer hover:bg-green-100 duration-150 rounded-full p-1 hover:text-green-600" />
+            <p className="text-green-700 font-semibold">12</p>
+            <p className="text-sm">Reactions </p>
           </span>
           <span onClick={() => { window.open("http://google.com", "_blank")}} className="flex flex-col items-center mt-10" >
             <ShareIcon className="h-8 cursor-pointer hover:bg-green-100 duration-150 rounded-full p-1 hover:text-green-600" />
             <p className="text-sm">Share </p>
           </span>
         </section>
-        <section className="bg-white rounded-md mx-wd3 border border-gray-300 h-full ml-32 wd-screen1">
+        <section className="bg-white rounded-md mx-wd3 border border-gray-300 h-full ml-32 wd-screen1 xs:mt-8">
 
-         <p className="ml-0 rounded-t-lg" dangerouslySetInnerHTML={{ __html: selectedBlog?.backgroundImage }}></p>
+         <p className="ml-0 img-w rounded-t-lg" dangerouslySetInnerHTML={{ __html: selectedBlog?.backgroundImage }}/>
 
           <div className="mt-4 ml-6 flex items-center">
             <span className="bg-yellow-300 w-10 font-mono p-1 pl-3 uppercase text-xl text-gray-800 h-10 border-2 border-yellow-300 rounded-full">
@@ -185,7 +206,7 @@ const SelectedBlog = forwardRef(({ timestamp, description, user }, ref) => {
             </h2>
             <span>
               <p
-                className="font-sans pt-3 text-md leading-7"
+                className="font-sans pt-3 text-lg leading-7"
                 dangerouslySetInnerHTML={{ __html: selectedBlog?.blogBody }}
               />
             </span>
@@ -214,25 +235,27 @@ const SelectedBlog = forwardRef(({ timestamp, description, user }, ref) => {
           ))}
           </div>
           </div> */}
+
         </section>
 
-        <section>
-          <section className="profile w-72 h-72 rounded-md border border-gray-400 bg-white">
+        <section className="hidden md:block lg:block ml-5 ">
+          <section className="profile w-72  rounded-md border border-gray-400 bg-white">
             <div className="bg-c h-20 border-t rounded-t-md flex items-center justify-center">
-              <UserCircleIcon className="h-16 mt-20 bg-white rounded-full cursor-pointer" />
+               <span className="bg-yellow-300 w-16 h-16  mt-20 border-5 border-white font-mono pl-6 font-bold items-center flex uppercase text-2xl text-center text-purple-800 border-2 rounded-full">
+              {selectedBlog.displayName?.[0]}
+            </span>
             </div>
-            <div className="flex flex-col text-start p-3 mt-8">
+            <div className="flex flex-col text-start p-3 mt-6">
               <h3 className="text-xl text-center">{selectedBlog?.displayName}</h3>
-              <p className="text-gray-800 text-md">
-                FreeLance Web Developer || Javascript Developer || Web Developer
-                || Open Source Contributer
-              </p>
-              <p>{selectedBlog?.skills}</p>
+              <h3 className="mt-4 text-center mb-3 text-purple-800">Currently Working On </h3>
+               <span className="text-gray-800 text-md">
+                {!selectedBlog?.currentTask ? (<h3 className="text-center text-gray-400 "> Project Not set</h3>) : (<p className="text-center text-gray-800">{selectedBlog?.currentTask}</p>)}
+              </span>
             </div>
           </section>
 
           <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
-            Follow Evans Mutuku
+            Follow {selectedBlog?.displayName}
           </button>
         </section>
       </main>

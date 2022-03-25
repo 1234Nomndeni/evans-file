@@ -52,7 +52,9 @@ h1 {
   border-radius: 6px;
   margin: auto;
 }
-
+.font-sans > p{
+  color: rgb(36, 36, 36);
+}
 .ql-editor {
   min-height: 300px !important;
 }
@@ -72,6 +74,15 @@ h1 {
 /* .text-cc{
 
 } */
+
+.cont-h{
+  height: max-content;
+}
+
+.twitter{
+  color:#0EA5E9 ;
+}
+
 @layer utilities {
   @variants hover, focus {
     .bradius {

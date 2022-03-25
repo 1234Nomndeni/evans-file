@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Modal } from "@mui/material";
+import {Modal } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { XIcon } from "@heroicons/react/outline";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, logout, login } from "../features/userSlice";
-import { auth, db, storage } from "../utils/firebase";
+import { auth, db} from "../utils/firebase";
 import SignUp from "./SignUp";
 import firebase from "firebase/compat/app";
 import brandLogo from "./images/melbite.jpg";
-// text editor dependancies
+
+/******************************************************** */ 
+/*text editor dependancies */
+/******************************************************** */ 
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -47,6 +50,7 @@ const CreatePost = () => {
   const [blogHeader, setBlogHeader] = useState("");
   const [blogBody, setBlogBody] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
+  const [currentTask, setCurrentTask] = useState("");
   const [open, setOpen] = useState(true);
 
   const navigate = useNavigate();
@@ -63,18 +67,34 @@ const CreatePost = () => {
 
   const publishBlog = (e) => {
     e.preventDefault();
-      db.collection("posts").add({
+    db.collection("posts").doc(user?.uid).collection("userPosts").add({
+      // db.collection("posts").add({
+        uid:user.uid,
         backgroundImage: backgroundImage,
         blogHeader: blogHeader,
         blogBody: blogBody,
+        currentTask: currentTask,
         description: user.email,
         displayName: user.displayName,
-        profilePic: user.photoURL,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      });
-      setBackgroundImage("")
+      }).then(() => {
+         db.collection("posts").add({
+          uid:user.uid,
+          backgroundImage: backgroundImage,
+          blogHeader: blogHeader,
+          blogBody: blogBody,
+          currentTask: currentTask,
+          description: user.email,
+          displayName: user.displayName,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        })
+      })
+
+     
+      setBackgroundImage("");
       setBlogHeader("");
       setBlogBody("");
+      setCurrentTask("");
   };
 
 
@@ -108,7 +128,6 @@ const CreatePost = () => {
             onClose={(e) => setOpen(false)}
           >
             <main className="bg-white min-h-screen">
-              {/* <ImageUpload /> */}
               <div className="flex justify-between items-center bg-white mx-auto border-b-2 border-fuchsia-600 pb-4  mx-wd2 pt-6 ">
                 <span className="w-full flex justify-between">
                   <div className="flex-shrink-0 flex w-3/5 items-center  ">
@@ -132,7 +151,6 @@ const CreatePost = () => {
                   </div>
                 </span>
                 <span className=" pl-10">
-                    <Avatar src={user.photoURL}/>
                   <XIcon
                     onClick={() => navigate("/")}
                     className="w-8 rounded-lg hover:text-red-500  cursor-pointer"
@@ -141,6 +159,7 @@ const CreatePost = () => {
               </div>
 
               <section className="mx-wd2 mx-auto pt-4">
+                <div className="flex flex-wrap mb-5 justify-between"> 
                    <ReactQuill
                     className="w-3/6 rounded-t-lg outline-none"
                     value={backgroundImage || ""}
@@ -149,6 +168,9 @@ const CreatePost = () => {
                     modules={modules2}
                     placeholder="Background Image"
                   />
+
+                  <textarea value={currentTask} onChange={(e) => setCurrentTask(e.target.value)} className="border-gray-300 border max-h-52 w-2/6 focus:outline-none rounded-sm p-3" placeholder="Am currently working on..."></textarea>
+                </div>
 
                 <input
                   value={blogHeader}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import {Modal } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { XIcon } from "@heroicons/react/outline";
@@ -46,7 +47,6 @@ const modules2 = {
 };
 
 const CreatePost = () => {
-  // Accept user inputs of the actual blog
   const [blogHeader, setBlogHeader] = useState("");
   const [blogBody, setBlogBody] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
@@ -122,6 +122,9 @@ const CreatePost = () => {
         <SignUp />
       ) : (
         <div className="bg-white pt-32 mx-auto  min-h-screen">
+          <Helmet>
+            <title>Melbite | New Post</title>
+          </Helmet>
           <Modal
             className=" bg-white overflow-auto min-h-screen"
             open={open}
@@ -178,7 +181,7 @@ const CreatePost = () => {
                   className="focus:outline-none mt-10 mb-3 text-4xl font-bold text-gray-900 w-full"
                   type="text"
                   required
-                  placeholder="Your Post Title.."
+                  placeholder="Type your title here . . ."
                 />
               </section>
 

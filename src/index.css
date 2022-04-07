@@ -4,8 +4,10 @@
 
 body {
   background-color: #f3f6fb;
-  /* background-color: rgba(33, 75, 214, 0.96); */
-  /* background-color: rgb(23, 0, 128); */
+}
+
+.footer-bg{
+  background-color: #131435;
 }
 
 h1,
@@ -32,6 +34,7 @@ h1 {
   padding-right: 1.5rem;
   overflow-x: auto;
   color: rgb(242, 202, 39);
+  font-size: 14px;
 }
 
 .hljs-title {

@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import {
-  ClockIcon,
-  BookOpenIcon,
-  BookmarkIcon,
-} from "@heroicons/react/outline";
+import { useNavigate } from "react-router-dom";
 import Feed from "./Feed";
 import { db } from "../utils/firebase";
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
-  // const [userProfile, setUserProfile] = useState([])
   const navigate = useNavigate();
-  const location = useLocation();
-  const { pathname } = location;
-  const getLocation = pathname.split("/");
   const user = useSelector(selectUser);
 
-
-  // -> Make the blog visible from the firebase to the front-end
+  /******************************************************** */ 
+  /*Make the blog visible from the firebase to the front-end*/
+  /******************************************************** */ 
 
 
   const fetchData = async()=> {
@@ -50,90 +44,27 @@ const HomePage = () => {
       <section className="mb-20">
         <nav className="w-full  bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500">
           <div className=" pb-8 mt-14 mx-auto mx-wd p-10">
-            <h1 className="lg:text-3xl w-1/2 mb-14 text-gray-700 prose md:text-lg font-serif">
-              Hello world, let's read, write and learn through melbite
+            <h1 className="lg:text-3xl md:w-1/2 text-2xl mb-14 text-gray-700 prose  font-serif">
+              Hello world . . . let's read, write and learn through melbite
             </h1>
-            <button className="bg-c p-3 transition-all text-white font-bold rounded-sm transform hover:scale-105 ">
-              Sign Me Up
-            </button>
+            {!user ? (
+              <button onClick={() => navigate('/signIn')} className="border border-purple-600 text-purple-800 px-5 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 ">
+                Sign Me Up
+              </button>
+            ): (
+              <button onClick={() => navigate('/new')} className="border border-purple-600 text-purple-800 px-5 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 ">
+                Start Writting
+              </button>
+            )}
+            
           </div>
         </nav>
 
         <main className="mt-5 mx-auto mx-wd1 ">
-          {/* <section className="hidden md:block lg:mx-wd1">
-            <nav className="flex items-center justify-between bg-white p-2 border-2 m-auto rounded-md">
-              <span
-                onClick={() => navigate("/profile")}
-                className="flex text-center items-center cursor-pointer"
-              >
-                {/* <UserCircleIcon src={user?.photoURL} className="h-10 w-10 rounded-full  font-light text-gray-500" /> *
-                  <span className="bg-c w-10 font-mono p-1 uppercase text-xl text-white h-10 border-2 border-gray-900 rounded-full">
-                    {user?.email[0] }
-                  </span>
-                <h3 className="ml-3 text-gray-700 font-serif text-xl">
-                  {user?.displayName}
-                </h3>
-              </span>
-              <span className="flex md:flex sm:hidden">
-                <li
-                  className={
-                    getLocation[1] === ""
-                      ? "list-none text-blue-300"
-                      : "list-none"
-                  }
-                >
-                  <Link
-                    className="flex items-center mx-2 px-3 py-2 text-gray-900 border  hover:bg-gray-100 rounded-lg"
-                    to="/"
-                  >
-                    <BookOpenIcon className="text-sm w-6 mr-2" />
-                    <p className="text-lg">My Feeds</p>
-                  </Link>
-                </li>
-
-                <Link
-                  className=" flex items-center mx-2 px-3 py-2 text-gray-900 border text-xl hover:bg-gray-100 rounded-lg"
-                  to="/recent"
-                >
-                  <ClockIcon className="text-sm w-6 mr-2" />
-                  <p className="text-lg">Recent</p>
-                </Link>
-                <Link
-                  className="flex items-center mx-2 px-3 text-gray-900 border hover:bg-gray-100 rounded-lg"
-                  to="/classified"
-                >
-                  <p className="text-lg">Classified</p>
-                </Link>
-                <Link
-                  className="flex items-center mx-2 px-3 py-2 text-gray-900 border text-xl hover:bg-gray-100 rounded-lg"
-                  to="/bookmarks"
-                >
-                  <BookmarkIcon className="w-6 text-sm  mr-2 " />
-
-                  <p className="text-lg">Bookmarks</p>
-                </Link>
-
-              </span>
-              <span>
-                <Link
-                  className="flex items-center px-3 py-2 text-gray-900 border text-xl hover:bg-gray-100 rounded-lg"
-                  to="/new"
-                >
-                  <p>Start Writing</p>
-                </Link>
-              </span>
-            </nav>
-          </section> */}
-{/* 
-        {userProfile.map(({id, data: {biography}}) =>(
-        <div key={id}>
-          hello world
-          {biography}
-        </div>
-        ))} */}
           <section className="flex justify-between h-full mt-5">
 
             <div className=" lg:w-3/5 sm:w-full">
+              
               {posts.map( 
                 ({
                   id,
@@ -155,8 +86,8 @@ const HomePage = () => {
                     likeCount={likeCount}
                   />
                 )
-              )}
-            </div>
+              )} 
+            </div> 
 
             <div className="hidden md:block ml-3 w-72 h-72">
               <div className=" border-2 flex-wrap bg-white p-4">
@@ -168,7 +99,7 @@ const HomePage = () => {
                 <p onClick={() => navigate('/privacy-policy') } className="text-sm cursor-pointer hover:text-purple-800 mb-2">Privacy Policy</p>
                 <p onClick={() => navigate('/code-of-conduct') } className="text-sm cursor-pointer hover:text-purple-800">Code of Conduct</p>
               </div>
-              <button onClick={() => navigate('/new')} className="bg-c text-white w-full p-1 mt-5 rounded-sm">Start Writting</button>
+              <button onClick={() => navigate('/new')} className="bg-c text-white w-full py-2 mt-5 rounded-sm">Start Writing</button>
             </div>
           </section>
         </main>

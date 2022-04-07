@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Footer = () => {
   const navigate = useNavigate()
   return (
-    <div className="w-full mt-10 bg-gray-900 bottom-0 pb-10">
+    <div className="w-full mt-10 footer-bg bottom-0 pb-10">
       <section className="pt-6 pb-3 mx-wd2 mx-auto border-b border-gray-700 flex justify-center flex-col items-center">
         {/* <img className="w-44 mb-6  items-center" src={logo} alt="" /> */}
         <span className=" w-full flex-wrap mb-3">

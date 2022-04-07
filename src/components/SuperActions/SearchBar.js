@@ -14,7 +14,7 @@ const SearchBar = () => {
   return (
     <main>
         <section>
-            <div className="flex space-x-9 items-center border rounded-full pr-4">
+            <div className="flex space-x-9 items-center border border-purple-600 rounded-full pr-4">
                     <input
                       value={searchInput}
                       onChange={(e) => setSearchInput(e.target.value)}

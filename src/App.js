@@ -1,5 +1,6 @@
 import React,{useEffect} from 'react';
 import './App.css';
+import { Helmet } from "react-helmet";
 import Header from './components/Header';
 import HomePage from './components/HomePage';
 import { Routes, Route } from 'react-router-dom';
@@ -18,6 +19,7 @@ import HowToBlogHere from './components/StaticPages/HowToBlogHere';
 // import ComingSoon from './components/StaticPages/ComingSoon';
 import ReactGA from 'react-ga'
 
+
 ReactGA.initialize(process.env.TRACK_ID);
 function App() {
 
@@ -27,13 +29,16 @@ function App() {
 
   return (
     <main className="">
+      <Helmet>
+        <title>Melbite | Home</title>
+      </Helmet>
       <Header />
-
+      
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/new" element={<CreatePost />} />
         <Route path="/signIn" element={<SignUp />} />
-        <Route path={"/posts/:postId"} element={<SelectedBlog />} />
+        <Route path={`/:displayName/:blogHeader`} element={<SelectedBlog />} />
         <Route path="/like" element={<LikePost/>} />
         <Route path="/profile" element={<UpdateProfile/>} />
         <Route path="/myDashboard" element={<UserDashboard/>} />

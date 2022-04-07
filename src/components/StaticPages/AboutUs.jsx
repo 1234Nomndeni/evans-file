@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 
 const AboutUs = () => {
@@ -8,6 +9,9 @@ const AboutUs = () => {
       onLoad={window.scroll(0, 0)}
       className="mt-24 mx-wd1 bg-white mx-auto p-4 pt-12 pl-12 border rounded-md"
     >
+      <Helmet>
+        <title>Melbite | About Us</title>
+      </Helmet>
       <section className="bg mx-wd2">
         <h2 className="text-3xl text-gray-800">About Melbite</h2>
         <p className="mt-3 leading-7 text-md text-gray-900">

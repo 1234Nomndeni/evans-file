@@ -2,17 +2,15 @@ import React from "react";
 import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
-  BellIcon,
   MenuIcon,
   XIcon,
-  SearchIcon,
 } from "@heroicons/react/outline";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, login, logout } from "../features/userSlice";
 import { auth} from "../utils/firebase";
 import SearchBar from "./SuperActions/SearchBar";
-// import brandLogo from "./images/melbite1.jpg";
+import brandLogo from "./images/melbite.jpg";
 
 
 function classNames(...classes) {
@@ -54,8 +52,9 @@ const Header = () => {
 
     if (user) {
         auth.signOut()
-    }
-  };
+      }
+      navigate("/")
+    };
 
   /******************************************************** */ 
   /*/validate and keep the user loggedIn*/
@@ -100,35 +99,21 @@ const Header = () => {
               </div>
               <div className=" flex-1 p-2 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
-                  {/* <img
-                    className="hidden lg:hidden cursor-pointer h-8 w-auto items-center"
-                    onClick={() => navigate("/")}
-                    src={brandLogo}
-                    alt="melbite Logo"
-                  /> */}
                   <div className=" hidden lg:block w-auto ">
-                    {/* <img
-                      className="h-8 w-32 cursor-pointer"
+                    <img
+                      className="h-11 w-36 cursor-pointer"
                       onClick={() => navigate("/")}
                       src={brandLogo}
                       alt="melbite Logo"
-                    /> */}
-                    <h2 onClick={() => navigate("/")} className="text-2xl text-purple-900 cursor-pointer">Melbite</h2>
+                    />
+                    {/* <h2 onClick={() => navigate("/")} className="text-2xl text-purple-900 cursor-pointer">Melbite</h2> */}
                   </div>
                 </div>
                 <div className="hidden lg:block ml-10 w-4/5 ">
-                  {/* <div className="flex space-x-9 items-center border rounded-full pr-4">
-                    <input
-                      type="text"
-                      className="rounded-full p-2 ml-4 text-sm focus:outline-none w-100 h-11 w-full "
-                      placeholder="Search topic..."
-                    />
-                    <SearchIcon className=" block h-5 w-5 mr-10 cursor-pointer" />
-                  </div> */}
                   <SearchBar/>
                 </div>
               </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              <div className="absolute space-x-5 inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <li
                   className={
                     getLocation[1] === "about"
@@ -138,7 +123,7 @@ const Header = () => {
                 >
                   <Link
                     to="/about"
-                    className="text-md  pl-2 cursor-pointer mr-10  p-2  "
+                    className="hidden md:block text-md  pl-2 cursor-pointer mr-10  p-2  "
                   >
                     Our Story
                   </Link>
@@ -146,11 +131,11 @@ const Header = () => {
 
                 <p
                   onClick={() => navigate("/new")}
-                  className="text-gray-700 border px-6  hover:bg-gray-200 font-bold text-md p-2 cursor-pointer rounded-sm"
+                  className="hidden md:block border border-purple-600 text-purple-800 px-5 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 cursor-pointer"
                 >
                   Start Writing
                 </p>
-                <span
+                {/* <span
                   onClick={() => navigate("/notifications")}
                   className="hidden cursor-pointer transform hover:scale-105  ml-12 mr-10 sm:block"
                 >
@@ -158,22 +143,16 @@ const Header = () => {
                     0
                   </p>
                   <BellIcon className="text-sm h-8 relative text-gray-700 " />
-                </span>
+                </span> */}
 
                 {/* Profile dropdown */}
                 {!user ? (
                   <>
                     <button
                       onClick={() => navigate("/signIn")}
-                      className="p-2 font-bold bg-c rounded-sm text-white hover:bg-purple-600 mr-4"
+                      className="border border-purple-600 text-purple-800 px-5 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 cursor-pointer"
                     >
-                      Login
-                    </button>
-                    <button
-                      onClick={() => navigate("/signIn")}
-                      className="p-2 font-bold bg-c rounded-sm text-white hover:bg-purple-600 "
-                    >
-                      Sign In
+                      Get Started
                     </button>
                   </>
                 ) : (
@@ -181,7 +160,7 @@ const Header = () => {
                     <div>
                       <Menu.Button className="bg-green-800 flex text-sm rounded-full ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <span className="bg-c w-12 font-mono p-2 uppercase text-2xl text-white h-12 border-2 border-gray-900 rounded-full text-center">
-                          {user?.email[0] }
+                          {user?.displayName[0] || user?.email[0]}
                         </span>
                         <img src={user.photoURL} alt="" />
                       </Menu.Button>
@@ -270,7 +249,7 @@ const Header = () => {
           <Disclosure.Panel className="lg:hidden white z-100">
             <div
               className={
-                !isOpen ? "lg:hidden bg-white px-2 pt-2 pb-3 space-y-1 " : ""
+                !isOpen ? "lg:hidden bg-white px-2 pt-2 pb-3 space-y-1 border-b-2 " : ""
               }
               onClick={toogle}
             >
@@ -281,34 +260,34 @@ const Header = () => {
                 Home
               </p>
               <p
-                onClick={() => navigate("/new")}
-                className="text-gray-900 hover:text-purple-800 text-lg p-2 cursor-pointer rounded-md"
-              >
-                Start Writing
-              </p>
-              <p
-                onClick={() => navigate("/notifications")}
-                className="text-gray-900 hover:text-purple-900 text-lg p-2 cursor-pointer rounded-md"
-              >
-                Notifications
-              </p>
-              <p
                 onClick={() => navigate("/about")}
                 className="text-gray-900 hover:text-purple-800 text-lg p-2 cursor-pointer rounded-md"
               >
                 About Us
               </p>
               <p
-                onClick={() => navigate("/contacts")}
+                onClick={() => navigate("/contact-us")}
                 className="text-gray-900 hover:text-purple-800 text-lg p-2 cursor-pointer rounded-md"
               >
                 Contacts
               </p>
               <p
-                onClick={() => navigate("/contacts")}
+                onClick={() => navigate("/privacy-policy")}
+                className="text-gray-900 hover:text-purple-900 text-lg p-2 cursor-pointer rounded-md"
+              >
+                Privacy Policy
+              </p>
+              <p
+                onClick={() => navigate("/code-of-conduct")}
                 className="text-gray-900 hover:text-purple-800 text-lg p-2 cursor-pointer rounded-md"
               >
-                Contacts
+                Code of Conduct
+              </p>
+               <p
+                onClick={() => navigate("/new")}
+                className="text-gray-900 hover:text-purple-800 text-lg p-2 cursor-pointer rounded-md"
+              >
+                Start Writing
               </p>
             </div>
           </Disclosure.Panel>

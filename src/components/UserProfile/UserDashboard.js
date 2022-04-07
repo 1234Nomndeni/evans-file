@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import { selectUser } from '../../features/userSlice';
-import { auth, db } from '../../utils/firebase';
+import { db } from '../../utils/firebase';
 // import SignUp from '../SignUp';
 
 

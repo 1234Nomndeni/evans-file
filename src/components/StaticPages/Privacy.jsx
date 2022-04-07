@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 
 const Privacy = () => {
   return (
@@ -6,6 +7,9 @@ const Privacy = () => {
       onLoad={window.scroll(0, 0)}
       className="mt-24 mx-wd1 bg-white mx-auto p-4 text-gray-900 pt-12 pl-12 border rounded-md"
     >
+      <Helmet>
+        <title>Melbite | Privacy Policy</title>
+      </Helmet>
       <section>
         <h1 className="text-4xl text-gray-800 mb-5 leading-5">
           Privacy Policy

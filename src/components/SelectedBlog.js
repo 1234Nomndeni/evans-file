@@ -1,52 +1,28 @@
 import React, { forwardRef, useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useSelector } from "react-redux";
 import { selectOpenBlog} from "../features/blogSlice";
 import {
   HeartIcon,
-  BookmarkIcon,
-  UserCircleIcon,
   ChatIcon,
   ShareIcon,
 } from "@heroicons/react/outline";
-
-import firebase from "firebase/compat/app";
-// text editor dependancies
-
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import hljs from "highlight.js";
-import "highlight.js/styles/github.css";
 import { db } from "../utils/firebase";
 import ReactTimeago from "react-timeago";
-// Text editor
+import { selectUser } from "../features/userSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import firebase from "firebase/compat/app";
+import SignUp from "./SignUp";
 
-const modules = {
-  syntax: {
-    highlight: (text) => hljs.highlightAuto(text).value,
-  },
-  toolbar: [
-    [{ header: [1, 2, 3, 4, 5, 6, false] }],
-    [{ font: [] }],
-    [{ list: "ordered" }, { list: "bullet" }],
-    ["bold", "italic", "underline"],
-    [{ color: [] }, { background: ["red"] }],
-    [{ script: "sub" }, { script: "super" }],
-    [{ align: [] }],
-    ["image", "blockquote", "code-block"],
-    ["clean"],
-  ],
-};
-
-const SelectedBlog = forwardRef(({}, ref) => {
+const SelectedBlog = forwardRef(({id}, ref) => {
+    const navigate = useNavigate()
     const selectedBlog = useSelector(selectOpenBlog);
+    const [addComment, setAddComment] = useState("");
+    const [getBlogComments, setGetBlogComments] = useState([]);
+    const user = useSelector(selectUser);
+    const blog = useParams();
 
-    const [userProfile, setUserProfile] = useState([])
-    // const showprofile = useSelector(selectViewProfile)
-    // const postId = useSelector(selectPostComment);
-
-    // const [post, setPost] = useState('')
     // const [allComments, setAllComments] = useState([]);
-    // const [comment, setComment] = useState("");
 
 
   //    useEffect(() => {
@@ -83,25 +59,7 @@ const SelectedBlog = forwardRef(({}, ref) => {
     //     };
     // }, [selectedBlog]);
 
-    // const postComment = (e) => {
-    //     e.preventDefault();
-
-    //     db.collection("posts").doc(postId).collection("comments").add({
-    //       text: comment,
-    //       // description: user.displayName,
-    //     });
-    //     setComment("");
-    //   };
-
-  //       const postComment = (e) => {
-  //   e.preventDefault();
-  //   db.collection("posts").doc(postId).collection("comments").add({
-  //     text: comment,
-  //     // username: user.displayName,
-  //     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-  //   });
-  //   setComment("");
-  // };
+    
 
   //   const handleChange = (value, delta, source, editor) => {
   //     setComment(value);
@@ -110,7 +68,7 @@ const SelectedBlog = forwardRef(({}, ref) => {
   // Like  this post function
    const likePost = (postID) => {
     const likeDocument = db.collection("likes")
-    //   .where("userId", "==", userId)
+      .where("userId", "==",user?.uid)
       .where("postId", "==", postID)
       .limit(1);
     let postData;
@@ -131,7 +89,7 @@ const SelectedBlog = forwardRef(({}, ref) => {
           db.collection("likes")
             .add({
               postId: postID,
-            //   userId: userId,
+              //   userId: userId,
             })
             .then(() => {
               postData.likeCount++;
@@ -149,35 +107,72 @@ const SelectedBlog = forwardRef(({}, ref) => {
       });
   };
 
+  // selected blog id: QQyhiP4w0wzEbGYK9pIH
+
+    /********************************************/
+    /*** Add A Single Posts Comments ***/
+    /********************************************/
+ 
+    const postComment = (e) => {
+      e.preventDefault();
+
+      db.collection("posts").doc(blog?.id).collection("comments").add({
+        uid:user.uid,
+        addComment: addComment,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+      setAddComment("");
+    };
+
+    /********************************************/
+    /*** Get The A Single Posts Comments ***/
+    /********************************************/
+
+    const fetchAllPostsComments = async()=> {
+    try { 
+      await db.collection('posts').doc(blog?.id).collection("comments")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((snapshot) =>
+          setGetBlogComments(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              data: doc.data(),
+            }))
+          )
+        );
+    
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
-    db.collection("Users")
-      .onSnapshot((snapshot) =>
-        setUserProfile(
-          snapshot.docs.map((doc) => ({
-            id: doc.uid,
-            data: doc.data(),
-          }))
-        )
-      );
-  },[])
- 
+    fetchAllPostsComments()
+  }, []);
+
+  const preventCommetIfUserDoesNotExist = () => {
+    if(!user){
+      navigate('/signIn')
+    }
+  }
   
     return (
       <main onLoad={window.scroll(0, 0)}
         className="pt-24 mx-wd1 mx-auto flex justify-between pb-24 wd-screen3"
         ref={ref}
       >
+        <Helmet>
+          <title>Melbite | Selected Article</title>
+        </Helmet>
         <section className="hidden w-28 mt-8 fixed lg:block flex-col md:block">
           <span className="flex flex-col items-center">
-            <HeartIcon onClick={likePost} className="h-8 cursor-pointer hover:bg-red-100 duration-150 rounded-full p-1 hover:text-red-600" />
-            <p className="text-sm text-red-500 font-semibold">17 {selectedBlog.likeCount}</p>
+            <HeartIcon className="h-8 cursor-pointer hover:bg-red-100 duration-150 rounded-full p-1 hover:text-red-600" />
+            <p className="text-sm text-red-500 font-semibold">{selectedBlog.likeCount}</p>
             <p>Likes</p>
           </span>
           <span href="comment" className="flex flex-col items-center mt-10">
-            {/* <BookmarkIcon className="h-8 cursor-pointer hover:bg-green-100 duration-150 rounded-full p-1 hover:text-green-600" /> */}
             <ChatIcon className="h-8 cursor-pointer hover:bg-green-100 duration-150 rounded-full p-1 hover:text-green-600" />
-            <p className="text-green-700 font-semibold">12</p>
+            <p className="text-green-700 font-semibold"></p>
             <p className="text-sm">Reactions </p>
           </span>
           <span onClick={() => { window.open("http://google.com", "_blank")}} className="flex flex-col items-center mt-10" >
@@ -187,7 +182,7 @@ const SelectedBlog = forwardRef(({}, ref) => {
         </section>
         <section className="bg-white rounded-md mx-wd3 border border-gray-300 h-full ml-32 wd-screen1 xs:mt-8">
 
-         <p className="ml-0 img-w rounded-t-lg" dangerouslySetInnerHTML={{ __html: selectedBlog?.backgroundImage }}/>
+         <p className="ml-0 w-full object-contain rounded-t-lg" dangerouslySetInnerHTML={{ __html: selectedBlog?.backgroundImage }}/>
 
           <div className="mt-4 ml-6 flex items-center">
             <span className="bg-yellow-300 w-10 font-mono p-1 pl-3 uppercase text-xl text-gray-800 h-10 border-2 border-yellow-300 rounded-full">
@@ -195,13 +190,12 @@ const SelectedBlog = forwardRef(({}, ref) => {
             </span>
             <span className="ml-2">
               <p className="text-md">{selectedBlog?.displayName} </p>
-              {/* <p className="text-sm text-gray-500 -mt-1">Posted 2hrs ago</p> */}
-              <p className="text-sm text-gray-500 -mt-1">PostDate: <ReactTimeago date={new Date(selectedBlog.timestamp?.toDate()).toUTCString()} /></p>
+              <p className="text-sm text-gray-500 -mt-1">Published <ReactTimeago date={new Date(selectedBlog.timestamp?.toDate()).toUTCString()} /></p>
             </span>
           </div>
 
           <div className="ml-7 mr-7 mt-5 mb-4">
-            <h2 className=" lg:text-4xl md:text-2xl sm:text-md text-black">
+            <h2 className=" lg:text-4xl md:text-2xl sm:text-md text-gray-900 leading-10">
               {selectedBlog?.blogHeader}
             </h2>
             <span>
@@ -212,30 +206,23 @@ const SelectedBlog = forwardRef(({}, ref) => {
             </span>
           </div>
 
-          {/* <div className="mt-6 ml-7 mr-7 border-t border-gray-300">
-            <h2 className="text-xl text-gray-900 pt-3">Comments ({17})</h2>
-            <div className="mt-5">
-            <UserCircleIcon className="h-9" />
-            <ReactQuill
-              value={comment}
-              onChange={handleChange}
-              theme="snow"
-              modules={modules}
-              placeholder="Write Here.."
-              // className=""
-            />
+          {/*******************************************/}
+          {/**** Add Comment Section ****/}
+          {/*******************************************/}
 
-            <button  disabled={!comment} onClick={postComment} className="p-2 bg-red-500 text-white">Send Comment</button>
+          <div className="mt-12 ml-7 mr-7 border-t border-gray-300 pb-12">
+            <h2 className="text-gray-900 pt-7">Comments ({})</h2>
+            <div className="mt-5 flex">
+              <span className="bg-yellow-300 w-10 font-mono p-1 pl-3 pr-3 uppercase text-xl text-gray-800 h-10 border-2 border-yellow-300 rounded-full">
+                {selectedBlog.displayName?.[0]}
+              </span>
+              <div>
+                <textarea onClick={preventCommetIfUserDoesNotExist} value={addComment} onChange={(e) => setAddComment(e.target.value)} className='border-2 rounded py-2 px-3 block w-full ml-4 focus:outline-none focus:border-purple-600' placeholder='What do you think about this article . . .' rows={5} cols={60}/>
+                {/* {!user? ( <SignUp/> ) : (<></>)} */}
+                <button  disabled={!addComment} onClick={postComment} className="mt-3 ml-4 py-2 px-9 border-2 border-purple-800 rounded-full text-purple-900 hover:bg-purple-800 hover:text-white">Post</button>
+              </div>
+            </div>
           </div>
-          <div>
-            {allComments.map((comment) => (
-            <p>
-              <b>{comment.text}</b> 
-            </p>
-          ))}
-          </div>
-          </div> */}
-
         </section>
 
         <section className="hidden md:block lg:block ml-5 ">

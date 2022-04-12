@@ -18,6 +18,8 @@ import CodeOfConduct from './components/StaticPages/CodeOfConduct';
 import HowToBlogHere from './components/StaticPages/HowToBlogHere';
 // import ComingSoon from './components/StaticPages/ComingSoon';
 import ReactGA from 'react-ga'
+import WelcomeBlog from './components/StaticPages/WelcomeBlog';
+import Subscriptions from './components/StaticPages/Subscriptions';
 
 
 ReactGA.initialize(process.env.TRACK_ID);
@@ -47,6 +49,8 @@ function App() {
         <Route path="/privacy-policy" element={<Privacy/>} />
         <Route path="/code-of-conduct" element={<CodeOfConduct/>} />
         <Route path="/how-to-blog-at-melbite" element={<HowToBlogHere/>} />
+        <Route path="/Welcome-to-Melbite-the-official-blogging-site-or-the-world" element={<WelcomeBlog/>} />
+        <Route path="/subscriptions" element={<Subscriptions/>} />
       </Routes>
       <Footer/>
       {/* <ComingSoon /> */}

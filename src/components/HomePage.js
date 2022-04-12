@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import WelcomeNote from "./StaticPages/WelcomeNote";
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
@@ -45,7 +46,7 @@ const HomePage = () => {
         <nav className="w-full  bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500">
           <div className=" pb-8 mt-14 mx-auto mx-wd p-10">
             <h1 className="lg:text-3xl md:w-1/2 text-2xl mb-14 text-gray-700 prose  font-serif">
-              Hello world . . . let's read, write and learn through melbite
+              Hello world! let's read, write and learn through melbite
             </h1>
             {!user ? (
               <button onClick={() => navigate('/signIn')} className="border border-purple-600 text-purple-800 px-5 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 ">
@@ -64,6 +65,7 @@ const HomePage = () => {
           <section className="flex justify-between h-full mt-5">
 
             <div className=" lg:w-3/5 sm:w-full">
+              <WelcomeNote/>
               
               {posts.map( 
                 ({

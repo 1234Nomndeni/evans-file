@@ -42,7 +42,8 @@
     "rich-markdown-editor": "^11.21.3",
     "styled-components": "^5.3.3",
     "swr": "^1.1.2",
-    "tailwind-scrollbar-hide": "^1.1.6"
+    "tailwind-scrollbar-hide": "^1.1.6",
+    "validator": "^13.7.0"
   },
   "scripts": {
     "start": "craco start",

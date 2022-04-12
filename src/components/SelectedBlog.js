@@ -13,6 +13,7 @@ import { selectUser } from "../features/userSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import SignUp from "./SignUp";
+import LikeButton from "./SuperActions/LikeButton";
 
 const SelectedBlog = forwardRef(({id}, ref) => {
     const navigate = useNavigate()
@@ -22,90 +23,6 @@ const SelectedBlog = forwardRef(({id}, ref) => {
     const user = useSelector(selectUser);
     const blog = useParams();
 
-    // const [allComments, setAllComments] = useState([]);
-
-
-  //    useEffect(() => {
-  //   // za komentiranje na slika
-  //   if (postId) {
-  //     db.collection("posts")
-  //       .doc(postId)
-  //       .collection("comments")
-  //       .orderBy("timestamp", "desc")
-  //       .onSnapshot((snapshot) => {
-  //         setAllComments(snapshot.docs.map((doc) => doc.data()));
-  //       });
-  //   }
-  // }, [postId]);
-
-    // useEffect(() => {
-    //   let unsubscribe;
-    //   if (selectedBlog) {
-    //      unsubscribe =  db.collection('posts').doc(selectedBlog).onSnapshot(snapshot => (
-    //         setAllComments(snapshot.data())
-    //       ))
-
-    //     db.collection("posts")
-    //       .doc(selectedBlog)
-    //       .collection("comments")
-    //       .orderBy("timestamp", "desc")
-    //       .onSnapshot((snapshot) => {
-    //         setAllComments(snapshot.docs.map((doc) => doc.data()))
-    //       });
-    //   }
-
-    //    return () => {
-    //      unsubscribe();
-    //     };
-    // }, [selectedBlog]);
-
-    
-
-  //   const handleChange = (value, delta, source, editor) => {
-  //     setComment(value);
-  //   };
-
-  // Like  this post function
-   const likePost = (postID) => {
-    const likeDocument = db.collection("likes")
-      .where("userId", "==",user?.uid)
-      .where("postId", "==", postID)
-      .limit(1);
-    let postData;
-    const postDocument = db.collection("posts").doc(postID);
-    postDocument
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          postData = doc.data();
-          postData.screamId = doc.id;
-          return likeDocument.get();
-        } else {
-          console.log("Scream not found");
-        }
-      })
-      .then((data) => {
-        if (data.empty) {
-          db.collection("likes")
-            .add({
-              postId: postID,
-              //   userId: userId,
-            })
-            .then(() => {
-              postData.likeCount++;
-              return postDocument.update({ likeCount: postData.likeCount });
-            })
-            .then(() => {
-              return postData;
-            });
-        } else {
-          console.log("Already liked");
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
 
   // selected blog id: QQyhiP4w0wzEbGYK9pIH
 
@@ -165,11 +82,12 @@ const SelectedBlog = forwardRef(({id}, ref) => {
           <title>Melbite | Selected Article</title>
         </Helmet>
         <section className="hidden w-28 mt-8 fixed lg:block flex-col md:block">
-          <span className="flex flex-col items-center">
+          {/* <LikeButton/> */}
+          {/* <span className="flex flex-col items-center">
             <HeartIcon className="h-8 cursor-pointer hover:bg-red-100 duration-150 rounded-full p-1 hover:text-red-600" />
             <p className="text-sm text-red-500 font-semibold">{selectedBlog.likeCount}</p>
             <p>Likes</p>
-          </span>
+          </span> */}
           <span href="comment" className="flex flex-col items-center mt-10">
             <ChatIcon className="h-8 cursor-pointer hover:bg-green-100 duration-150 rounded-full p-1 hover:text-green-600" />
             <p className="text-green-700 font-semibold"></p>

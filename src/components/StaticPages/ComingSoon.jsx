@@ -3,9 +3,22 @@ import './ComSoon.css'
 import { Helmet } from "react-helmet";
 import { db } from '../../utils/firebase';
 import firebase from 'firebase/compat/app'
+import validate from 'validator';
 
 const ComingSoon = () => {
   const [email, setEmail] = useState("")
+  const [emailError, setEmailError] = useState("")
+
+  const emailValidator = (e) => {
+    e.preventDefault()
+    var email = e.target.value
+
+    if(validate.isEmail(email)){
+      setEmailError("You can submit")
+    } else{
+      setEmailError("Enter a valid Email Address")
+    }
+  }
 
   const mailList = (e) => {
     e.preventDefault()
@@ -15,6 +28,7 @@ const ComingSoon = () => {
     });
     setEmail("")
   }
+
   return (
     <div className="com">
       <Helmet>

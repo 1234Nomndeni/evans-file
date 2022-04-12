@@ -74,21 +74,21 @@ const SignUp = () => {
     const twitterSignUp = (e) => {
         e.preventDefault()
         auth.signInWithPopup(twitterProvider).then((result) => {
-            db.collection("Users").doc(result.user.uid).add({
-                email: email,
-                tagName: tagName,
-                website: website,
-                workExperience:workExperience,
-                skills: skills,
-                biography:biography
-            })
-            setEmail("")
-            setDisplayName("")
-            setTagName("");
-            setWebsite('')
-            setWorkExperience("")
-            setSkills("")
-            setBiography("")
+            // db.collection("Users").doc(result.user.uid).add({
+            //     email: email,
+            //     tagName: tagName,
+            //     website: website,
+            //     workExperience:workExperience,
+            //     skills: skills,
+            //     biography:biography
+            // })
+            // setEmail("")
+            // setDisplayName("")
+            // setTagName("");
+            // setWebsite('')
+            // setWorkExperience("")
+            // setSkills("")
+            // setBiography("")
         }).catch((error) => {
             alert(error.message)
         }).then(() => {

@@ -77,7 +77,8 @@ const CreatePost = () => {
         description: user.email,
         displayName: user.displayName,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      }).then(() => {
+      })
+      .then(() => {
          db.collection("posts").add({
           uid:user.uid,
           backgroundImage: backgroundImage,
@@ -89,13 +90,13 @@ const CreatePost = () => {
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         })
       })
-
      
       setBackgroundImage("");
       setBlogHeader("");
       setBlogBody("");
       setCurrentTask("");
   };
+
 
 
   //validate and keep the user loggedIn

@@ -2,7 +2,7 @@
 ## MELBITE WEBSITE BACKED UP BY EVANSIFY - TECH SOFTWARES ( [https://evansify.com] )
 
 ### Melbite Blogging website
-![Hello world! let's read, write and learn through melbite!](/components/images/mel_Home.png "Melbite landing Page")
+![Hello world! let's read, write and learn through melbite!](/src/components/images/mel_Home.png "Melbite landing Page")
 
 Technologies Used: 
 

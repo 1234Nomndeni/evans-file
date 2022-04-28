@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import {Modal } from "@mui/material";
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import { XIcon } from "@heroicons/react/outline";
 import { useSelector, useDispatch } from "react-redux";
@@ -19,7 +21,19 @@ import "react-quill/dist/quill.snow.css";
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
 // Text editor
-
+toast.configure({
+  position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 3000,
+    pauseOnFocusLoss: false,
+        className:({
+        backgroundColor: 'red',
+    }),
+    bodyClassName:({
+        backgroundColor: 'blue',
+        height: '100%',
+        width: '100%',
+    })
+})
 const modules = {
   syntax: {
     highlight: (text) => hljs.highlightAuto(text).value,
@@ -67,34 +81,41 @@ const CreatePost = () => {
 
   const publishBlog = (e) => {
     e.preventDefault();
-    db.collection("posts").doc(user?.uid).collection("userPosts").add({
-      // db.collection("posts").add({
-        uid:user.uid,
-        backgroundImage: backgroundImage,
-        blogHeader: blogHeader,
-        blogBody: blogBody,
-        currentTask: currentTask,
-        description: user.email,
-        displayName: user.displayName,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      })
-      .then(() => {
-         db.collection("posts").add({
+    if(backgroundImage && blogHeader && blogBody){
+   
+      db.collection("testPosts").doc(user?.uid).collection("testUserPosts").add({
           uid:user.uid,
           backgroundImage: backgroundImage,
           blogHeader: blogHeader,
+          slug_name: blogHeader.replace(/\s/g, '-'),
           blogBody: blogBody,
           currentTask: currentTask,
           description: user.email,
           displayName: user.displayName,
+          name_slug: user.displayName.replace(/\s/g, '-'),
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         })
-      })
-     
-      setBackgroundImage("");
-      setBlogHeader("");
-      setBlogBody("");
-      setCurrentTask("");
+        .then(() => {
+          db.collection("testPosts").add({
+            uid:user.uid,
+            backgroundImage: backgroundImage,
+            blogHeader: blogHeader,
+            slug_name: blogHeader.replace(/\s/g, '-'),
+            blogBody: blogBody,
+            currentTask: currentTask,
+            description: user.email,
+            displayName: user.displayName,
+            name_slug: user.displayName.replace(/\s/g, '-'),
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          })
+        })
+      
+        setBackgroundImage("");
+        setBlogHeader("");
+        setBlogBody("");
+        setCurrentTask("");
+        toast("Published Successfully")
+    }
   };
 
 
@@ -192,7 +213,7 @@ const CreatePost = () => {
                   onChange={handleChange}
                   theme="snow"
                   modules={modules}
-                  placeholder="Write Here.."
+                  placeholder="Write Your Article.."
                 />
               </section>
             </main>

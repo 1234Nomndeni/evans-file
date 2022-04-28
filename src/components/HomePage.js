@@ -9,7 +9,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import WelcomeNote from "./StaticPages/WelcomeNote";
 
 const HomePage = () => {
-  const [posts, setPosts] = useState([]);
+  const [articles, setArticles] = useState([]);
   const navigate = useNavigate();
   const user = useSelector(selectUser);
 
@@ -18,26 +18,21 @@ const HomePage = () => {
   /******************************************************** */ 
 
 
-  const fetchData = async()=> {
-    try { 
-      await db.collection('posts')
-        .orderBy("timestamp", "desc")
-        .onSnapshot((snapshot) =>
-          setPosts(
-            snapshot.docs.map((doc) => ({
-              id: doc.id,
-              data: doc.data(),
-            }))
-          )
-        );
-    
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   useEffect(() => {
-    fetchData()
+    const unsubscribe = db.collection('posts')
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) =>
+        setArticles(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+          }))
+        )
+      );
+      
+      return () => {
+        unsubscribe();
+      }
   }, []);
   
   return (
@@ -66,11 +61,13 @@ const HomePage = () => {
 
             <div className=" lg:w-3/5 sm:w-full">
               <WelcomeNote/>
-              
-              {posts.map( 
+              {articles.map(article => (
+                <Feed key={article.id} id={article.id} blogHeader={article.data.blogHeader} blogBody={article.data.blogBody} displayName={article.data.displayName} backgroundImage={article.data.backgroundImage} timestamp={article.data.timestamp}  slug_name={article.data.slug_name} name_slug={article.data.name_slug} currentTask={article.data.currentTask} description={article.data.description} skills={article.data.skills} likeCount={article.data.likeCount} />
+              ))}
+              {/* {posts.map( 
                 ({
                   id,
-                  data: { uid, backgroundImage,profilePic, blogHeader, blogBody,currentTask, timestamp, description,displayName,skills, likeCount },
+                  data: { uid, backgroundImage,profilePic, blogHeader,slug_name, blogBody,currentTask, timestamp, description,displayName,skills, likeCount },
                 }) => (
                   <Feed
                     key={id}
@@ -79,6 +76,7 @@ const HomePage = () => {
                     backgroundImage={backgroundImage}
                     profilePic={profilePic}
                     blogHeader={blogHeader}
+                    slug_name={slug_name}
                     blogBody={blogBody}
                     currentTask={currentTask}
                     timestamp={timestamp}
@@ -88,7 +86,7 @@ const HomePage = () => {
                     likeCount={likeCount}
                   />
                 )
-              )} 
+              )}  */}
             </div> 
 
             <div className="hidden md:block ml-3 w-72 h-72">
@@ -96,7 +94,7 @@ const HomePage = () => {
                 <p onClick={() => navigate('/about') } className="text-sm cursor-pointer hover:text-purple-800 mb-2">About Us</p>
                 <p onClick={() => navigate('/contact-us') } className="text-sm cursor-pointer hover:text-purple-800 mb-2">Contact Us</p>
                 <p onClick={() => navigate('/myDashboard') } className="text-sm cursor-pointer hover:text-purple-800 mb-2">Your Account</p>
-                <p onClick={() => navigate('/sponser-us') } className="text-sm cursor-pointer hover:text-purple-800 mb-2">Sponser Us</p>
+                <p onClick={() => navigate('/') } className="text-sm cursor-pointer hover:text-purple-800 mb-2">Sponser Us</p>
                 <p onClick={() => navigate('/how-to-blog-at-melbite') } className="text-sm cursor-pointer hover:text-purple-800 mb-2">How to Blog Here</p>
                 <p onClick={() => navigate('/privacy-policy') } className="text-sm cursor-pointer hover:text-purple-800 mb-2">Privacy Policy</p>
                 <p onClick={() => navigate('/code-of-conduct') } className="text-sm cursor-pointer hover:text-purple-800">Code of Conduct</p>

@@ -18,7 +18,7 @@ import {useSelector } from "react-redux";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-const SelectedBlog = () => {
+const SelectedBlog2 = () => {
   const navigate = useNavigate()
   const user = useSelector(selectUser);
   const {blogId,displayName} = useParams()
@@ -36,7 +36,7 @@ const SelectedBlog = () => {
 
   useEffect(() => {
     if(blogId){
-      db.collection('posts').doc(blogId).onSnapshot(snapshot => (
+      db.collection('testPosts').doc(blogId).onSnapshot(snapshot => (
         setBlogHeader(snapshot.data().blogHeader),
         setBackgroundImage(snapshot.data().backgroundImage),
         setBlogBody(snapshot.data().blogBody),
@@ -45,7 +45,7 @@ const SelectedBlog = () => {
         setNameSlug(snapshot.data().name_slug)
       ))
 
-      db.collection('posts').doc(blogId).collection('comments').orderBy('timestamp', 'desc').onSnapshot(snapshot => (
+      db.collection('testPosts').doc(blogId).collection('comments').orderBy('timestamp', 'desc').onSnapshot(snapshot => (
         setComments(snapshot.docs.map(doc => doc.data()))
       ))
     }
@@ -64,7 +64,7 @@ const SelectedBlog = () => {
   const postComment = (e) => {
     e.preventDefault();
 
-    db.collection('posts').doc(blogId).collection('comments').add({
+    db.collection('testPosts').doc(blogId).collection('comments').add({
       message: addComment,
       name: user.displayName,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -75,7 +75,7 @@ const SelectedBlog = () => {
 
   const fetchCommentsCount = async () => {
     await db
-      .collection("posts").doc(blogId).collection("comments")
+      .collection("testPosts").doc(blogId).collection("comments")
       .onSnapshot((snapshot) =>
         setCommentCount(snapshot.size)
     )
@@ -90,7 +90,7 @@ const SelectedBlog = () => {
       className="pt-24 mx-wd1 mx-auto flex justify-between pb-24 wd-screen3"
     >
       <Helmet>
-        <title>{`${blogHeader}`}</title>
+        <title>{`${slug_name}`}</title>
       </Helmet>
       <section className="hidden w-28 mt-8 fixed lg:block flex-col md:block">
         {/* <span href="comment" className="flex flex-col items-center mt-10">
@@ -223,7 +223,7 @@ const SelectedBlog = () => {
           <div className="mt-5 flex" id="comment">
             {!user ? (<Avatar/>) : (
               <span className="bg-yellow-300 w-10 font-mono p-1 pl-3 pr-3 uppercase text-xl text-gray-800 h-10 border-2 border-yellow-300 rounded-full">
-              {user.displayName?.[0]}
+              {displayName?.[0]}
             </span>
             )}
             
@@ -268,7 +268,7 @@ const SelectedBlog = () => {
             {/* <h3 className="text-xl text-center"></h3> */}
             <h3 className="mt-4 text-center mb-3 text-purple-800">Currently Working On </h3>
               <span className="text-gray-800 text-md">
-              {!currentTask ? (<h3 className="text-center mb-3 text-gray-400 "> Project Not set</h3>) : (<p className="text-center mb-3 text-gray-800">{currentTask}</p>)}
+              {!currentTask ? (<h3 className="text-center text-gray-400 "> Project Not set</h3>) : (<p className="text-center text-gray-800">{currentTask}</p>)}
             </span>
           </div>
         </section>
@@ -280,4 +280,4 @@ const SelectedBlog = () => {
     </main>
   );
 }
-export default SelectedBlog;
+export default SelectedBlog2;

@@ -7,7 +7,7 @@ const AboutUs = () => {
   return (
     <main
       onLoad={window.scroll(0, 0)}
-      className="mt-24 mx-wd1 bg-white mx-auto p-4 pt-12 pl-12 border rounded-md"
+      className="mt-24 mx-wd1 bg-white mx-auto p-4 pt-12 pb-12 pl-12 border rounded-md"
     >
       <Helmet>
         <title>Melbite | About Us</title>

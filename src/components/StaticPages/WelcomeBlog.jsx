@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
+import { Menu, Transition } from "@headlessui/react";
 import { Helmet } from "react-helmet";
 import { HeartIcon, ChatIcon, ShareIcon } from "@heroicons/react/outline";
 import { useSelector } from "react-redux";
-// import { selectUser } from "../features/userSlice";
 import { db } from "../../utils/firebase";
 import firebase from 'firebase/compat/app'
 import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../features/userSlice";
 import ReactTimeago from "react-timeago";
 
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 
 const WelcomeBlog = () => {
   const [addComment, setAddComment] = useState("");
@@ -22,6 +25,10 @@ const WelcomeBlog = () => {
   /*** Add A Single Posts Comments ***/
   /********************************************/
 
+
+  // const handleBackgroundChange = (value, delta, source, editor) => {
+  //   setBackgroundImage(value);
+  // };
   const postComment = (e) => {
       e.preventDefault();
       db.collection("welcomeComments").add({
@@ -74,9 +81,7 @@ const WelcomeBlog = () => {
   }, []);
 
   return (
-    <main
-      className="pt-24 mx-wd1 mx-auto flex justify-between pb-24 wd-screen3"
-    >
+    <main className="pt-24 mx-wd1 mx-auto flex justify-between pb-24 wd-screen3">
       <Helmet>
         <title>Welcome to Melbite!</title>
       </Helmet>
@@ -91,15 +96,86 @@ const WelcomeBlog = () => {
           <p className="text-green-700 font-semibold">{commentCount}</p>
           <p className="text-sm">Reactions </p>
         </span>
-        <span
-          onClick={() => {
-            window.open("http://google.com", "_blank");
-          }}
-          className="flex flex-col items-center mt-10"
-        >
-          <ShareIcon className="h-8 cursor-pointer hover:bg-green-100 duration-150 rounded-full p-1 hover:text-green-600" />
-          <p className="text-sm">Share </p>
-        </span>
+        <Menu as="div" className="ml-10 ">
+          <div>
+            <Menu.Button className="flex flex-col items-center mt-10">
+              <ShareIcon className="h-8 cursor-pointer hover:bg-green-100 duration-150 rounded-full p-1 hover:text-green-600" />
+              <p className="text-sm">Share </p>
+            </Menu.Button>
+          </div>
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+          >
+            <Menu.Items className="right-0 mt-2 w-40 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <Menu.Item>
+                {({ active }) => (
+                  <a
+                    href={`https://twitter.com/intent/tweet?url=https://melbite.com/Welcome-to-Melbite-the-official-blogging-site-or-the-world `}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={classNames(
+                      active ? "bg-white" : "",
+                      "block px-4 py-2 text-sm text-gray-700 hover:text-purple-900"
+                    )}
+                  >
+                    Share on Twitter
+                  </a>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <a
+                    href={`https://www.facebook.com/sharer.php?u=https://melbite.com/Welcome-to-Melbite-the-official-blogging-site-or-the-world `}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={classNames(
+                      active ? "bg-white" : "",
+                      "block px-4 py-2 text-sm text-gray-700 hover:text-purple-900"
+                    )}
+                  >
+                    Share on Facebook
+                  </a>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <a
+                    href={`https://www.linkedin.com/sharing/share-offsite/?url=https://melbite.com/Welcome-to-Melbite-the-official-blogging-site-or-the-world `}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={classNames(
+                      active ? "bg-white" : "",
+                      "block px-4 py-2 text-sm text-gray-700 hover:text-purple-900"
+                    )}
+                  >
+                    Share on LinkedIn
+                  </a>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
+                  <a
+                    href={`https://www.reddit.com/submit?url=https://melbite.com/Welcome-to-Melbite-the-official-blogging-site-or-the-world `}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={classNames(
+                      active ? "bg-white" : "",
+                      "block px-4 py-2 text-sm text-gray-700 hover:text-purple-900"
+                    )}
+                  >
+                    Share on Reddit
+                  </a>
+                )}
+              </Menu.Item>
+            </Menu.Items>
+          </Transition>
+        </Menu>
       </section>
       <section className="bg-white rounded-md mx-wd3 border border-gray-300 h-full ml-32 wd-screen1 xs:mt-8">
         <img src="https://wallpaperaccess.com/full/3214529.jpg" alt="" />

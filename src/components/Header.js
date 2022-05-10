@@ -31,6 +31,9 @@ const Header = () => {
   const toogle = () => {
     setIsOpen(!isOpen);
   };
+  const closeOnNavigate = () => {
+    setIsOpen(isOpen)
+  }
 
   const transitionNavBar = () => {
     if (window.scrollY > 100) {
@@ -205,16 +208,29 @@ const Header = () => {
                             </a>
                           )}
                         </Menu.Item> */}
-                        <Menu.Item>
+                        {/* <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="/myDashboard"
+                              href="/dashboard"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
                               My Dashboard
+                            </a>
+                          )}
+                        </Menu.Item>  */}
+                         <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="/profile"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              My Profile
                             </a>
                           )}
                         </Menu.Item>
@@ -254,7 +270,7 @@ const Header = () => {
               onClick={toogle}
             >
               <p
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/")} 
                 className="text-gray-900 hover:text-purple-800  text-lg p-2 cursor-pointer rounded-md"
               >
                 Home

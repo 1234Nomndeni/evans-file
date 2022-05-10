@@ -33,9 +33,9 @@ const UserDashboard = () => {
     }, []);
 
     const deletePost = ()=> {
-        db.collection("userPosts").delete()
-        .then(()=>{console.log("successfully deleted! ")})
-        .catch((error)=>{ console.log("Error removing document:", error)})
+        db.collection("posts").doc(userPosts.id).delete().then(() => {
+          alert("Article Deleted Successfully")
+        })
     }
 
     return (
@@ -57,7 +57,7 @@ const UserDashboard = () => {
                         <h3 className='text-2xl mb-4' dangerouslySetInnerHTML={{__html:blogHeader }}/>
                         <p className='text-gray-800'  dangerouslySetInnerHTML={{__html:blogBody }}/>
                         <p className='text-gray-800' dangerouslySetInnerHTML={{__html:currentTask }}/>
-                        <button onClick={deletePost} className='mt-5 bg-red-500 text-white pl-4 pr-4 p-2 h-10 rounded-sm hover:bg-red-600 font-semibold'>DELETE</button>
+                        <button className='mt-5 bg-red-500 text-white pl-4 pr-4 p-2 h-10 rounded-sm hover:bg-red-600 font-semibold'>DELETE</button>
                       </div>
                       
                     ))}

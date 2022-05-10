@@ -19,6 +19,8 @@ const WelcomeBlog = () => {
   const [commentCount, setCommentCount] = useState(0);
   const user = useSelector(selectUser);
   const navigate = useNavigate()
+  const [like, setLike] = useState(true);
+  const [likeCount, setLikeCount] = useState(0)
 
   
   /********************************************/
@@ -72,6 +74,12 @@ const WelcomeBlog = () => {
       )
   };
 
+  const likePost = (e) => {
+   if(like){
+     setLikeCount(likeCount+1).limit(1)
+   }
+  }
+
   useEffect(() => {
     fetchWelcomeComments();
   }, []);
@@ -85,11 +93,32 @@ const WelcomeBlog = () => {
       <Helmet>
         <title>Welcome to Melbite!</title>
       </Helmet>
-      <section className="hidden w-28 mt-8 fixed lg:block flex-col md:block">
-        {/* <span className="flex flex-col items-center">
-          <HeartIcon className="h-8 cursor-pointer hover:bg-red-100 duration-150 rounded-full p-1 hover:text-red-600" />
-          <p className="text-sm text-red-500 font-semibold"></p>
-          <p>Likes</p>
+      <section className="hidden sm:absolute w-28 mt-6 fixed lg:block flex-col md:block">
+        {/* <span href="comment" className="flex flex-col items-center mt-10">
+          {like ? (
+            <HeartIcon
+              onClick={likePost}
+              className="h-8 cursor-pointer hover:bg-pink-100 rounded-full p-1 hover:text-pink-600"
+            />
+          ) : (
+            <svg
+              onClick={() => setLike(true)}
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-8 translate-ease-in-out"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                className="cursor-pointer text-pink-600 hover:bg-pink-100 rounded-full p-1 hover:text-pink-600"
+                fill-rule="evenodd"
+                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          )}
+          <p className="text-pink-600 font-semibold">{12}</p>
+          <p className="text-pink-600 font-semibold">{likeCount}</p>
+          <p className="text-sm">Like</p>
         </span> */}
         <span href="comment" className="flex flex-col items-center mt-10">
           <ChatIcon className="h-8 cursor-pointer hover:bg-green-100 duration-150 rounded-full p-1 hover:text-green-600" />
@@ -177,7 +206,7 @@ const WelcomeBlog = () => {
           </Transition>
         </Menu>
       </section>
-      <section className="bg-white rounded-md mx-wd3 border border-gray-300 h-full ml-32 wd-screen1 xs:mt-8">
+      <section className="bg-white rounded-md mx-wd3 border border-gray-300 h-full ml-32 wd-screen1 md:w-full xs:mt-8">
         <img src="https://wallpaperaccess.com/full/3214529.jpg" alt="" />
 
         <div className="mt-4 ml-6 flex items-center">
@@ -190,7 +219,7 @@ const WelcomeBlog = () => {
           </span>
         </div>
 
-        <div className="ml-7 mr-7 mt-5 mb-4">
+        <div className="ml-7 mr-7 mt-5 mb-4 border-b pb-7">
           <h2 className=" lg:text-4xl md:text-2xl sm:text-md text-gray-900 leading-10">
             Welcome to Melbite, We are glad to have you on board!
           </h2>
@@ -276,6 +305,119 @@ const WelcomeBlog = () => {
           </p>
         </div>
 
+        <section className="lg:hidden md:flex sm:flex flex pt-2 pb-2 w-full items-center justify-between pr-10 pl-10">
+          {/* <span href="comment" className="flex flex-col items-center">
+            {like ? (
+              <HeartIcon
+                onClick={() => setLike(false)}
+                className="h-8 cursor-pointer hover:bg-pink-100 rounded-full p-1 hover:text-pink-600"
+              />
+            ) : (
+              <svg
+                onClick={() => setLike(true)}
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-8 translate-ease-in-out"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  className="cursor-pointer text-pink-600 hover:bg-pink-100 rounded-full p-1 hover:text-pink-600"
+                  fill-rule="evenodd"
+                  d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            )}
+            <p className="text-pink-600 font-semibold">{12}</p>
+            <p className="text-sm">Like</p>
+          </span> */}
+          <span href="comment" className="flex flex-col items-center">
+            <ChatIcon className="h-8 cursor-pointer hover:bg-green-100 duration-150 rounded-full p-1 hover:text-green-600" />
+            <p className="text-green-700 font-semibold">{commentCount}</p>
+            <p className="text-sm">Reactions </p>
+          </span>
+          <Menu as="div" className="ml-10 ">
+            <div>
+              <Menu.Button className="flex flex-col items-center">
+                <ShareIcon className="h-8 cursor-pointer hover:bg-green-100 duration-150 rounded-full p-1 hover:text-green-600" />
+                <p className="text-sm">Share </p>
+              </Menu.Button>
+            </div>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="right-20 mt-2 w-40 absolute rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Item>
+                  {({ active }) => (
+                    <a
+                      href={`https://twitter.com/intent/tweet?url=https://melbite.com/Welcome-to-Melbite-the-official-blogging-site-or-the-world `}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={classNames(
+                        active ? "bg-white" : "",
+                        "block px-4 py-2 text-sm text-gray-700 hover:text-purple-900"
+                      )}
+                    >
+                      Share on Twitter
+                    </a>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <a
+                      href={`https://www.facebook.com/sharer.php?u=https://melbite.com/Welcome-to-Melbite-the-official-blogging-site-or-the-world `}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={classNames(
+                        active ? "bg-white" : "",
+                        "block px-4 py-2 text-sm text-gray-700 hover:text-purple-900"
+                      )}
+                    >
+                      Share on Facebook
+                    </a>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <a
+                      href={`https://www.linkedin.com/sharing/share-offsite/?url=https://melbite.com/Welcome-to-Melbite-the-official-blogging-site-or-the-world `}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={classNames(
+                        active ? "bg-white" : "",
+                        "block px-4 py-2 text-sm text-gray-700 hover:text-purple-900"
+                      )}
+                    >
+                      Share on LinkedIn
+                    </a>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <a
+                      href={`https://www.reddit.com/submit?url=https://melbite.com/Welcome-to-Melbite-the-official-blogging-site-or-the-world `}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={classNames(
+                        active ? "bg-white" : "",
+                        "block px-4 py-2 text-sm text-gray-700 hover:text-purple-900"
+                      )}
+                    >
+                      Share on Reddit
+                    </a>
+                  )}
+                </Menu.Item>
+              </Menu.Items>
+            </Transition>
+          </Menu>
+        </section>
+
         {/*******************************************/}
         {/**** Add Comment Section ****/}
         {/*******************************************/}
@@ -338,7 +480,7 @@ const WelcomeBlog = () => {
         )}
       </section>
 
-      <section className="hidden md:block lg:block ml-5 ">
+      <section className="hidden md:hidden lg:block ml-5 ">
         <section className="profile w-72  rounded-md border border-gray-400 bg-white">
           <div className="bg-c h-20 border-t rounded-t-md flex items-center justify-center">
             <span className="bg-yellow-300 w-16 h-16  mt-20 border-5 border-white font-mono pl-6 font-bold items-center flex uppercase text-2xl text-center text-purple-800 border-2 rounded-full">

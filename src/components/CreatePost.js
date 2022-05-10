@@ -191,7 +191,7 @@ const CreatePost = () => {
                     onChange={handleBackgroundChange}
                     theme="snow"
                     modules={modules2}
-                    placeholder="Background Image"
+                    placeholder="Click The Icon To Add Background Image"
                   />
 
                   <textarea value={currentTask} onChange={(e) => setCurrentTask(e.target.value)} className="border-gray-300 border max-h-52 w-2/6 focus:outline-none rounded-sm p-3" placeholder="Am currently working on..."></textarea>

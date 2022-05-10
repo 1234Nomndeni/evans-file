@@ -10,7 +10,7 @@ import {
 } from "@heroicons/react/outline";
 
 const LikePost = ({description}) => {
-    const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState([])
   
   useEffect(() => {
     db.collection("posts")

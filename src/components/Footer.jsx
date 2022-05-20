@@ -1,13 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-// import logo from "../Images/JohFun1.jpg";
 
 const Footer = () => {
   const navigate = useNavigate()
   return (
     <div className="w-full mt-10 footer-bg bottom-0 pb-10">
       <section className="pt-6 pb-3 mx-wd2 mx-auto border-b border-gray-700 flex justify-center flex-col items-center">
-        {/* <img className="w-44 mb-6  items-center" src={logo} alt="" /> */}
         <span className=" w-full flex-wrap mb-3">
           <h3 className="pb-2 text-white font-semibold  text-lg">
             Get to Know Us
@@ -35,7 +33,7 @@ const Footer = () => {
               Sponser Us
             </p>
             <p
-              onClick={() => navigate("/myDashboard")}
+              onClick={() => navigate("/profile")}
               className="text-sm text-gray-300 hover:text-orange-500 cursor-pointer mb-2 mr-2"
             >
               Your Account

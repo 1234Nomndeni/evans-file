@@ -150,7 +150,7 @@ const HomePage = () => {
                   Contact Us
                 </p>
                 <p
-                  onClick={() => navigate("/myDashboard")}
+                  onClick={() => navigate("/profile")}
                   className="text-sm cursor-pointer hover:text-purple-800 mb-2"
                 >
                   Your Account

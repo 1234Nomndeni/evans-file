@@ -6,33 +6,35 @@ import { useNavigate } from "react-router-dom";
 import { DriveEta } from '@mui/icons-material';
 
 const UpdateProfile = (props) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const user = useSelector(selectUser);
-  const [userData, setUserData] = useState()
-  const [tagName, setTagName] = useState()
-  const [website, setWebsite] = useState()
-  const [location, setLocation]= useState("")
-  const [workExperience, setWorkExperience] = useState("")
-  const [skills, setSkills] = useState("")
-  const [biography, setBiography] = useState("")
+  const [tagName, setTagName] = useState();
+  const [website, setWebsite] = useState();
+  const [location, setLocation] = useState("");
+  const [workExperience, setWorkExperience] = useState("");
+  const [skills, setSkills] = useState("");
+  const [biography, setBiography] = useState("");
 
   const updateProfile = (e) => {
-    e.preventDefault()
-    db.collection('Users').doc(user?.uid).update({
-      tagName:tagName,
-      website:website,
-      workExperience: workExperience,
-      skills:skills,
-      biography:biography,
-      uid:user.uid
-    }, {merge: true})
+    e.preventDefault();
+    db.collection("Users").doc(user?.uid).update(
+      {
+        tagName: tagName,
+        website: website,
+        workExperience: workExperience,
+        skills: skills,
+        biography: biography,
+        uid: user.uid,
+      },
+      { merge: true }
+    );
 
-    setTagName("")
-    setWebsite("")
-    setWorkExperience("")
-    setSkills("")
-    setBiography("")
-  }
+    setTagName("");
+    setWebsite("");
+    setWorkExperience("");
+    setSkills("");
+    setBiography("");
+  };
 
   // useEffect(() => {
   //   db.collection('Users').doc(user.uid).onSnapshot((snapshot) => setUserData(
@@ -68,7 +70,7 @@ const UpdateProfile = (props) => {
                   value={tagName}
                   onChange={(e) => setTagName(e.target.value)}
                   className="mt h-10 p-3 border border-gray-300 focus:outline-none focus:border-purple-700 rounded mt-1"
-                  placeholder={props.tagName} 
+                  placeholder="#letsLearn, #javascript"
                 />
                 {/* <p>My Name isb {user?.tagName}</p> */}
               </div>
@@ -78,7 +80,7 @@ const UpdateProfile = (props) => {
                   value={website}
                   onChange={(e) => setWebsite(e.target.value)}
                   className="mt h-10 p-3 border border-gray-300 focus:outline-none focus:border-purple-700 rounded mt-1"
-                  placeholder={props.website}
+                  placeholder="https://example.com"
                 />
               </div>
               <div className="flex flex-col mt-5">
@@ -87,7 +89,7 @@ const UpdateProfile = (props) => {
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   className="mt h-10 p-3 border border-gray-300 focus:outline-none focus:border-purple-700 rounded mt-1"
-                  placeholder="Nairobi, Califonia"
+                  placeholder="Nairobi, Califonia, USA etc"
                 />
               </div>
               <div className="flex flex-col mt-5">
@@ -96,7 +98,7 @@ const UpdateProfile = (props) => {
                   value={workExperience}
                   onChange={(e) => setWorkExperience(e.target.value)}
                   className="mt h-10 p-3 border border-gray-300 focus:outline-none focus:border-purple-700 rounded mt-1"
-                  placeholder="Software Dev, Journalist etc"
+                  placeholder="Tech Lead,CEO etc.."
                 />
               </div>
               <div className="flex flex-col mt-5">
@@ -105,7 +107,7 @@ const UpdateProfile = (props) => {
                   value={skills}
                   onChange={(e) => setSkills(e.target.value)}
                   className="mt h-18 p-3 pt-1 border border-gray-300 focus:outline-none focus:border-purple-700 rounded mt-1"
-                  placeholder="Lawyer, software dev"
+                  placeholder="Lawyer, software dev, Content Creator"
                 ></textarea>
               </div>
               <div className="flex flex-col mt-5">
@@ -134,7 +136,6 @@ const UpdateProfile = (props) => {
       </section>
 
       <section className="rounded-sm">
-
         <button
           onClick={() => navigate("/dashboard")}
           className="bg-c text-white py-2 px-12 w-full mt-5 font-bold"

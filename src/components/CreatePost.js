@@ -34,6 +34,7 @@ toast.configure({
         width: '100%',
     })
 })
+
 const modules = {
   syntax: {
     highlight: (text) => hljs.highlightAuto(text).value,
@@ -46,7 +47,7 @@ const modules = {
     [{ color: [] }, { background: [] }],
     [{ script: "sub" }, { script: "super" }],
     [{ align: [] }],
-    ["image", "blockquote", "code-block", "link", "formula"],
+    ["image", "code-block", 'blockquote', "link", "formula",'strike' ,],
     ["clean"],
   ],
 };
@@ -83,7 +84,20 @@ const CreatePost = () => {
     e.preventDefault();
     if(backgroundImage && blogHeader && blogBody){
    
-      db.collection("testPosts").doc(user?.uid).collection("testUserPosts").add({
+      db.collection("posts").doc(user?.uid).collection("userPosts").add({
+        uid:user.uid,
+        backgroundImage: backgroundImage,
+        blogHeader: blogHeader,
+        slug_name: blogHeader.replace(/\s/g, '-'),
+        blogBody: blogBody,
+        currentTask: currentTask,
+        description: user.email,
+        displayName: user.displayName,
+        name_slug: user.displayName.replace(/\s/g, '-'),
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      })
+      .then(() => {
+        db.collection("posts").add({
           uid:user.uid,
           backgroundImage: backgroundImage,
           blogHeader: blogHeader,
@@ -95,30 +109,15 @@ const CreatePost = () => {
           name_slug: user.displayName.replace(/\s/g, '-'),
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         })
-        .then(() => {
-          db.collection("testPosts").add({
-            uid:user.uid,
-            backgroundImage: backgroundImage,
-            blogHeader: blogHeader,
-            slug_name: blogHeader.replace(/\s/g, '-'),
-            blogBody: blogBody,
-            currentTask: currentTask,
-            description: user.email,
-            displayName: user.displayName,
-            name_slug: user.displayName.replace(/\s/g, '-'),
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-          })
-        })
+      })
       
-        setBackgroundImage("");
-        setBlogHeader("");
-        setBlogBody("");
-        setCurrentTask("");
-        toast("Published Successfully")
+      setBackgroundImage("");
+      setBlogHeader("");
+      setBlogBody("");
+      setCurrentTask("");
+      toast("Published Successfully")
     }
   };
-
-
 
   //validate and keep the user loggedIn
   useEffect(() => {
@@ -169,7 +168,7 @@ const CreatePost = () => {
                     <button
                       onClick={publishBlog}
                       disabled={!blogHeader}
-                      className="p-2 border mr-10  border-gray-400 text-sm bg-purple-700 rounded-md hover:bg-purple-800 py-2 px-8 font-bold text-white"
+                      className="border border-purple-600 text-purple-800 hover:bg-purple-800 hover:text-white px-7 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 cursor-pointer"
                     >
                       Publish
                     </button>
@@ -184,8 +183,8 @@ const CreatePost = () => {
               </div>
 
               <section className="mx-wd2 mx-auto pt-4">
-                <div className="flex flex-wrap mb-5 justify-between"> 
-                   <ReactQuill
+                <div className="flex flex-wrap mb-5 justify-between">
+                  <ReactQuill
                     className="w-3/6 rounded-t-lg outline-none"
                     value={backgroundImage || ""}
                     onChange={handleBackgroundChange}
@@ -194,7 +193,12 @@ const CreatePost = () => {
                     placeholder="Click The Icon To Add Background Image"
                   />
 
-                  <textarea value={currentTask} onChange={(e) => setCurrentTask(e.target.value)} className="border-gray-300 border max-h-52 w-2/6 focus:outline-none rounded-sm p-3" placeholder="Am currently working on..."></textarea>
+                  <textarea
+                    value={currentTask}
+                    onChange={(e) => setCurrentTask(e.target.value)}
+                    className="border-gray-300 border max-h-52 w-2/6 focus:outline-none rounded-sm p-3"
+                    placeholder="Am currently working on..."
+                  ></textarea>
                 </div>
 
                 <input

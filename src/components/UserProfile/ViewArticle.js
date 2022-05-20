@@ -1,157 +1,85 @@
-import React, { Fragment, useEffect, useState } from "react";
+import { Menu, Transition } from '@headlessui/react';
+import React, {useState, useEffect, Fragment} from 'react'
 import { Helmet } from "react-helmet";
-import { Menu, Transition } from "@headlessui/react";
-import Avatar from "@mui/material/Avatar";
 import { HeartIcon, ChatIcon, ShareIcon } from "@heroicons/react/outline";
-// import {HeartIcon} from "@heroicons/react/solid"
-import { db } from "../utils/firebase";
-import ReactTimeago from "react-timeago";
-import { selectUser } from "../features/userSlice";
-import { useNavigate, useParams } from "react-router-dom";
-import firebase from "firebase/compat/app";
-import { useSelector } from "react-redux";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { selectUser } from '../../features/userSlice';
+import { db } from '../../utils/firebase';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-const SelectedBlog = () => {
+const ViewArticle = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-  const { blogId, displayName } = useParams();
+  const { postId} = useParams();
   const [blogHeader, setBlogHeader] = useState("");
   const [blogBody, setBlogBody] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
   const [currentTask, setCurrentTask] = useState("");
   const [slug_name, setSlugName] = useState("");
   const [name_slug, setNameSlug] = useState("");
-  const [addComment, setAddComment] = useState("");
-  const [comments, setComments] = useState([]);
-  const [commentCount, setCommentCount] = useState(0);
-  const [likesCount, setLikesCount] = useState(0);
-  const [liked, setLiked] = useState(false);
-  const [isCopied, setIsCopied] = useState(false)
+  const [isCopied, setIsCopied] = useState(false);
 
-  useEffect(() => {
-    if (blogId) {
-      db.collection("posts")
-        .doc(blogId)
-        .onSnapshot(
-          (snapshot) => (
-            setBlogHeader(snapshot.data().blogHeader),
-            setBackgroundImage(snapshot.data().backgroundImage),
-            setBlogBody(snapshot.data().blogBody),
-            setCurrentTask(snapshot.data().currentTask),
-            setSlugName(snapshot.data().slug_name),
-            setNameSlug(snapshot.data().name_slug)
-          )
-        );
 
-      db.collection("posts")
-        .doc(blogId)
-        .collection("comments")
-        .orderBy("timestamp", "desc")
-        .onSnapshot((snapshot) =>
-          setComments(snapshot.docs.map((doc) => doc.data()))
-        );
-    }
-  }, []);
+    useEffect(() => {
+      if (postId) {
+        db.collection(`posts`)
+          .doc(user?.uid)
+          .collection("userPosts")
+          .doc(postId)
+          .onSnapshot(
+            (snapshot) => (
+              setBlogHeader(snapshot.data().blogHeader),
+              setBackgroundImage(snapshot.data().backgroundImage),
+              setBlogBody(snapshot.data().blogBody),
+              setCurrentTask(snapshot.data().currentTask),
+              setSlugName(snapshot.data().slug_name),
+              setNameSlug(snapshot.data().name_slug)
+            )
+          );
 
-  /********************************************/
-  /*** Add A Single Posts Comments ***/
-  /********************************************/
-  const preventCommetIfUserDoesNotExist = () => {
-    if (!user) {
-      navigate("/signIn");
-    }
-  };
-
-  const postComment = (e) => {
-    e.preventDefault();
-
-    db.collection("posts").doc(blogId).collection("comments").add({
-      message: addComment,
-      name: user.displayName,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    });
-
-    setAddComment("");
-  };
-
-  const fetchCommentsCount = async () => {
-    await db
-      .collection("posts")
-      .doc(blogId)
-      .collection("comments")
-      .onSnapshot((snapshot) => setCommentCount(snapshot.size));
-  };
-
-  const likePost = () => {
-    preventCommetIfUserDoesNotExist();
-    setLiked((prev) => !prev);
-    db.collection("posts")
-      .doc(blogId)
-      .collection("likes")
-      .doc(user?.uid)
-      .set({
-        liked,
-        uid: user?.uid,
-      })
-      .then(() => {
-        alert("Doc Updated");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const fetchLikesCount = async () => {
-    let data;
-    await db
-      .collection("posts")
-      .doc(blogId)
-      .collection("likes")
-      .onSnapshot((snapshot) => {
-        // setLikesCount(snapshot.size)
-        // console.log(snapshot.docs)
-        getData(snapshot.docs);
-      });
-
-    const getData = (_data) => {
-      if (!_data) return;
-
-      console.log("The data is : ", _data);
-
-      const noOfLikes = _data.reduce((acc, curr) => {
-        if (curr.data()?.liked === true) {
-          console.log(curr.data().liked);
-          return acc + 1;
-        }
-      }, 0);
-
-    }; 
-  };
-
-  useEffect(() => {
-    fetchLikesCount();
-  }, []);
-  useEffect(() => {
-    fetchCommentsCount();
-  }, []);
+        // db.collection("posts")
+        //   .doc(blogId)
+        //   .collection("comments")
+        //   .orderBy("timestamp", "desc")
+        //   .onSnapshot((snapshot) =>
+        //     setComments(snapshot.docs.map((doc) => doc.data()))
+        //   );
+      }
+    }, []);
 
 
   const onArticleCopyLink = () => {
-    setIsCopied(true)
+    setIsCopied(true);
     setTimeout(() => {
-      setIsCopied(false)
+      setIsCopied(false);
     }, 1000);
-  }
+  };
 
   return (
     <main className="pt-24 mx-wd1 mx-auto flex justify-between pb-24 wd-screen3">
       <Helmet>
-        <title>{`${blogHeader}`}</title>
+        <title>Preview Post</title>
       </Helmet>
+     
+      {/* <div className=" w-3/5"> */}
+        {/* {posts.map(
+          ({ id, data: { blogHeader, blogBody, timestamp, description } }) => (
+            <Feed
+              key={id}
+              id={id}
+              blogHeader={blogHeader}
+              blogBody={blogBody}
+              timestamp={timestamp}
+              description={description}
+            />
+          )
+        )}
+      </div> */}
+
       <section className="hidden w-28 mt-8 fixed lg:block flex-col md:block">
         {/* <span href="comment" className="flex flex-col items-center mt-10">
           <HeartIcon
@@ -169,7 +97,7 @@ const SelectedBlog = () => {
             xlinkHref="comment"
             className="h-8 cursor-pointer hover:bg-green-100 duration-150 rounded-full p-1 hover:text-green-600"
           />
-          <p className="text-green-700 font-semibold">{commentCount}</p>
+          <p className="text-green-700 font-semibold">{0}</p>
           <p className="text-sm">Reactions </p>
         </span>
         <Menu as="div" className="ml-10 ">
@@ -190,7 +118,7 @@ const SelectedBlog = () => {
           >
             <Menu.Items className="right-0 mt-2 w-40 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
               <CopyToClipboard
-                text={`https://melbite.com/${name_slug}/${blogId} `}
+                text={`https://melbite.com/${name_slug}/${postId} `}
                 onCopy={onArticleCopyLink}
               >
                 <span>
@@ -208,7 +136,7 @@ const SelectedBlog = () => {
               <Menu.Item>
                 {({ active }) => (
                   <a
-                    href={`https://twitter.com/intent/tweet?url=https://melbite.com/${name_slug}/${blogId} `}
+                    href={`https://twitter.com/intent/tweet?url=https://melbite.com/${name_slug}/${postId} `}
                     target="_blank"
                     rel="noreferrer"
                     className={classNames(
@@ -224,7 +152,7 @@ const SelectedBlog = () => {
               <Menu.Item>
                 {({ active }) => (
                   <a
-                    href={`https://www.facebook.com/sharer.php?u=https://melbite.com/${name_slug}/${blogId}`}
+                    href={`https://www.facebook.com/sharer.php?u=https://melbite.com/${name_slug}/${postId}`}
                     target="_blank"
                     rel="noreferrer"
                     className={classNames(
@@ -239,7 +167,7 @@ const SelectedBlog = () => {
               <Menu.Item>
                 {({ active }) => (
                   <a
-                    href={`https://www.linkedin.com/sharing/share-offsite/?url=https://melbite.com/${name_slug}/${blogId} `}
+                    href={`https://www.linkedin.com/sharing/share-offsite/?url=https://melbite.com/${name_slug}/${postId} `}
                     target="_blank"
                     rel="noreferrer"
                     className={classNames(
@@ -254,7 +182,7 @@ const SelectedBlog = () => {
               <Menu.Item>
                 {({ active }) => (
                   <a
-                    href={`https://www.reddit.com/submit?url=https://melbite.com/${name_slug}/${blogId}`}
+                    href={`https://www.reddit.com/submit?url=https://melbite.com/${name_slug}/${postId}`}
                     target="_blank"
                     rel="noreferrer"
                     className={classNames(
@@ -278,10 +206,10 @@ const SelectedBlog = () => {
 
         <div className="mt-4 ml-6 flex items-center">
           <span className="bg-yellow-300 w-10 font-mono p-1 pl-3 uppercase text-xl text-gray-800 h-10 border-2 border-yellow-300 rounded-full">
-            {displayName?.[0]}
+            {name_slug?.[0]}
           </span>
           <span className="ml-2">
-            <p className="text-md">{displayName}</p>
+            <p className="text-md">{name_slug}</p>
             {/* <p className="text-sm text-gray-500 -mt-1">Published <ReactTimeago date={new Date(timestamp?.toDate()).toUTCString()} /></p> */}
           </span>
         </div>
@@ -300,7 +228,7 @@ const SelectedBlog = () => {
         {/*******************************************/}
         {/**** Add Comment Section ****/}
         {/*******************************************/}
-
+        {/* 
         <div className="ml-7 mr-7 border-t border-gray-300 pb-12">
           <h2 className="text-gray-900 pt-7">Comments ({commentCount})</h2>
           <div className="mt-5 flex" id="comment">
@@ -357,39 +285,10 @@ const SelectedBlog = () => {
               </div>
             </div>
           </p>
-        ))}
-      </section>
-
-      <section className="hidden md:block lg:block ml-5 ">
-        <section className="profile w-72  rounded-md border border-gray-400 bg-white">
-          <div className="bg-c h-20 border-t rounded-t-md flex items-center justify-center">
-            <span className="bg-yellow-300 w-16 h-16  mt-20 border-5 border-white font-mono pl-6 font-bold items-center flex uppercase text-2xl text-center text-purple-800 border-2 rounded-full">
-              {displayName?.[0]}
-            </span>
-          </div>
-          <div className="flex flex-col text-start p-3 mt-6">
-            {/* <h3 className="text-xl text-center"></h3> */}
-            <h3 className="mt-4 text-center mb-3 text-purple-800">
-              Currently Working On{" "}
-            </h3>
-            <span className="text-gray-800 text-md">
-              {!currentTask ? (
-                <h3 className="text-center mb-3 text-gray-400 ">
-                  {" "}
-                  Project Not set
-                </h3>
-              ) : (
-                <p className="text-center mb-3 text-gray-800">{currentTask}</p>
-              )}
-            </span>
-          </div>
-        </section>
-
-        <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
-          Follow
-        </button>
+        ))} */}
       </section>
     </main>
   );
-};
-export default SelectedBlog;
+}
+
+export default ViewArticle

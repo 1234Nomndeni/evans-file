@@ -6,18 +6,23 @@ import { store } from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from "react-router-dom";
+import SeoOptimization from './components/SuperActions/SeoOptimization';
 
 
 ReactDOM.render(
-  <React.StrictMode >
+  <React.StrictMode>
     <Provider store={store}>
       {/* <App /> */}
       <BrowserRouter>
+        <SeoOptimization>
+
         <App />
+        </SeoOptimization>
+
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

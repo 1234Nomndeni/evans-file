@@ -18,6 +18,8 @@ import CodeOfConduct from './components/StaticPages/CodeOfConduct';
 import HowToBlogHere from './components/StaticPages/HowToBlogHere';
 import ReactGA from 'react-ga'
 import WelcomeBlog from './components/StaticPages/WelcomeBlog';
+import ViewArticle from './components/UserProfile/ViewArticle';
+import Donate from "./components/SuperActions/Donate";
 // import Subscriptions from './components/StaticPages/Subscriptions';
 
 
@@ -41,9 +43,11 @@ function App() {
         <Route path="/signIn" element={<SignUp />} />
         <Route path={`/:displayName/:blogId`} element={<SelectedBlog />} />
         {/* <Route path={`/:displayName/:blogId`} element={<SelectedBlog2 />} /> */}
-        <Route path="/profile" element={<UpdateProfile/>} />
+        <Route path="/profile" element={<UpdateProfile />} />
         <Route path="/dashboard" element={<UserDashboard />} />
+        <Route path="/:name_slug/:postId" element={<ViewArticle />} />
         <Route path="/about" element={<AboutUs />} />
+        <Route path="/donate" element={<Donate />} />
         <Route path="/contact-us" element={<Contacts />} />
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/code-of-conduct" element={<CodeOfConduct />} />

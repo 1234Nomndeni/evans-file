@@ -46,3 +46,10 @@ You will also see any lint errors in the console.
 * ```firebase deploy```
 <!-- implementing the quill -->
 <!-- https://codesandbox.io/s/react-quill-add-tts-sound-qgkt2?file=/src/App.js -->
+
+
+<!-- Card Details -->
+
+# Card Number => 4243,1420,0658,2224
+# CVC => 860
+# valid Date => 07/23 

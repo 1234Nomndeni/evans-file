@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { useNavigate } from "react-router-dom";
 import Feed from "./Feed";
 import { db } from "../utils/firebase";
@@ -9,10 +9,11 @@ import WelcomeNote from "./StaticPages/WelcomeNote";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookIcon from "@mui/icons-material/Facebook";
-// import loader from "./images/dark-loader.gif";
+import loader from "./images/dark-loader.gif";
 
 const HomePage = () => {
   const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate();
   const user = useSelector(selectUser);
 
@@ -58,7 +59,7 @@ const HomePage = () => {
                 onClick={() => navigate("/new")}
                 className="border border-purple-600 text-purple-800 px-5 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 "
               >
-                Start Writting
+                Start Writing
               </button>
             )}
           </div>
@@ -116,23 +117,25 @@ const HomePage = () => {
 
             <div className=" lg:w-3/5 sm:w-full">
               <WelcomeNote />
-              {articles.map((article) => (
-                <Feed
-                  key={article.id}
-                  id={article.id}
-                  blogHeader={article.data.blogHeader}
-                  blogBody={article.data.blogBody}
-                  displayName={article.data.displayName}
-                  backgroundImage={article.data.backgroundImage}
-                  timestamp={article.data.timestamp}
-                  slug_name={article.data.slug_name}
-                  name_slug={article.data.name_slug}
-                  currentTask={article.data.currentTask}
-                  description={article.data.description}
-                  skills={article.data.skills}
-                  likeCount={article.data.likeCount}
-                />
-              ))}
+              {!articles || articles.length === 0 ? ( <div className="flex flex-col items-center justify-center w-full mx-auto"> <img className="w-16" src={loader} alt="Loading articles . . ." /> <p className="mt-2 text-sm">Loading articles. . .</p> </div> ) : (
+                articles.map((article) => (
+                  <Feed
+                    key={article.id}
+                    id={article.id}
+                    blogHeader={article.data.blogHeader}
+                    blogBody={article.data.blogBody}
+                    displayName={article.data.displayName}
+                    backgroundImage={article.data.backgroundImage}
+                    timestamp={article.data.timestamp}
+                    slug_name={article.data.slug_name}
+                    name_slug={article.data.name_slug}
+                    currentTask={article.data.currentTask}
+                    description={article.data.description}
+                    skills={article.data.skills}
+                    likeCount={article.data.likeCount}
+                  />
+                ))
+              )}
             </div>
 
             <div className="hidden md:block ml-3 w-72 h-72">

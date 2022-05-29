@@ -24,7 +24,7 @@ const Feed = ({children, id, timestamp, blogHeader, blogBody,backgroundImage, na
     return (
       <main className="w-full border-2 rounded-md bg-white p-5 mb-2 hover:border-purple-800 duration-150">
         <Helmet>
-          <title>{meta.title}</title>
+          {/* <title>{meta.title}</title> */}
           <meta name="robots" content="follow, index" />
           <meta content={meta.description} name="description" />
           <meta

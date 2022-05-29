@@ -15,10 +15,8 @@ ReactDOM.render(
       {/* <App /> */}
       <BrowserRouter>
         <SeoOptimization>
-
-        <App />
+          <App />
         </SeoOptimization>
-
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

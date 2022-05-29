@@ -19,8 +19,32 @@ h3 {
 h1 {
   font-size: 2rem;
 }
+.ais-SearchBox-form{
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+}
 
-/* Quill code highlight */
+.ais-SearchBox-input{
+  padding: 0.5rem !important;
+  width: 95% !important;
+  border-radius: 9999px !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.ais-SearchBox-submitIcon{
+  display: none !important;
+}
+
+.ais-SearchBox-reset{
+  /* display: block !important; */
+}
+
+/************ Quill code highlight **************/
+
 .hljs-keyword {
   color: rgb(236, 2, 71) !important;
 }
@@ -68,6 +92,11 @@ h1 {
 .font-sans > p {
   color: rgb(36, 36, 36);
   line-height: 1.9rem;
+}
+
+.font-sans > ul > li{
+  list-style-type: disc;
+  margin-left: 1rem;
 }
 
 .ql-editor {

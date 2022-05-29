@@ -28,3 +28,5 @@ const gitProvider = new firebase.auth.GithubAuthProvider()
 const twitterProvider = new firebase.auth.TwitterAuthProvider();
 
 export { analytics, db, storage, auth, provider, gitProvider, twitterProvider }
+
+// deployment and avoid cloud functions => firebase deploy --except functions

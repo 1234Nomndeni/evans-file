@@ -31,7 +31,7 @@ const SeoOptimization = ({
         <meta property="og:url" content={`https://melbite.com${Link.asPath}`} />
         <link rel="canonical" href={`https://melbite.com${Link.asPath}`} />
         <meta property="og:type" content={meta.type} />
-        <meta property="og:site_name" content="Paul Knulst" />
+        <meta property="og:site_name" content="Melbite Platform" />
         <meta property="og:description" content={meta.description} />
         <meta property="og:title" content={meta.title} />
         <meta property="og:image" content={meta.image} />
@@ -45,7 +45,7 @@ const SeoOptimization = ({
         )}
       </Helmet>
       <section>
-          <div>{children}</div>
+        <div>{children}</div>
       </section>
     </main>
   );

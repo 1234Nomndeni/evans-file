@@ -1,17 +1,14 @@
 import React from "react";
 import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import {
-  MenuIcon,
-  XIcon,
-} from "@heroicons/react/outline";
+import { MenuIcon, XIcon, BellIcon } from "@heroicons/react/outline";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, login, logout } from "../features/userSlice";
-import { auth} from "../utils/firebase";
-import SearchBar from "./SuperActions/SearchBar";
+import { auth } from "../utils/firebase";
 import brandLogo from "./images/melbite.jpg";
-
+import SearchBar from "./SuperActions/SearchBar";
+// import Ether from "../tests/Ether";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -32,8 +29,8 @@ const Header = () => {
     setIsOpen(!isOpen);
   };
   const closeOnNavigate = () => {
-    setIsOpen(isOpen)
-  }
+    setIsOpen(isOpen);
+  };
 
   const transitionNavBar = () => {
     if (window.scrollY > 100) {
@@ -54,16 +51,15 @@ const Header = () => {
     window.location.reload(false);
 
     if (user) {
-        auth.signOut()
-      }
-      navigate("/")
-    };
+      auth.signOut();
+    }
+    navigate("/");
+  };
 
-  /******************************************************** */ 
+  /******************************************************** */
   /*/validate and keep the user loggedIn*/
-  /******************************************************** */ 
+  /******************************************************** */
 
-  
   useEffect(() => {
     auth.onAuthStateChanged((userAuth) => {
       if (userAuth) {
@@ -113,7 +109,8 @@ const Header = () => {
                   </div>
                 </div>
                 <div className="hidden lg:block ml-10 w-4/5 ">
-                  <SearchBar/>
+                  {/* <SearchBar/> */}
+                  <SearchBar />
                 </div>
               </div>
               <div className="absolute space-x-5 inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -126,7 +123,7 @@ const Header = () => {
                 >
                   <Link
                     to="/about"
-                    className="hidden md:block text-md  pl-2 cursor-pointer mr-10  p-2  "
+                    className="hidden md:block text-md pl-2 cursor-pointer mr-10  p-2  "
                   >
                     Our Story
                   </Link>
@@ -134,10 +131,11 @@ const Header = () => {
 
                 <p
                   onClick={() => navigate("/new")}
-                  className="hidden md:block border border-purple-600 text-purple-800 px-5 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 cursor-pointer"
+                  className="hidden text-sm md:block border border-purple-600 text-purple-800 px-5 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 cursor-pointer"
                 >
                   Start Writing
                 </p>
+                {/* <Ether/> */}
                 {/* <span
                   onClick={() => navigate("/notifications")}
                   className="hidden cursor-pointer transform hover:scale-105  ml-12 mr-10 sm:block"
@@ -149,23 +147,81 @@ const Header = () => {
                 </span> */}
 
                 {/* Profile dropdown */}
+                <Menu as="div" className="relative">
+                  <div>
+                    <Menu.Button className="">
+                      {/* <span className="">
+                        <BellIcon className="text-sm h-8 relative text-gray-700 " />
+                      </span> */}
+                      <span className="hidden cursor-pointer transform hover:scale-105  ml-12 mr-10 sm:block">
+                        <p className="absolute animate-pulse bg-red-500 text-md text-center h-4 w-4 text-white rounded-full font-bold -mt-1 ml-4 z-50 "></p>
+                        <BellIcon className="text-sm h-8 font-thin relative text-gray-500 " />
+                      </span>
+                    </Menu.Button>
+                  </div>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <Menu.Items>
+                      <Menu.Item className="w-80 origin-top-right absolute -right-16 mt-4 w-400 rounded-md shadow-lg pb-2 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <div className="">
+                          <div className="bg-green-100 px-3 py-2">
+                            <p className="font-bold text-purple-600 text-sm">Latest Updates & Upgrades </p>
+                          </div>
+
+                          <div className="px-3 mt-2">
+                            {/* <h2></h2> */}
+                            <p className="mb-2 text-sm text-gray-600">
+                              Working on making the search bar more effective
+                            </p>
+                            <p className="mb-2 text-sm text-gray-600">
+                             Improving the personal user Dashboard
+                            </p>
+                            {/* <p className="mb-2 text-sm text-gray-600">
+                              Making melbite the best platform for all writters
+                              and learners to write and learn from.
+                            </p>
+                            <p className="mb-2 text-sm text-gray-600">
+                              Making melbite the best platform for all writters
+                              and learners to write and learn from.
+                            </p>
+                            <p className="mb-2 text-sm text-gray-600">
+                              Making melbite the best platform for all writters
+                              and learners to write and learn from.
+                            </p>
+                            <p className="mb-2 text-sm text-gray-600">
+                              Making melbite the best platform for all writters
+                              and learners to write and learn from.
+                            </p> */}
+                          </div>
+                        </div>
+                      </Menu.Item>
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
                 {!user ? (
                   <>
                     <button
                       onClick={() => navigate("/signIn")}
-                      className="border border-purple-600 text-purple-800 px-5 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 cursor-pointer"
+                      className="border text-sm border-purple-600 text-purple-800 px-5 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 cursor-pointer"
                     >
                       Get Started
                     </button>
                   </>
                 ) : (
-                  <Menu as="div" className="ml-3 relative">
+                  <Menu as="div" className="relative">
                     <div>
-                      <Menu.Button className="bg-green-800 flex text-sm rounded-full ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <span className="bg-c w-12 font-mono p-2 uppercase text-2xl text-white h-12 border-2 border-gray-900 rounded-full text-center">
+                      <Menu.Button className="bg-green-800 flex text-sm rounded-full ring-1 ring-opacity-5 focus:outline-none">
+                        <span className="bg-c w-10 font-mono p-1 uppercase text-lg text-white h-10 border-2 rounded-full text-center">
                           {user?.displayName[0] || user?.email[0]}
                         </span>
-                        <img src={user.photoURL} alt="" />
+                        {/* <img src={user.photoURL} alt="" /> */}
                       </Menu.Button>
                     </div>
                     <Transition
@@ -177,7 +233,7 @@ const Header = () => {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="origin-top-right absolute right-0 mt-2 w-400 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="origin-top-right absolute right-0 mt-3 w-400 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <Menu.Item>
                           {({ active }) => (
                             <Link
@@ -189,7 +245,7 @@ const Header = () => {
                             >
                               <div className="w-60">
                                 <span className="">
-                                  Hello {!user ? "Guest" : user.displayName}
+                                  Hello, {!user ? "Guest" : user.displayName}
                                 </span>
                               </div>
                             </Link>
@@ -221,7 +277,7 @@ const Header = () => {
                             </a>
                           )}
                         </Menu.Item>  */}
-                         <Menu.Item>
+                        <Menu.Item>
                           {({ active }) => (
                             <a
                               href="/profile"
@@ -265,12 +321,14 @@ const Header = () => {
           <Disclosure.Panel className="lg:hidden white z-100">
             <div
               className={
-                !isOpen ? "lg:hidden bg-white px-2 pt-2 pb-3 space-y-1 border-b-2 " : ""
+                !isOpen
+                  ? "lg:hidden bg-white px-2 pt-2 pb-3 space-y-1 border-b-2 "
+                  : ""
               }
               onClick={toogle}
             >
               <p
-                onClick={() => navigate("/")} 
+                onClick={() => navigate("/")}
                 className="text-gray-900 hover:text-purple-800  text-lg p-2 cursor-pointer rounded-md"
               >
                 Home
@@ -299,7 +357,7 @@ const Header = () => {
               >
                 Code of Conduct
               </p>
-               <p
+              <p
                 onClick={() => navigate("/new")}
                 className="text-gray-900 hover:text-purple-800 text-lg p-2 cursor-pointer rounded-md"
               >

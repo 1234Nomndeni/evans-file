@@ -1,5 +1,5 @@
-import React,{useEffect} from 'react';
-import './App.css';
+import React, {useEffect} from 'react';
+// import './App.css';
 import { Helmet } from "react-helmet";
 import Header from './components/Header';
 import HomePage from './components/HomePage';

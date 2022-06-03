@@ -151,11 +151,8 @@ const Header = () => {
                 <Menu as="div" className="relative">
                   <div>
                     <Menu.Button className="">
-                      {/* <span className="">
-                        <BellIcon className="text-sm h-8 relative text-gray-700 " />
-                      </span> */}
-                      <span className="hidden cursor-pointer transform hover:scale-105  ml-12 mr-10 sm:block">
-                        <p className="absolute animate-pulse bg-red-500 text-md text-center h-4 w-4 text-white rounded-full font-bold -mt-1 ml-4 z-50 "></p>
+                      <span className="cursor-pointer transform hover:scale-105  ml-12 mr-4 md:mr-10 sm:block">
+                        <p className="hidden md:absolute animate-pulse bg-red-500 text-md text-center h-4 w-4 text-white rounded-full font-bold -mt-1 ml-4 z-50 "></p>
                         <BellIcon className="text-sm h-8 font-thin relative text-gray-500 " />
                       </span>
                     </Menu.Button>
@@ -170,7 +167,7 @@ const Header = () => {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items>
-                      <Menu.Item className="w-80 origin-top-right absolute -right-16 mt-4 w-400 rounded-md shadow-lg pb-2 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Item className="w-64 md:w-80 origin-top-right absolute -right-20 md:-right-16 md:mt-4 w-400 rounded-md shadow-lg pb-2 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="">
                           <LatestUpdates />
                         </div>

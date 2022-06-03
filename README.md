@@ -49,7 +49,8 @@ You will also see any lint errors in the console.
 
 
 <!-- Card Details -->
-
+ <!-- 
 # Card Number => 4243,1420,0658,2224
 # CVC => 860
 # valid Date => 07/23 
+-->

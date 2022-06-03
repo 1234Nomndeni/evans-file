@@ -234,7 +234,7 @@ const SelectedBlog2 = () => {
           </div>
         </div>
         {comments.map(message => (
-            <p className={`pb-5 ml-7 mr-14 flex  ${message.name === displayName && "chat__reciever"}`}>
+            <div className={`pb-5 ml-7 mr-14 flex  ${message.name === displayName && "chat__reciever"}`}>
                 <span className="bg-yellow-300 w-10 font-mono p-1 pl-3 pr-3 uppercase text-xl text-gray-800 h-10 border-2 border-yellow-300 rounded-full">
                   {message.name?.[0]}
                 </span>
@@ -253,7 +253,7 @@ const SelectedBlog2 = () => {
                     <p>{message.message}</p>
                   </div>
                 </div>
-            </p>
+            </div>
         ))}
       </section>
 

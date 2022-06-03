@@ -2,8 +2,9 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Menu, Transition } from "@headlessui/react";
 import Avatar from "@mui/material/Avatar";
-import { HeartIcon, ChatIcon, ShareIcon } from "@heroicons/react/outline";
-// import {HeartIcon} from "@heroicons/react/solid"
+import { ChatIcon, ShareIcon } from "@heroicons/react/outline";
+import ReplyIcon from "@mui/icons-material/Reply";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { db } from "../utils/firebase";
 import ReactTimeago from "react-timeago";
 import { selectUser } from "../features/userSlice";
@@ -11,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import { useSelector } from "react-redux";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import ReplyComment from "./ReplyComment";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -26,11 +28,15 @@ const SelectedBlog = () => {
   const [slug_name, setSlugName] = useState("");
   const [name_slug, setNameSlug] = useState("");
   const [addComment, setAddComment] = useState("");
+  // const [commentReactions, setCommentReactions] = useState("");
   const [comments, setComments] = useState([]);
+  const [subComments, setSubComments] = useState([]);
   const [commentCount, setCommentCount] = useState(0);
-  const [likesCount, setLikesCount] = useState(0);
+  const [subcommentCount, setSubCommentCount] = useState(0);
+  // const [likesCount, setLikesCount] = useState(0);
   const [liked, setLiked] = useState(false);
-  const [isCopied, setIsCopied] = useState(false)
+  const [isCopied, setIsCopied] = useState(false);
+  const [showReply, setShowReply] = React.useState(false);
 
   useEffect(() => {
     if (blogId) {
@@ -47,15 +53,27 @@ const SelectedBlog = () => {
           )
         );
 
-      db.collection("posts")
-        .doc(blogId)
-        .collection("comments")
-        .orderBy("timestamp", "desc")
-        .onSnapshot((snapshot) =>
-          setComments(snapshot.docs.map((doc) => doc.data()))
-        );
+      fetchComments();
     }
   }, []);
+
+  function fetchComments() {
+    db.collection("posts")
+      .doc(blogId)
+      .collection("comments")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        setComments(
+          snapshot.docs.map((doc) => {
+            getSubComments(blogId, doc.id);
+            return {
+              id: doc.id,
+              ...doc.data(),
+            };
+          })
+        );
+      });
+  }
 
   /********************************************/
   /*** Add A Single Posts Comments ***/
@@ -78,12 +96,83 @@ const SelectedBlog = () => {
     setAddComment("");
   };
 
+  /********************************************/
+  /*** Fetch Comment Count ***/
+  /********************************************/
   const fetchCommentsCount = async () => {
     await db
       .collection("posts")
       .doc(blogId)
       .collection("comments")
       .onSnapshot((snapshot) => setCommentCount(snapshot.size));
+  };
+
+  const fetchSubCommentsCount = async (commentId) => {
+    await db
+      .collection("posts")
+      .doc(blogId)
+      .collection("comments")
+      .doc(commentId)
+      .collection("commentReaction")
+      .onSnapshot((snapshot) => setSubCommentCount(snapshot.size));
+  };
+  /********************************************/
+  /*** Comment An Existing Comment ***/
+  /********************************************/
+  const reactToExistingComment = (id, comment) => {
+    db.collection("posts")
+      .doc(blogId)
+      .collection("comments")
+      .doc(id)
+      .collection("commentReaction")
+      .add({
+        commentReaction: comment,
+        name: user.displayName,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+  };
+
+  const replyCommentCallback = (type, id, comment) => {
+    switch (type) {
+      case "close":
+        setShowReply((prev) => !prev);
+        break;
+
+      case "reply":
+        // Function to save comment
+        // reactToExistingComment();
+        // alert(`Saving comment...`);
+        // alert(`Replyin to commet with id" ${id}`);
+
+        reactToExistingComment(id, comment);
+        setShowReply((prev) => !prev);
+
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const getSubComments = (postId, commentId) => {
+    db.collection("posts")
+      .doc(postId)
+      .collection("comments")
+      .doc(commentId)
+      .collection("commentReaction")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        snapshot.docs.map((doc) =>
+          setSubComments((prev) => [
+            ...prev,
+            {
+              commentId,
+              id: doc.id,
+              ...doc.data(),
+            },
+          ])
+        );
+      });
   };
 
   const likePost = () => {
@@ -128,8 +217,7 @@ const SelectedBlog = () => {
           return acc + 1;
         }
       }, 0);
-
-    }; 
+    };
   };
 
   useEffect(() => {
@@ -138,14 +226,16 @@ const SelectedBlog = () => {
   useEffect(() => {
     fetchCommentsCount();
   }, []);
-
+  useEffect(() => {
+    fetchSubCommentsCount();
+  }, []);
 
   const onArticleCopyLink = () => {
-    setIsCopied(true)
+    setIsCopied(true);
     setTimeout(() => {
-      setIsCopied(false)
+      setIsCopied(false);
     }, 1000);
-  }
+  };
 
   return (
     <main className="pt-24 mx-wd1 mx-auto flex justify-between pb-24 wd-screen3">
@@ -301,13 +391,13 @@ const SelectedBlog = () => {
         {/**** Add Comment Section ****/}
         {/*******************************************/}
 
-        <div className="ml-7 mr-7 border-t border-gray-300 pb-12">
+        <div className="md:ml-7 md:mr-7 ml-2 border-t border-gray-300 pb-12">
           <h2 className="text-gray-900 pt-7">Comments ({commentCount})</h2>
           <div className="mt-5 flex" id="comment">
             {!user ? (
-              <Avatar />
+              <Avatar className="h-8 w-8 md:w-10 md:h-10" />
             ) : (
-              <span className="bg-yellow-300 w-10 font-mono p-1 pl-3 pr-3 uppercase text-xl text-gray-800 h-10 border-2 border-yellow-300 rounded-full">
+              <span className="bg-yellow-300 h-8 w-8 md:w-10 md:h-10 font-mono p-1 pl-3 pr-3 uppercase text-md md:text-xl text-gray-800 border-2 border-yellow-300 rounded-full">
                 {user.displayName?.[0]}
               </span>
             )}
@@ -317,7 +407,7 @@ const SelectedBlog = () => {
                 onClick={preventCommetIfUserDoesNotExist}
                 value={addComment}
                 onChange={(e) => setAddComment(e.target.value)}
-                className="border-2 rounded py-2 px-3 block w-full ml-4 focus:outline-none focus:border-purple-600"
+                className="border-2 rounded py-2 px-3 block w-full md:w-full ml-2 md:ml-4 focus:outline-none focus:border-purple-600"
                 placeholder="What do you think about this article . . ."
                 rows={5}
                 cols={60}
@@ -333,30 +423,109 @@ const SelectedBlog = () => {
           </div>
         </div>
         {comments.map((message) => (
-          <p
-            className={`pb-5 ml-7 mr-14 flex  ${
+          <div
+            className={`md:ml-7 md:mr-7 ml-2 pb-5 mr-10 ${
               message.name === displayName && "chat__reciever"
             }`}
           >
-            <span className="bg-yellow-300 w-10 font-mono p-1 pl-3 pr-3 uppercase text-xl text-gray-800 h-10 border-2 border-yellow-300 rounded-full">
-              {message.name?.[0]}
-            </span>
-            <div className="border border-gray-300 w-full rounded-md ml-3 p-3">
-              <span className="flex">
-                <p className="text-sm text-gray-800 font-bold">
-                  {message.name}
-                </p>
-                <p className="text-sm text-gray-700 ml-3">
-                  <ReactTimeago
-                    date={new Date(message.timestamp?.toDate()).toUTCString()}
-                  />
-                </p>
+            {/* */}
+            {console.log("subComments: ", subComments)}
+            <div className="flex">
+              <span className="bg-yellow-300 w-8 h-8 md:w-10 md:h-10 font-mono p-1 md:pl-3 md:pr-3 pl-2 uppercase md:text-xl text-gray-800 border-2 border-yellow-300 rounded-full">
+                {message.name?.[0]}
               </span>
-              <div className="pt-3">
-                <p>{message.message}</p>
+              <div className="w-full">
+                <div className="border border-gray-300 w-full rounded-md ml-3 p-3">
+                  <span className="flex">
+                    <p className="text-sm text-gray-800 font-bold">
+                      {message.name}
+                    </p>
+                    <p className="text-sm text-gray-700 ml-3">
+                      <ReactTimeago
+                        date={new Date(
+                          message.timestamp?.toDate()
+                        ).toUTCString()}
+                      />
+                    </p>
+                  </span>
+                  <div className="pt-3">
+                    <p>{message.message}</p>
+                  </div>
+                </div>
+                <div className="flex space-x-4 items-center">
+                  {/* <div className="text-gray-600 flex space-x-1 items-center ml-3 cursor-pointer rounded-md duration-100 hover:bg-red-200 w-20 p-1 mt-1">
+                    <FavoriteBorderIcon />
+                    <p className="text-sm">Like</p>
+                  </div> */}
+                  {/* <div className="text-gray-600 flex space-x-1 items-center ml-3 cursor-pointer rounded-md duration-100 hover:bg-red-200 w-20 p-1 mt-1">
+                    <FavoriteBorderIcon />
+                    <p className="text-sm">Like</p>
+                  </div> */}
+                  <div
+                    onClick={() => setShowReply((prev) => !prev)}
+                    className="text-gray-600 flex space-x-2 items-center ml-3 cursor-pointer rounded-md duration-100 hover:bg-gray-200 w-20 p-1 mt-1"
+                  >
+                    <ReplyIcon />
+                    <p className="text-sm">Reply</p>
+                  </div>
+                </div>
+                <ReplyComment
+                  commentId={message.id}
+                  show={showReply}
+                  cb={replyCommentCallback}
+                />
               </div>
             </div>
-          </p>
+            {subComments.map(
+              (sub) =>
+                sub.commentId === message.id && (
+                  <div
+                    key={sub.id.toString()}
+                    className="flex mt-1 ml-8 md:ml-10"
+                  >
+                    <span className="bg-yellow-200 w-8 h-8 font-mono p-1 pl-2 pr-3 uppercase text-md text-gray-800  border-2 border-yellow-300 rounded-full">
+                      {sub.name?.[0]}
+                    </span>
+                    <div className="w-full">
+                      <div className="border bg-green-50 w-full rounded-md ml-3 p-3">
+                        <span className="flex items-center flex-wrap">
+                          <p className="text-sm text-gray-800 font-bold">
+                            {sub.name}
+                          </p>
+                          <p className="text-xs text-gray-500 ml-2">Replied </p>
+                          <p className=" text-xs md:text-sm text-gray-700 ml-2">
+                            <ReactTimeago
+                              date={new Date(
+                                sub.timestamp?.toDate()
+                              ).toUTCString()}
+                            />
+                          </p>
+                        </span>
+                        <div className="pt-3">
+                          {/* <p>{message.message}</p> */}
+                          <p className="text-sm">{sub.commentReaction}</p>
+                        </div>
+                      </div>
+                      {/* <div className="flex space-x-4 items-center">
+                        <div className="text-gray-600 flex space-x-1 items-center ml-3 cursor-pointer rounded-md duration-100 bg-red-200 w-20 p-1 mt-1">
+                          <FavoriteBorderIcon className="text-red-600" />
+                          <p>2</p>
+                          <p className="text-sm">Like</p>
+                        </div>
+                        <div className="text-gray-600 flex space-x-2 items-center ml-3 cursor-pointer rounded-md duration-100 hover:bg-gray-200 w-20 p-1 mt-1">
+                          <ReplyIcon />
+                          <p className="text-sm">Reply</p>
+                        </div>
+                      </div> */}
+                      {/* <div className="text-gray-600 flex space-x-2 items-center ml-3 cursor-pointer rounded-md duration-100 hover:bg-gray-200 w-20 p-1 mt-1">
+                  <ReplyIcon />
+                  <p className="text-sm">Reply</p>
+                </div> */}
+                    </div>
+                  </div>
+                )
+            )}
+          </div>
         ))}
       </section>
 

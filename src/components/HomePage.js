@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useTransition } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Feed from "./Feed";
 import { db } from "../utils/firebase";
@@ -13,7 +13,6 @@ import loader from "./images/dark-loader.gif";
 
 const HomePage = () => {
   const [articles, setArticles] = useState([]);
-  const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate();
   const user = useSelector(selectUser);
 
@@ -117,7 +116,18 @@ const HomePage = () => {
 
             <div className=" lg:w-3/5 sm:w-full">
               <WelcomeNote />
-              {!articles || articles.length === 0 ? ( <div className="flex flex-col items-center justify-center w-full mx-auto"> <img className="w-16" src={loader} alt="Loading articles . . ." /> <p className="mt-2 text-sm">Loading articles. . .</p> </div> ) : (
+              {/* <MyModal/> */}
+
+              {!articles || articles.length === 0 ? (
+                <div className="flex flex-col items-center justify-center w-full mx-auto">
+                  <img
+                    className="w-16"
+                    src={loader}
+                    alt="Loading articles . . ."
+                  />
+                  <p className="mt-2 text-sm">Loading articles. . .</p>
+                </div>
+              ) : (
                 articles.map((article) => (
                   <Feed
                     key={article.id}

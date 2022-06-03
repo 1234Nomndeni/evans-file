@@ -119,6 +119,20 @@ h1 {
 span > .font-sans > h2{
   font-size: 1.5rem !important;
 }
+span > p > ol > li{
+  list-style-type: disc;
+  margin-left: 2rem;
+}
+
+span > p > ul > li{
+  list-style-type: lower-roman;
+  margin-left: 2rem;
+}
+
+span > p > p > a{
+  color: #0a92d0;
+  text-decoration: underline;
+}
 
 code{
   background-color: #e5e9ee;

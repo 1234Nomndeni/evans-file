@@ -8,6 +8,7 @@ import { selectUser, login, logout } from "../features/userSlice";
 import { auth } from "../utils/firebase";
 import brandLogo from "./images/melbite.jpg";
 import SearchBar from "./SuperActions/SearchBar";
+import LatestUpdates from "./LatestUpdates";
 // import Ether from "../tests/Ether";
 
 function classNames(...classes) {
@@ -171,35 +172,7 @@ const Header = () => {
                     <Menu.Items>
                       <Menu.Item className="w-80 origin-top-right absolute -right-16 mt-4 w-400 rounded-md shadow-lg pb-2 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="">
-                          <div className="bg-green-100 px-3 py-2">
-                            <p className="font-bold text-purple-600 text-sm">Latest Updates & Upgrades </p>
-                          </div>
-
-                          <div className="px-3 mt-2">
-                            {/* <h2></h2> */}
-                            <p className="mb-2 text-sm text-gray-600">
-                              Working on making the search bar more effective
-                            </p>
-                            <p className="mb-2 text-sm text-gray-600">
-                             Improving the personal user Dashboard
-                            </p>
-                            {/* <p className="mb-2 text-sm text-gray-600">
-                              Making melbite the best platform for all writters
-                              and learners to write and learn from.
-                            </p>
-                            <p className="mb-2 text-sm text-gray-600">
-                              Making melbite the best platform for all writters
-                              and learners to write and learn from.
-                            </p>
-                            <p className="mb-2 text-sm text-gray-600">
-                              Making melbite the best platform for all writters
-                              and learners to write and learn from.
-                            </p>
-                            <p className="mb-2 text-sm text-gray-600">
-                              Making melbite the best platform for all writters
-                              and learners to write and learn from.
-                            </p> */}
-                          </div>
+                          <LatestUpdates />
                         </div>
                       </Menu.Item>
                     </Menu.Items>

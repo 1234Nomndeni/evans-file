@@ -1,14 +1,14 @@
-import React from 'react'
-import { Helmet } from 'react-helmet';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router-dom";
 
 const HowToBlogHere = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <main
       onLoad={window.scroll(0, 0)}
-      className="mt-24 mx-wd1 bg-white mx-auto p-4 pt-12 pl-12 border rounded-md"
+      className="mt-20 md:mt-24 mx-wd1 bg-white mx-auto p-4 md:pt-12 md:pl-12 border rounded-md"
     >
       <Helmet>
         <title>Melbite | How To Blog Here</title>
@@ -51,6 +51,6 @@ const HowToBlogHere = () => {
       </section>
     </main>
   );
-}
+};
 
-export default HowToBlogHere
+export default HowToBlogHere;

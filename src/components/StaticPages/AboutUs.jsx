@@ -1,9 +1,8 @@
-import React from 'react'
-import { Helmet } from 'react-helmet';
-import { useNavigate } from 'react-router-dom';
+import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router-dom";
 
 const AboutUs = () => {
-  const navigate =  useNavigate()
+  const navigate = useNavigate();
   return (
     <main
       onLoad={window.scroll(0, 0)}
@@ -48,6 +47,6 @@ const AboutUs = () => {
       <section></section>
     </main>
   );
-}
+};
 
-export default AboutUs
+export default AboutUs;

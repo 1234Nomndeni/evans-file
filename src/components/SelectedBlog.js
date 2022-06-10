@@ -1,10 +1,10 @@
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Menu, Transition } from "@headlessui/react";
 import Avatar from "@mui/material/Avatar";
-import { ChatIcon, ShareIcon } from "@heroicons/react/outline";
+import { ChatIcon, ShareIcon, HeartIcon } from "@heroicons/react/outline";
 import ReplyIcon from "@mui/icons-material/Reply";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+// import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { db } from "../utils/firebase";
 import ReactTimeago from "react-timeago";
 import { selectUser } from "../features/userSlice";
@@ -13,10 +13,15 @@ import firebase from "firebase/compat/app";
 import { useSelector } from "react-redux";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import ReplyComment from "./ReplyComment";
+import LikePost from "./LikePost";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import EditArticle from "./SuperActions/EditArticle";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+
 const SelectedBlog = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
@@ -25,18 +30,18 @@ const SelectedBlog = () => {
   const [blogBody, setBlogBody] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
   const [currentTask, setCurrentTask] = useState("");
+  const [timestamp, setTimestamp] = useState("");
   const [slug_name, setSlugName] = useState("");
+  const [uid, setUid] = useState("");
   const [name_slug, setNameSlug] = useState("");
+  const [likes, setLikes] = useState("");
   const [addComment, setAddComment] = useState("");
-  // const [commentReactions, setCommentReactions] = useState("");
   const [comments, setComments] = useState([]);
   const [subComments, setSubComments] = useState([]);
   const [commentCount, setCommentCount] = useState(0);
   const [subcommentCount, setSubCommentCount] = useState(0);
-  // const [likesCount, setLikesCount] = useState(0);
-  const [liked, setLiked] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
-  const [showReply, setShowReply] = React.useState(false);
+  const [showReply, setShowReply] = useState(false);
 
   useEffect(() => {
     if (blogId) {
@@ -48,12 +53,16 @@ const SelectedBlog = () => {
             setBackgroundImage(snapshot.data().backgroundImage),
             setBlogBody(snapshot.data().blogBody),
             setCurrentTask(snapshot.data().currentTask),
+            setTimestamp(snapshot.data().timestamp),
             setSlugName(snapshot.data().slug_name),
-            setNameSlug(snapshot.data().name_slug)
+            setNameSlug(snapshot.data().name_slug),
+            setLikes(snapshot.data().likes),
+            setUid(snapshot.data().uid)
           )
         );
-
       fetchComments();
+
+      // return;
     }
   }, []);
 
@@ -78,7 +87,7 @@ const SelectedBlog = () => {
   /********************************************/
   /*** Add A Single Posts Comments ***/
   /********************************************/
-  const preventCommetIfUserDoesNotExist = () => {
+  const preventCommentIfUserDoesNotExist = () => {
     if (!user) {
       navigate("/signIn");
     }
@@ -91,6 +100,7 @@ const SelectedBlog = () => {
       message: addComment,
       name: user.displayName,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      commentLikes: [],
     });
 
     setAddComment("");
@@ -139,11 +149,6 @@ const SelectedBlog = () => {
         break;
 
       case "reply":
-        // Function to save comment
-        // reactToExistingComment();
-        // alert(`Saving comment...`);
-        // alert(`Replyin to commet with id" ${id}`);
-
         reactToExistingComment(id, comment);
         setShowReply((prev) => !prev);
 
@@ -175,54 +180,6 @@ const SelectedBlog = () => {
       });
   };
 
-  const likePost = () => {
-    preventCommetIfUserDoesNotExist();
-    setLiked((prev) => !prev);
-    db.collection("posts")
-      .doc(blogId)
-      .collection("likes")
-      .doc(user?.uid)
-      .set({
-        liked,
-        uid: user?.uid,
-      })
-      .then(() => {
-        alert("Doc Updated");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const fetchLikesCount = async () => {
-    let data;
-    await db
-      .collection("posts")
-      .doc(blogId)
-      .collection("likes")
-      .onSnapshot((snapshot) => {
-        // setLikesCount(snapshot.size)
-        // console.log(snapshot.docs)
-        getData(snapshot.docs);
-      });
-
-    const getData = (_data) => {
-      if (!_data) return;
-
-      console.log("The data is : ", _data);
-
-      const noOfLikes = _data.reduce((acc, curr) => {
-        if (curr.data()?.liked === true) {
-          console.log(curr.data().liked);
-          return acc + 1;
-        }
-      }, 0);
-    };
-  };
-
-  useEffect(() => {
-    fetchLikesCount();
-  }, []);
   useEffect(() => {
     fetchCommentsCount();
   }, []);
@@ -237,30 +194,46 @@ const SelectedBlog = () => {
     }, 1000);
   };
 
+  const loginToLike = () => {
+    if (!user) {
+      toast("Please Login To Like This Article");
+    }
+  };
+  const meta = {
+    title: blogHeader,
+    description: blogBody,
+    image: backgroundImage,
+    type: "website",
+  };
+
   return (
     <main className="pt-24 mx-wd1 mx-auto flex justify-between pb-24 wd-screen3">
       <Helmet>
         <title>{`${blogHeader}`}</title>
+        <meta content={meta.blogHeader} name="description" />
+        <meta content={meta.slug_name} name="description" />
       </Helmet>
-      <section className="hidden w-28 mt-8 fixed lg:block flex-col md:block">
-        {/* <span href="comment" className="flex flex-col items-center mt-10">
-          <HeartIcon
-            onClick={likePost}
-            className="h-8 cursor-pointer hover:bg-pink-100 duration-150 rounded-full p-1 hover:text-pink-600"
-          /> */}
-        {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-6" viewBox="0 0 20 20" fill="currentColor">
-            <path className="h-8 cursor-pointer text-pink-600 hover:bg-pink-100 duration-150 rounded-full p-1 hover:text-pink-600" fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-          </svg> */}
-        {/* <p className="text-pink-600 font-semibold">{likesCount}</p>
-          <p className="text-sm">Like</p>
-        </span> */}
+      <section className="hidden w-28 mt-4 md:fixed lg:block flex-col md:block">
+        <span className="flex flex-col items-center mt-10">
+          {!user ? (
+            <HeartIcon
+              onClick={loginToLike}
+              className="h-8 cursor-pointer hover:bg-pink-100 duration-150 rounded-full p-1 hover:text-pink-600"
+            />
+          ) : (
+            <div>{user && <LikePost id={blogId} likes={likes} />} </div>
+          )}
+
+          <p className=" font-semibold">{likes?.length}</p>
+          <p className="text-xs">Likes</p>
+        </span>
         <span href="comment" className="flex flex-col items-center mt-10">
           <ChatIcon
             xlinkHref="comment"
             className="h-8 cursor-pointer hover:bg-green-100 duration-150 rounded-full p-1 hover:text-green-600"
           />
           <p className="text-green-700 font-semibold">{commentCount}</p>
-          <p className="text-sm">Reactions </p>
+          <p className="text-xs">Comments </p>
         </span>
         <Menu as="div" className="ml-10 ">
           <div>
@@ -366,17 +339,44 @@ const SelectedBlog = () => {
           dangerouslySetInnerHTML={{ __html: backgroundImage }}
         />
 
-        <div className="mt-4 ml-6 flex items-center">
-          <span className="bg-yellow-300 w-10 font-mono p-1 pl-3 uppercase text-xl text-gray-800 h-10 border-2 border-yellow-300 rounded-full">
-            {displayName?.[0]}
-          </span>
-          <span className="ml-2">
-            <p className="text-md">{displayName}</p>
-            {/* <p className="text-sm text-gray-500 -mt-1">Published <ReactTimeago date={new Date(timestamp?.toDate()).toUTCString()} /></p> */}
-          </span>
+        <div className="mt-4 ml-6 mr-7 flex items-center justify-between">
+          <div className="flex items-center justify-between">
+            <span className="bg-yellow-300 w-10 font-mono p-1 pl-3 uppercase text-xl text-gray-800 h-10 border-2 border-yellow-300 rounded-full">
+              {displayName?.[0]}
+            </span>
+            <span className="ml-2">
+              <p className="text-md">{displayName}</p>
+              {/* <p className="text-sm text-gray-500 -mt-1">
+              Published{" "}
+              <ReactTimeago
+                date={new Date(timestamp.timestamp?.toDate()).toUTCString()}
+              />
+            </p> */}
+            </span>
+            <span className="md:hidden flex flex-wrap items-center space-x-2 ml-7">
+              {!user ? (
+                <HeartIcon
+                  onClick={loginToLike}
+                  className="h-6 cursor-pointer hover:bg-pink-100 duration-150 rounded-full p-1 hover:text-pink-600"
+                />
+              ) : (
+                <div>
+                  {user && (
+                    <LikePost className="h-6" id={blogId} likes={likes} />
+                  )}
+                </div>
+              )}
+
+              <p className="text-xs font-semibold">{likes?.length}</p>
+              <p className="text-xs">Likes</p>
+            </span>
+          </div>
+          <div className="flex space-x-5 items-center">
+            {user && user.uid === uid && <EditArticle blogId={blogId} />}
+          </div>
         </div>
         <div className="ml-7 mr-7 mt-5 mb-4">
-          <h2 className="lg:text-4xl md:text-2xl sm:text-md text-gray-900 leading-10">
+          <h2 className="text-lg lg:text-4xl md:text-2xl sm:text-md text-gray-900 md:leading-10">
             {blogHeader}
           </h2>
           <span>
@@ -404,7 +404,7 @@ const SelectedBlog = () => {
 
             <div>
               <textarea
-                onClick={preventCommetIfUserDoesNotExist}
+                onClick={preventCommentIfUserDoesNotExist}
                 value={addComment}
                 onChange={(e) => setAddComment(e.target.value)}
                 className="border-2 rounded py-2 px-3 block w-full md:w-full ml-2 md:ml-4 focus:outline-none focus:border-purple-600"
@@ -453,14 +453,6 @@ const SelectedBlog = () => {
                   </div>
                 </div>
                 <div className="flex space-x-4 items-center">
-                  {/* <div className="text-gray-600 flex space-x-1 items-center ml-3 cursor-pointer rounded-md duration-100 hover:bg-red-200 w-20 p-1 mt-1">
-                    <FavoriteBorderIcon />
-                    <p className="text-sm">Like</p>
-                  </div> */}
-                  {/* <div className="text-gray-600 flex space-x-1 items-center ml-3 cursor-pointer rounded-md duration-100 hover:bg-red-200 w-20 p-1 mt-1">
-                    <FavoriteBorderIcon />
-                    <p className="text-sm">Like</p>
-                  </div> */}
                   <div
                     onClick={() => setShowReply((prev) => !prev)}
                     className="text-gray-600 flex space-x-2 items-center ml-3 cursor-pointer rounded-md duration-100 hover:bg-gray-200 w-20 p-1 mt-1"
@@ -502,25 +494,9 @@ const SelectedBlog = () => {
                           </p>
                         </span>
                         <div className="pt-3">
-                          {/* <p>{message.message}</p> */}
                           <p className="text-sm">{sub.commentReaction}</p>
                         </div>
                       </div>
-                      {/* <div className="flex space-x-4 items-center">
-                        <div className="text-gray-600 flex space-x-1 items-center ml-3 cursor-pointer rounded-md duration-100 bg-red-200 w-20 p-1 mt-1">
-                          <FavoriteBorderIcon className="text-red-600" />
-                          <p>2</p>
-                          <p className="text-sm">Like</p>
-                        </div>
-                        <div className="text-gray-600 flex space-x-2 items-center ml-3 cursor-pointer rounded-md duration-100 hover:bg-gray-200 w-20 p-1 mt-1">
-                          <ReplyIcon />
-                          <p className="text-sm">Reply</p>
-                        </div>
-                      </div> */}
-                      {/* <div className="text-gray-600 flex space-x-2 items-center ml-3 cursor-pointer rounded-md duration-100 hover:bg-gray-200 w-20 p-1 mt-1">
-                  <ReplyIcon />
-                  <p className="text-sm">Reply</p>
-                </div> */}
                     </div>
                   </div>
                 )
@@ -537,7 +513,6 @@ const SelectedBlog = () => {
             </span>
           </div>
           <div className="flex flex-col text-start p-3 mt-6">
-            {/* <h3 className="text-xl text-center"></h3> */}
             <h3 className="mt-4 text-center mb-3 text-purple-800">
               Currently Working On{" "}
             </h3>
@@ -555,6 +530,7 @@ const SelectedBlog = () => {
         </section>
 
         <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
+          {/* <FollowUser /> */}
           Follow
         </button>
       </section>

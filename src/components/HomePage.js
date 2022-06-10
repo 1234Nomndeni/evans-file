@@ -39,7 +39,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <main>
+    <main onLoad={window.scroll(0, 0)}>
       <section className="mb-20">
         <nav className="w-full  bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500">
           <div className=" pb-8 mt-16 mx-auto mx-wd p-10">
@@ -116,7 +116,6 @@ const HomePage = () => {
 
             <div className=" lg:w-3/5 sm:w-full">
               <WelcomeNote />
-              {/* <MyModal/> */}
 
               {!articles || articles.length === 0 ? (
                 <div className="flex flex-col items-center justify-center w-full mx-auto">
@@ -142,7 +141,8 @@ const HomePage = () => {
                     currentTask={article.data.currentTask}
                     description={article.data.description}
                     skills={article.data.skills}
-                    likeCount={article.data.likeCount}
+                    likes={article.data.likes}
+                    uid={article.data.uid}
                   />
                 ))
               )}
@@ -161,12 +161,6 @@ const HomePage = () => {
                   className="text-sm cursor-pointer hover:text-purple-800 mb-2"
                 >
                   Contact Us
-                </p>
-                <p
-                  onClick={() => navigate("/profile")}
-                  className="text-sm cursor-pointer hover:text-purple-800 mb-2"
-                >
-                  Your Account
                 </p>
                 <p
                   onClick={() => navigate("/")}

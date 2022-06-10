@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../features/userSlice';
-import { auth, db } from '../../utils/firebase';
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../features/userSlice";
+import { auth, db } from "../../utils/firebase";
 import { useNavigate } from "react-router-dom";
-import { DriveEta } from '@mui/icons-material';
 
 const UpdateProfile = (props) => {
   const navigate = useNavigate();
@@ -140,11 +139,11 @@ const UpdateProfile = (props) => {
           onClick={() => navigate("/dashboard")}
           className="bg-c text-white py-2 px-12 w-full mt-5 font-bold"
         >
-          My Articles
+          Go To My Articles
         </button>
       </section>
     </main>
   );
-}
+};
 
-export default UpdateProfile
+export default UpdateProfile;

@@ -1,8 +1,10 @@
-import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { selectUser } from "../../features/userSlice";
 
 const Footer = () => {
-  const navigate = useNavigate()
+  const user = useSelector(selectUser);
+  const navigate = useNavigate();
   return (
     <div className="w-full mt-10 footer-bg bottom-0 pb-10">
       <section className="pt-6 pb-3 mx-wd2 mx-auto border-b border-gray-700 flex justify-center flex-col items-center">
@@ -32,12 +34,22 @@ const Footer = () => {
             <p className="text-sm text-gray-300 hover:text-orange-500 cursor-pointer mb-2 mr-2">
               Sponser Us
             </p>
-            <p
-              onClick={() => navigate("/profile")}
-              className="text-sm text-gray-300 hover:text-orange-500 cursor-pointer mb-2 mr-2"
-            >
-              Your Account
-            </p>
+            {!user ? (
+              <p
+                onClick={() => navigate("/signIn")}
+                className="text-sm text-gray-300 hover:text-orange-500 cursor-pointer mb-2 mr-2"
+              >
+                Sign Up
+              </p>
+            ) : (
+              <p
+                onClick={() => navigate("/profile")}
+                className="text-sm text-gray-300 hover:text-orange-500 cursor-pointer mb-2 mr-2"
+              >
+                Your Account
+              </p>
+            )}
+
             <p
               onClick={() => navigate("/how-to-blog-at-melbite")}
               className="text-sm text-gray-300 hover:text-orange-500 cursor-pointer mb-2 mr-2"

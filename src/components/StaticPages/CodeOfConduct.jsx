@@ -1,17 +1,17 @@
-import React from 'react'
-import { Helmet } from 'react-helmet';
+import React from "react";
+import { Helmet } from "react-helmet";
 
 const CodeOfConduct = () => {
   return (
     <main
       onLoad={window.scroll(0, 0)}
-      className="mt-24 mx-wd1 bg-white mx-auto p-4 text-gray-900 pt-12 pl-12 border rounded-md"
+      className="mt-20 md:mt-24 mx-wd1 bg-white mx-auto p-2 md:p-4 text-gray-900 md:pt-12 md:pl-12 border rounded-md"
     >
       <Helmet>
         <title>Melbite | Code Of Conduct</title>
       </Helmet>
       <section>
-        <h1 className="text-4xl text-gray-800 mb-5 leading-5">
+        <h1 className="text-2xl md:text-4xl text-gray-800 mb-5 leading-5">
           Code Of Conduct
         </h1>
         <p className="text-gray-600">Effective from March 17, 2022</p>
@@ -101,6 +101,6 @@ const CodeOfConduct = () => {
       </section>
     </main>
   );
-}
+};
 
-export default CodeOfConduct
+export default CodeOfConduct;

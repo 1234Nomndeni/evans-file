@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
-import {Modal } from "@mui/material";
-import {toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Modal } from "@mui/material";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { XIcon } from "@heroicons/react/outline";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUser, logout, login } from "../features/userSlice";
-import { auth, db} from "../utils/firebase";
-import SignUp from "./SignUp";
+import { selectUser, logout, login } from "../../features/userSlice";
+import { auth, db } from "../../utils/firebase";
+import SignUp from "../SignUp";
 import firebase from "firebase/compat/app";
-import brandLogo from "./images/melbite.jpg";
+import brandLogo from "../images/melbite.jpg";
 
-/******************************************************** */ 
+/******************************************************** */
 /*text editor dependancies */
-/******************************************************** */ 
+/******************************************************** */
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -22,18 +22,18 @@ import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
 // Text editor
 toast.configure({
-  position: toast.POSITION.BOTTOM_RIGHT,
-    autoClose: 3000,
-    pauseOnFocusLoss: false,
-        className:({
-        backgroundColor: 'red',
-    }),
-    bodyClassName:({
-        backgroundColor: 'blue',
-        height: '100%',
-        width: '100%',
-    })
-})
+  position: toast.POSITION.TOP_CENTER,
+  autoClose: 3000,
+  pauseOnFocusLoss: false,
+  className: {
+    backgroundColor: "red-red-200",
+  },
+  bodyClassName: {
+    backgroundColor: "blue",
+    height: "100%",
+    width: "100%",
+  },
+});
 
 const modules = {
   syntax: {
@@ -47,7 +47,7 @@ const modules = {
     [{ color: [] }, { background: [] }],
     [{ script: "sub" }, { script: "super" }],
     [{ align: [] }],
-    ["image", "code-block", 'blockquote', "link", "formula",'strike' ,],
+    ["image", "code-block", "blockquote", "link", "formula", "strike"],
     ["clean"],
   ],
 };
@@ -56,12 +56,10 @@ const modules2 = {
   syntax: {
     highlight: (text) => hljs.highlightAuto(text).value,
   },
-  toolbar: [
-    ["image"],
-  ],
+  toolbar: [["image"]],
 };
 
-const CreatePost = () => {
+const CreatePost = ({ id, setArticleId }) => {
   const [blogHeader, setBlogHeader] = useState("");
   const [blogBody, setBlogBody] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
@@ -82,40 +80,26 @@ const CreatePost = () => {
 
   const publishBlog = (e) => {
     e.preventDefault();
-    if(backgroundImage && blogHeader && blogBody){
-   
-      db.collection("posts").doc(user?.uid).collection("userPosts").add({
-        uid:user.uid,
+    if (blogHeader && blogBody) {
+      db.collection("posts").add({
+        uid: user.uid,
         backgroundImage: backgroundImage,
         blogHeader: blogHeader,
-        slug_name: blogHeader.replace(/\s/g, '-'),
+        slug_name: blogHeader.replace(/\s/g, "-"),
         blogBody: blogBody,
         currentTask: currentTask,
         description: user.email,
         displayName: user.displayName,
-        name_slug: user.displayName.replace(/\s/g, '-'),
+        name_slug: user.displayName.replace(/\s/g, "-"),
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      })
-      .then(() => {
-        db.collection("posts").add({
-          uid:user.uid,
-          backgroundImage: backgroundImage,
-          blogHeader: blogHeader,
-          slug_name: blogHeader.replace(/\s/g, '-'),
-          blogBody: blogBody,
-          currentTask: currentTask,
-          description: user.email,
-          displayName: user.displayName,
-          name_slug: user.displayName.replace(/\s/g, '-'),
-          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        })
-      })
-      
+        likes: [],
+      });
+
       setBackgroundImage("");
       setBlogHeader("");
       setBlogBody("");
       setCurrentTask("");
-      toast("Published Successfully")
+      toast("Article Published Successfully");
     }
   };
 
@@ -137,12 +121,32 @@ const CreatePost = () => {
     });
   }, [dispatch]);
 
+  const editHandler = async () => {
+    try {
+      const docSnap = await (db, "posts", id);
+      console.log("the record is :", docSnap.data());
+      setBackgroundImage(docSnap.data().backgroundImage);
+      setBlogHeader(docSnap.data().blogHeader);
+      setBlogBody(docSnap.data().blogBody);
+      setCurrentTask(docSnap.data().currentTask);
+    } catch (err) {
+      // setMessage({ error: true, msg: err.message });
+    }
+  };
+
+  useEffect(() => {
+    console.log("The id here is : ", id);
+    if (id !== undefined && id !== "") {
+      editHandler();
+    }
+  }, [id]);
+
   return (
     <>
       {!user ? (
         <SignUp />
       ) : (
-        <div className="bg-white pt-32 mx-auto  min-h-screen">
+        <div className="bg-white pt-32 mx-auto min-w-full  min-h-screen">
           <Helmet>
             <title>Melbite | New Post</title>
           </Helmet>
@@ -166,6 +170,14 @@ const CreatePost = () => {
                   </div>
                   <div className="flex items-center justify-between ">
                     <button
+                      disabled={!blogHeader}
+                      className="border border-purple-600 text-purple-800 hover:bg-purple-800 hover:text-white px-7 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 cursor-pointer"
+                    >
+                      Save draft
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between ">
+                    <button
                       onClick={publishBlog}
                       disabled={!blogHeader}
                       className="border border-purple-600 text-purple-800 hover:bg-purple-800 hover:text-white px-7 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 cursor-pointer"
@@ -183,9 +195,9 @@ const CreatePost = () => {
               </div>
 
               <section className="mx-wd2 mx-auto pt-4">
-                <div className="flex flex-wrap mb-5 justify-between">
+                <div className="flex flex-wrap mb-5 justify-between outline-none">
                   <ReactQuill
-                    className="w-3/6 rounded-t-lg outline-none"
+                    className="w-3/6 rounded-t-lg outline-none border-none"
                     value={backgroundImage || ""}
                     onChange={handleBackgroundChange}
                     theme="snow"

@@ -1,7 +1,6 @@
-import React from 'react'
-import { Helmet } from 'react-helmet';
+import React from "react";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-
 
 const SeoOptimization = ({
   children,
@@ -35,11 +34,29 @@ const SeoOptimization = ({
         <meta property="og:description" content={meta.description} />
         <meta property="og:title" content={meta.title} />
         <meta property="og:image" content={meta.image} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="melbite.com" />
-        <meta name="twitter:title" content={meta.title} />
         <meta name="twitter:description" content={meta.description} />
-        <meta name="twitter:image" content={meta.image} />
+        <meta name="twitter:title" content={meta.title} />
+        <meta name="twitter:card" content="https://twitter.com/melbite1" />
+        <meta name="twitter:site" content="https://twitter.com/melbite1" />
+        <meta
+          property="og:image"
+          content="https://www.linkedin.com/company/melbite-community"
+        ></meta>
+        <meta
+          property="og:image"
+          content="https://www.facebook.com/learnthroughmelbite"
+        ></meta>
+        <meta name="twitter:image" content="https://twitter.com/melbite1" />
+        <link rel="canonical" href="http://melbite.com"></link>
+        <meta
+          property="og:url"
+          content="https://www.facebook.com/learnthroughmelbite"
+        ></meta>
+        <meta
+          property="og:url"
+          content="https://www.linkedin.com/company/melbite-community"
+        ></meta>
+        <meta name="twitter:url" content="https://twitter.com/melbite1"></meta>
         {meta.date && (
           <meta property="article:published_time" content={meta.date} />
         )}
@@ -51,4 +68,4 @@ const SeoOptimization = ({
   );
 };
 
-export default SeoOptimization
+export default SeoOptimization;

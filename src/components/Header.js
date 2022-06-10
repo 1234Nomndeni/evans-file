@@ -1,4 +1,3 @@
-import React from "react";
 import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MenuIcon, XIcon, BellIcon } from "@heroicons/react/outline";
@@ -29,6 +28,7 @@ const Header = () => {
   const toogle = () => {
     setIsOpen(!isOpen);
   };
+
   const closeOnNavigate = () => {
     setIsOpen(isOpen);
   };
@@ -246,7 +246,7 @@ const Header = () => {
                               My Dashboard
                             </a>
                           )}
-                        </Menu.Item>  */}
+                        </Menu.Item> */}
                         <Menu.Item>
                           {({ active }) => (
                             <a
@@ -256,7 +256,7 @@ const Header = () => {
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                             >
-                              My Profile
+                              My Profile & Dashboard
                             </a>
                           )}
                         </Menu.Item>

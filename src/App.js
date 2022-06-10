@@ -1,37 +1,44 @@
-import React, {useEffect} from 'react';
-// import './App.css';
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import Header from './components/Header';
-import HomePage from './components/HomePage';
-import { Routes, Route } from 'react-router-dom';
-import CreatePost from './components/CreatePost';
-import SignUp from './components/SignUp';
-import SelectedBlog from './components/SelectedBlog';
+import Header from "./components/Header";
+import HomePage from "./components/HomePage";
+import { Routes, Route } from "react-router-dom";
+import CreatePost from "./components/AddArticle/CreatePost";
+import SignUp from "./components/SignUp";
+import SelectedBlog from "./components/SelectedBlog";
 // import SelectedBlog2 from './components/SelectedBlog2';
-import Footer from './components/Footer';
-import UpdateProfile from './components/UserProfile/UpdateProfile';
-import AboutUs from './components/StaticPages/AboutUs'
-import UserDashboard from './components/UserProfile/UserDashboard';
-import Contacts from './components/StaticPages/Contacts';
-import Privacy from './components/StaticPages/Privacy';
-import CodeOfConduct from './components/StaticPages/CodeOfConduct';
-import HowToBlogHere from './components/StaticPages/HowToBlogHere';
-import ReactGA from 'react-ga'
-import WelcomeBlog from './components/StaticPages/WelcomeBlog';
-import ViewArticle from './components/UserProfile/ViewArticle';
+import Footer from "./components/StaticPages/Footer";
+import UpdateProfile from "./components/UserProfile/UpdateProfile";
+import AboutUs from "./components/StaticPages/AboutUs";
+import UserDashboard from "./components/UserProfile/UserDashboard";
+import Contacts from "./components/StaticPages/Contacts";
+import Privacy from "./components/StaticPages/Privacy";
+import CodeOfConduct from "./components/StaticPages/CodeOfConduct";
+import HowToBlogHere from "./components/StaticPages/HowToBlogHere";
+import ReactGA from "react-ga";
+import WelcomeBlog from "./components/StaticPages/WelcomeBlog";
+import ViewArticle from "./components/UserProfile/ViewArticle";
 import Donate from "./components/SuperActions/Donate";
+import PageNotFound from "./components/StaticPages/PageNotFound";
 // import Subscriptions from './components/StaticPages/Subscriptions';
-
+import { useSelector } from "react-redux";
+import { selectUser } from "./features/userSlice";
+import MyDrafts from "./components/UserProfile/MyDrafts";
+import AllDrafts from "./components/saveDraft/AllDrafts";
+import LocalStore from "./tests/LocalStore";
+import NewDraft from "./components/saveDraft/NewDraft";
 
 ReactGA.initialize(process.env.TRACK_ID);
 function App() {
-
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
-  },[])
+  }, []);
+
+  const user = useSelector(selectUser);
+  const [articleId, setArticleId] = useState("");
 
   return (
-    <main className="">
+    <main className="max-w-8xl mx-auto">
       <Helmet>
         <title>Melbite - Home Of Creators</title>
       </Helmet>
@@ -39,12 +46,18 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/new" element={<CreatePost />} />
+        <Route
+          path="/new"
+          id={articleId}
+          setArticleId={setArticleId}
+          element={<CreatePost />}
+        />
         <Route path="/signIn" element={<SignUp />} />
         <Route path={`/:displayName/:blogId`} element={<SelectedBlog />} />
         {/* <Route path={`/:displayName/:blogId`} element={<SelectedBlog2 />} /> */}
-        <Route path="/profile" element={<UpdateProfile />} />
-        <Route path="/dashboard" element={<UserDashboard />} />
+        {user && <Route path="/profile" element={<UpdateProfile />} />}
+        {user && <Route path="/dashboard" element={<UserDashboard />} />}
+        {user && <Route path="/my-drafts" element={<MyDrafts />} />}
         <Route path="/:name_slug/:postId" element={<ViewArticle />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/donate" element={<Donate />} />
@@ -56,6 +69,12 @@ function App() {
           path="/Welcome-to-Melbite-the-official-blogging-site-or-the-world"
           element={<WelcomeBlog />}
         />
+        {/* Test Scripts */}
+        <Route path="*" element={<PageNotFound />} />
+        <Route path="/addDraft" element={<AllDrafts />} />
+        <Route path="/localDraft" element={<LocalStore />} />
+        <Route path="/testDraft" element={<NewDraft />} />
+
         {/* <Route path="/subscriptions" element={<Subscriptions/>} /> */}
       </Routes>
       <Footer />
@@ -64,5 +83,3 @@ function App() {
 }
 
 export default App;
-
-

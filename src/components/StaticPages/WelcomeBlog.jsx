@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Helmet } from "react-helmet";
-import { HeartIcon, ChatIcon, ShareIcon } from "@heroicons/react/outline";
+import { ChatIcon, ShareIcon } from "@heroicons/react/outline";
 import { useSelector } from "react-redux";
 import { db } from "../../utils/firebase";
-import firebase from 'firebase/compat/app'
+import firebase from "firebase/compat/app";
 import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../features/userSlice";
 import ReactTimeago from "react-timeago";
@@ -18,49 +18,42 @@ const WelcomeBlog = () => {
   const [getBlogComments, setGetBlogComments] = useState([]);
   const [commentCount, setCommentCount] = useState(0);
   const user = useSelector(selectUser);
-  const navigate = useNavigate()
-  const [like, setLike] = useState(true);
-  const [likeCount, setLikeCount] = useState(0)
+  const navigate = useNavigate();
 
-  
   /********************************************/
   /*** Add A Single Posts Comments ***/
   /********************************************/
 
-
-  // const handleBackgroundChange = (value, delta, source, editor) => {
-  //   setBackgroundImage(value);
-  // };
   const postComment = (e) => {
-      e.preventDefault();
-      db.collection("welcomeComments").add({
-        uid: user.uid,
-        addComment: addComment,
-        displayName: user.displayName,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      });
-      setAddComment("");
+    e.preventDefault();
+    db.collection("welcomeComments").add({
+      uid: user.uid,
+      addComment: addComment,
+      displayName: user.displayName,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+    setAddComment("");
   };
 
   const preventCommetIfUserDoesNotExist = () => {
     if (!user) {
-        navigate("/signIn");
+      navigate("/signIn");
     }
   };
-  
+
   const fetchWelcomeComments = async () => {
     try {
       await db
         .collection("welcomeComments")
         .orderBy("timestamp", "desc")
-        .onSnapshot((snapshot) => 
+        .onSnapshot((snapshot) =>
           setGetBlogComments(
             snapshot.docs.map((doc) => ({
               id: doc.id,
               data: doc.data(),
             }))
-          ),
           )
+        );
     } catch (error) {
       console.log(error);
     }
@@ -69,16 +62,8 @@ const WelcomeBlog = () => {
   const fetchCommentsCount = async () => {
     await db
       .collection("welcomeComments")
-      .onSnapshot((snapshot) =>
-        setCommentCount(snapshot.size)
-      )
+      .onSnapshot((snapshot) => setCommentCount(snapshot.size));
   };
-
-  const likePost = (e) => {
-   if(like){
-     setLikeCount(likeCount+1).limit(1)
-   }
-  }
 
   useEffect(() => {
     fetchWelcomeComments();
@@ -94,32 +79,6 @@ const WelcomeBlog = () => {
         <title>Welcome to Melbite!</title>
       </Helmet>
       <section className="hidden sm:absolute w-28 mt-6 fixed lg:block flex-col md:block">
-        {/* <span href="comment" className="flex flex-col items-center mt-10">
-          {like ? (
-            <HeartIcon
-              onClick={likePost}
-              className="h-8 cursor-pointer hover:bg-pink-100 rounded-full p-1 hover:text-pink-600"
-            />
-          ) : (
-            <svg
-              onClick={() => setLike(true)}
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-8 translate-ease-in-out"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                className="cursor-pointer text-pink-600 hover:bg-pink-100 rounded-full p-1 hover:text-pink-600"
-                fill-rule="evenodd"
-                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          )}
-          <p className="text-pink-600 font-semibold">{12}</p>
-          <p className="text-pink-600 font-semibold">{likeCount}</p>
-          <p className="text-sm">Like</p>
-        </span> */}
         <span href="comment" className="flex flex-col items-center mt-10">
           <ChatIcon className="h-8 cursor-pointer hover:bg-green-100 duration-150 rounded-full p-1 hover:text-green-600" />
           <p className="text-green-700 font-semibold">{commentCount}</p>
@@ -306,31 +265,6 @@ const WelcomeBlog = () => {
         </div>
 
         <section className="lg:hidden md:flex sm:flex flex pt-2 pb-2 w-full items-center justify-between pr-10 pl-10">
-          {/* <span href="comment" className="flex flex-col items-center">
-            {like ? (
-              <HeartIcon
-                onClick={() => setLike(false)}
-                className="h-8 cursor-pointer hover:bg-pink-100 rounded-full p-1 hover:text-pink-600"
-              />
-            ) : (
-              <svg
-                onClick={() => setLike(true)}
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-8 translate-ease-in-out"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  className="cursor-pointer text-pink-600 hover:bg-pink-100 rounded-full p-1 hover:text-pink-600"
-                  fill-rule="evenodd"
-                  d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            )}
-            <p className="text-pink-600 font-semibold">{12}</p>
-            <p className="text-sm">Like</p>
-          </span> */}
           <span href="comment" className="flex flex-col items-center">
             <ChatIcon className="h-8 cursor-pointer hover:bg-green-100 duration-150 rounded-full p-1 hover:text-green-600" />
             <p className="text-green-700 font-semibold">{commentCount}</p>
@@ -505,6 +439,6 @@ const WelcomeBlog = () => {
       </section>
     </main>
   );
-}
+};
 
-export default WelcomeBlog
+export default WelcomeBlog;

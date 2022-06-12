@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import Header from "./components/Header";
 import HomePage from "./components/HomePage";
@@ -25,7 +25,6 @@ import { useSelector } from "react-redux";
 import { selectUser } from "./features/userSlice";
 import MyDrafts from "./components/UserProfile/MyDrafts";
 import AllDrafts from "./components/saveDraft/AllDrafts";
-import LocalStore from "./tests/LocalStore";
 import NewDraft from "./components/saveDraft/NewDraft";
 
 ReactGA.initialize(process.env.TRACK_ID);
@@ -35,7 +34,6 @@ function App() {
   }, []);
 
   const user = useSelector(selectUser);
-  const [articleId, setArticleId] = useState("");
 
   return (
     <main className="max-w-8xl mx-auto">
@@ -46,12 +44,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route
-          path="/new"
-          id={articleId}
-          setArticleId={setArticleId}
-          element={<CreatePost />}
-        />
+        <Route path="/new" element={<CreatePost />} />
         <Route path="/signIn" element={<SignUp />} />
         <Route path={`/:displayName/:blogId`} element={<SelectedBlog />} />
         {/* <Route path={`/:displayName/:blogId`} element={<SelectedBlog2 />} /> */}
@@ -65,14 +58,13 @@ function App() {
         <Route path="/privacy-policy" element={<Privacy />} />
         <Route path="/code-of-conduct" element={<CodeOfConduct />} />
         <Route path="/how-to-blog-at-melbite" element={<HowToBlogHere />} />
+        <Route path="*" element={<PageNotFound />} />
         <Route
           path="/Welcome-to-Melbite-the-official-blogging-site-or-the-world"
           element={<WelcomeBlog />}
         />
         {/* Test Scripts */}
-        <Route path="*" element={<PageNotFound />} />
         <Route path="/addDraft" element={<AllDrafts />} />
-        <Route path="/localDraft" element={<LocalStore />} />
         <Route path="/testDraft" element={<NewDraft />} />
 
         {/* <Route path="/subscriptions" element={<Subscriptions/>} /> */}

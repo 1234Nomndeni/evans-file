@@ -157,8 +157,8 @@ const CreatePost = ({ id, setArticleId }) => {
           >
             <main className="bg-white min-h-screen">
               <div className="flex justify-between items-center bg-white mx-auto border-b-2 border-fuchsia-600 pb-4  mx-wd2 pt-6 ">
-                <span className="w-full flex justify-between">
-                  <div className="flex-shrink-0 flex w-3/5 items-center  ">
+                <div className="w-full flex justify-between">
+                  <div className="flex-shrink-0 flex md:w-3/5 items-center  ">
                     <div className=" hidden lg:block ">
                       <img
                         onClick={() => navigate("/")}
@@ -168,28 +168,28 @@ const CreatePost = ({ id, setArticleId }) => {
                       />
                     </div>
                   </div>
-                  <div className="flex items-center justify-between ">
+                  {/* <div className="flex items-center justify-between ">
                     <button
                       disabled={!blogHeader}
-                      className="border border-purple-600 text-purple-800 hover:bg-purple-800 hover:text-white px-7 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 cursor-pointer"
+                      className="text-xs md:text-sm border border-purple-600 text-purple-800 hover:bg-purple-800 hover:text-white px-7 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 cursor-pointer"
                     >
                       Save draft
                     </button>
-                  </div>
+                  </div> */}
                   <div className="flex items-center justify-between ">
                     <button
                       onClick={publishBlog}
                       disabled={!blogHeader}
-                      className="border border-purple-600 text-purple-800 hover:bg-purple-800 hover:text-white px-7 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 cursor-pointer"
+                      className="text-xs md:text-sm border border-purple-600 text-purple-800 hover:bg-purple-800 hover:text-white px-7 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 cursor-pointer"
                     >
                       Publish
                     </button>
                   </div>
-                </span>
+                </div>
                 <span className=" pl-10">
                   <XIcon
                     onClick={() => navigate("/")}
-                    className="w-8 rounded-lg hover:text-red-500  cursor-pointer"
+                    className="w-5 md:w-8 rounded-lg hover:text-red-500  cursor-pointer"
                   />
                 </span>
               </div>

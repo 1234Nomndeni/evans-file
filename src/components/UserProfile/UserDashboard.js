@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { selectUser } from "../../features/userSlice";
 import { db } from "../../utils/firebase";
 import { Menu, Transition } from "@headlessui/react";
+import { Helmet } from "react-helmet";
 import {
   HeartIcon,
   ChatIcon,
@@ -13,7 +14,6 @@ import {
   DocumentAddIcon,
 } from "@heroicons/react/outline";
 import ReactTimeago from "react-timeago";
-// import EditMyArticle from "./EditMyArticle";
 import DeleteMyArticle from "./DeleteMyArticle";
 import EditMyArticle from "./EditMyArticle";
 
@@ -21,7 +21,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const UserDashboard = ({ name_slug }) => {
+const UserDashboard = ({ name_slug, open, setOpen }) => {
   const navigate = useNavigate();
   const [userPosts, setUserPosts] = useState([]);
   const user = useSelector(selectUser);
@@ -61,6 +61,9 @@ const UserDashboard = ({ name_slug }) => {
 
   return (
     <main className="min-h-screen mt-20 md:mt-24 mx-wd1 mx-auto p-0 md:p-5 ">
+      <Helmet>
+        <title>Melbite | Dashboard</title>
+      </Helmet>
       <section className="flex flex-wrap items-center justify-between mb-5">
         <section className="">
           <h3 className="text-lg font-serif md:text-3xl text-gray-600">
@@ -87,15 +90,24 @@ const UserDashboard = ({ name_slug }) => {
           ) : (
             <>
               {userPosts?.map(
-                ({ id, blogHeader, displayName, timestamp, uid }) => (
+                ({
+                  id,
+                  blogHeader,
+                  blogBody,
+                  backgroundImage,
+                  currentTask,
+                  displayName,
+                  timestamp,
+                  uid,
+                }) => (
                   <section
                     key={id}
-                    className="w-full border-2 rounded-md bg-white p-5 mb-2 hover:border-purple-800 duration-150"
+                    className="w-full border-2 rounded-md bg-white  p-5 mb-2 hover:border-purple-800 duration-150 max-h-96"
                   >
-                    <section className="flex justify-between items-center ">
+                    <section className="flex justify-between items-center">
                       <div className="flex items-center ">
                         <span className="bg-yellow-300 w-10 font-mono p-1 pl-3 uppercase text-xl text-gray-800 h-10 border-2 border-yellow-300 rounded-full">
-                          {displayName?.[0]}
+                          {user?.displayName[0]}
                         </span>
                         <span className="ml-2">
                           <h3 className="text-sm">{displayName}</h3>
@@ -107,16 +119,31 @@ const UserDashboard = ({ name_slug }) => {
                           </p>
                         </span>
                       </div>
-                      <div className="flex space-x-5 items-center">
-                        {user && user.uid === uid && <EditMyArticle id={id} />}
-                        {user && user.uid === uid && (
-                          <DeleteMyArticle id={id} />
-                        )}
+                      <div className="flex space-x-5 items-center h-8 justify-between">
+                        <div className="w-10 mt-32 bg-transparent">
+                          <EditMyArticle
+                            id={id}
+                            editBlogHeader={blogHeader}
+                            editBlogBody={blogBody}
+                            editBackgroundImage={backgroundImage}
+                            editCurrentTask={currentTask}
+                          />
+                        </div>
+
+                        <div>
+                          {user && user.uid === uid && (
+                            <DeleteMyArticle id={id} />
+                          )}
+                        </div>
                       </div>
                     </section>
 
                     <section className="mt-2">
-                      <Link to={`/${name_slug}/${id}`}>
+                      <Link
+                        to={`/${
+                          `${name_slug}` || `${user?.displayName[0]}`
+                        }/${id}`}
+                      >
                         <h1 className="md:leading-9 text-lg md:text-3xl text-gray-900 hover:text-purple-900 cursor-pointer">
                           {blogHeader}{" "}
                         </h1>

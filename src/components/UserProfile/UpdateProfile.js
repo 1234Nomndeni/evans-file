@@ -45,7 +45,7 @@ const UpdateProfile = (props) => {
   // }, [])
 
   return (
-    <main className="pt-24 mx-wd1 flex flex-wrap justify-between mx-auto">
+    <main className="pt-20 md:pt-24 mx-wd1 flex flex-wrap-reverse justify-between mx-auto">
       <section className=" mr-12 md:w-2/3 sm:w-full">
         <section className="bg-white rounded-sm border border-gray-300">
           <div className="rounded-t-md bg-c flex items-center flex-col justify-center h-24">

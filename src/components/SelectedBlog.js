@@ -16,7 +16,6 @@ import ReplyComment from "./ReplyComment";
 import LikePost from "./LikePost";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import EditArticle from "./SuperActions/EditArticle";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -371,9 +370,7 @@ const SelectedBlog = () => {
               <p className="text-xs">Likes</p>
             </span>
           </div>
-          <div className="flex space-x-5 items-center">
-            {user && user.uid === uid && <EditArticle blogId={blogId} />}
-          </div>
+          <div className="flex space-x-5 items-center"></div>
         </div>
         <div className="ml-7 mr-7 mt-5 mb-4">
           <h2 className="text-lg lg:text-4xl md:text-2xl sm:text-md text-gray-900 md:leading-10">

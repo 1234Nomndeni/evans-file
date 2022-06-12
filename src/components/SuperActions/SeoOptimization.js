@@ -10,6 +10,7 @@ const SeoOptimization = ({
   blogBody,
   backgroundImage,
   name_slug,
+  slug_name,
   displayName,
   ...customMeta
 }) => {
@@ -27,12 +28,14 @@ const SeoOptimization = ({
         <title>{meta.title}</title>
         <meta name="robots" content="follow, index" />
         <meta content={meta.description} name="description" />
+        <meta content={meta.slug_name} name="description" />
         <meta property="og:url" content={`https://melbite.com${Link.asPath}`} />
         <link rel="canonical" href={`https://melbite.com${Link.asPath}`} />
         <meta property="og:type" content={meta.type} />
         <meta property="og:site_name" content="Melbite Platform" />
         <meta property="og:description" content={meta.description} />
         <meta property="og:title" content={meta.title} />
+        <meta property="og:title" content={meta.slug_name} />
         <meta property="og:image" content={meta.image} />
         <meta name="twitter:description" content={meta.description} />
         <meta name="twitter:title" content={meta.title} />

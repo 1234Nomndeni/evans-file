@@ -16,6 +16,9 @@ const LatestUpdates = () => {
           New Features{" "}
         </button>
         <li className="mt-2 mb-1 ml-5 text-xs text-gray-600">
+          Determined the most trending article on Melbite
+        </li>
+        <li className="mt-2 mb-1 ml-5 text-xs text-gray-600">
           We've released Reply Comment Feature.
         </li>
         <li className="mb-1 ml-5 text-xs text-gray-600">

@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
+import TestImage from "../../tests/TestImage";
 
 const AboutUs = () => {
   const navigate = useNavigate();
@@ -44,7 +45,9 @@ const AboutUs = () => {
           </p>
         </p>
       </section>
-      <section></section>
+      <section>
+        <TestImage />
+      </section>
     </main>
   );
 };

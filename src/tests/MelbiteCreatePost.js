@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { Modal } from "@mui/material";
 import { toast } from "react-toastify";
@@ -6,11 +6,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { XIcon } from "@heroicons/react/outline";
 import { useSelector, useDispatch } from "react-redux";
-import { selectUser, logout, login } from "../../features/userSlice";
-import { auth, db, storage } from "../../utils/firebase";
-import SignUp from "../SignUp";
+// import { selectUser, logout, login } from "../../features/userSlice";
+// import { auth, db, storage } from "../utils/firebase";
+// import SignUp from "../SignUp";
 import firebase from "firebase/compat/app";
-import brandLogo from "../images/melbite.jpg";
+// import brandLogo from "../images/melbite.jpg";
 
 /******************************************************** */
 /*text editor dependancies */
@@ -20,6 +20,10 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
+import SignUp from "../components/SignUp";
+import { selectUser, logout, login } from "../features/userSlice";
+import { auth, db, storage } from "../utils/firebase";
+import BackgroundImage from "../components/AddArticle/BackgroundImage";
 // Text editor
 toast.configure({
   position: toast.POSITION.TOP_CENTER,
@@ -59,12 +63,14 @@ const modules2 = {
   toolbar: [["image"]],
 };
 
-const CreatePost = () => {
+const MelbiteCreatePost = () => {
   const [blogHeader, setBlogHeader] = useState("");
   const [blogBody, setBlogBody] = useState("");
-  const [backgroundImage, setBackgroundImage] = useState("");
   const [currentTask, setCurrentTask] = useState("");
+  const [backgroundImage, setBackgroundImage] = useState(null); //
+  const [error, setError] = useState(false);
   const [open, setOpen] = useState(true);
+  const [uploadedImage, setUploadedImage] = useState("");
 
   const navigate = useNavigate();
   const user = useSelector(selectUser);
@@ -74,32 +80,75 @@ const CreatePost = () => {
     setBlogBody(value);
   };
 
-  const handleBackgroundChange = (value, delta, source, editor) => {
-    setBackgroundImage(value);
-  };
+  // let uploadedImage = "";
+  React.useEffect(() => {
+    console.log("Uploaded Image Is: ", uploadedImage);
+  }, [uploadedImage]);
+
+  // const handleBackgroundChange = (value, delta, source, editor) => {
+  //   setBackgroundImage(value);
+  // };
 
   const publishBlog = (e) => {
     e.preventDefault();
-    if (blogHeader && blogBody) {
-      db.collection("posts").add({
-        uid: user.uid,
-        backgroundImage: backgroundImage,
-        blogHeader: blogHeader,
-        slug_name: blogHeader.replace(/\s/g, "-"),
-        blogBody: blogBody,
-        currentTask: currentTask,
-        description: user.email,
-        displayName: user.displayName,
-        name_slug: user.displayName.replace(/\s/g, "-"),
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        likes: [],
-      });
 
-      setBackgroundImage("");
-      setBlogHeader("");
-      setBlogBody("");
-      setCurrentTask("");
-      toast("Article Published Successfully");
+    try {
+      const uploadTask = storage
+        .ref(`images/${backgroundImage.name}`)
+        .put(backgroundImage);
+      console.log("Hello 1");
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          let progress;
+          progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(progress);
+          console.log("Hello 2");
+        },
+        (err) => {
+          console.log(err);
+        },
+        async () => {
+          const imageUrl = await storage
+            .ref("images/")
+            .child(backgroundImage.name)
+            .getDownloadURL();
+          console.log("Hello 3");
+          console.log("Image is: ", imageUrl);
+
+          setUploadedImage(imageUrl);
+        }
+      );
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      // console.log("Uploaded Image Is: ", uploadedImage);
+      if (blogHeader && blogBody) {
+        db.collection("posts")
+          .add({
+            uid: user.uid,
+            blogHeader: blogHeader,
+            slug_name: blogHeader.replace(/\s/g, "-"),
+            blogBody: blogBody,
+            currentTask: currentTask,
+            description: user.email,
+            displayName: user.displayName,
+            name_slug: user.displayName.replace(/\s/g, "-"),
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            likes: [],
+            backgroundImage: uploadedImage,
+          })
+          .then(() => {
+            setBackgroundImage(null);
+            setBlogHeader("");
+            setBlogBody("");
+            setCurrentTask("");
+            toast("Article Published Successfully");
+          });
+      } else {
+        setError(true);
+      }
     }
   };
 
@@ -140,22 +189,9 @@ const CreatePost = () => {
                 <div className="w-full flex justify-between">
                   <div className="flex-shrink-0 flex md:w-3/5 items-center  ">
                     <div className=" hidden lg:block ">
-                      <img
-                        onClick={() => navigate("/")}
-                        className="h-11 cursor-pointer"
-                        src={brandLogo}
-                        alt="Melbite Logo"
-                      />
+                      <h2>Melbite.com</h2>
                     </div>
                   </div>
-                  {/* <div className="flex items-center justify-between ">
-                    <button
-                      disabled={!blogHeader}
-                      className="text-xs md:text-sm border border-purple-600 text-purple-800 hover:bg-purple-800 hover:text-white px-7 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 cursor-pointer"
-                    >
-                      Save draft
-                    </button>
-                  </div> */}
                   <div className="flex items-center justify-between ">
                     <button
                       onClick={publishBlog}
@@ -176,14 +212,15 @@ const CreatePost = () => {
 
               <section className="mx-wd2 mx-auto pt-4">
                 <div className="flex flex-wrap mb-5 justify-between outline-none">
-                  <ReactQuill
+                  {/* <ReactQuill
                     className="w-3/6 rounded-t-lg outline-none border-none"
                     value={backgroundImage || ""}
                     onChange={handleBackgroundChange}
                     theme="snow"
                     modules={modules2}
                     placeholder="Click The Icon To Add Background Image"
-                  />
+                  /> */}
+                  <BackgroundImage setBackgroundImage={setBackgroundImage} />
 
                   <textarea
                     value={currentTask}
@@ -201,6 +238,9 @@ const CreatePost = () => {
                   required
                   placeholder="Type your title here . . ."
                 />
+                {error && (
+                  <p className="text-red-500">Please Fill title & content </p>
+                )}
               </section>
 
               <section className="mx-wd2 mt-10 pb-12 mx-auto">
@@ -220,4 +260,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default MelbiteCreatePost;

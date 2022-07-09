@@ -148,6 +148,13 @@ code{
   color:#0EA5E9 ;
 }
 
+.important{
+  width: 100px !important;
+  height: 60px !important;
+  background-color: yellow;
+  object-fit: cover !important;
+}
+
 @layer utilities {
   @variants hover, focus {
 

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Feed from "./Feed";
 import { db } from "../utils/firebase";
 import { useSelector } from "react-redux";
@@ -10,11 +10,17 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import loader from "./images/dark-loader.gif";
+import PageLinks from "./StaticPages/PageLinks";
+import { useStickyBox } from "react-sticky-box";
+import FetchMostRead from "./FilterCategory/FetchMostRead";
+import FilterCategory from "./FilterCategory/FilterCategory";
 
 const HomePage = () => {
   const [articles, setArticles] = useState([]);
   const navigate = useNavigate();
   const user = useSelector(selectUser);
+  const stickyRef = useStickyBox({ offsetTop: 100, offsetBottom: 20 });
+  const stickyRightRef = useStickyBox({ offsetTop: 80, offsetBottom: 20 });
 
   /******************************************************** */
   /*Make the blog visible from the firebase to the front-end*/
@@ -39,7 +45,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <main onLoad={window.scroll(0, 0)}>
+    <main>
       <section className="mb-20">
         <nav className="w-full  bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500">
           <div className=" pb-8 mt-16 mx-auto mx-wd p-10">
@@ -89,29 +95,11 @@ const HomePage = () => {
             </a>
           </div>
           <section className="flex justify-between h-full mt-5">
-            <div className="hidden md:flex flex-col items-center space-y-7">
-              <p className="font-bold">Social media</p>
-              <a
-                href="https://twitter.com/melbite1"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <TwitterIcon className="hover:text-purple-700 " />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/melbite-community"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <LinkedInIcon className=" hover:text-purple-700" />
-              </a>
-              <a
-                href="https://www.facebook.com/learnthroughmelbite"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <FacebookIcon className=" hover:text-purple-700" />
-              </a>
+            <div className="hidden md:block max-w-xl pr-4">
+              <aside ref={stickyRef}>
+                <FilterCategory />
+                <PageLinks />
+              </aside>
             </div>
 
             <div className=" lg:w-3/5 sm:w-full">
@@ -148,51 +136,12 @@ const HomePage = () => {
               )}
             </div>
 
-            <div className="hidden md:block ml-3 w-72 h-72">
-              <div className=" border-2 flex-wrap bg-white p-4">
-                <p
-                  onClick={() => navigate("/about")}
-                  className="text-sm cursor-pointer hover:text-purple-800 mb-2"
-                >
-                  About Us
-                </p>
-                <p
-                  onClick={() => navigate("/contact-us")}
-                  className="text-sm cursor-pointer hover:text-purple-800 mb-2"
-                >
-                  Contact Us
-                </p>
-                <p
-                  onClick={() => navigate("/")}
-                  className="text-sm cursor-pointer hover:text-purple-800 mb-2"
-                >
-                  Sponser Us
-                </p>
-                <p
-                  onClick={() => navigate("/how-to-blog-at-melbite")}
-                  className="text-sm cursor-pointer hover:text-purple-800 mb-2"
-                >
-                  How to Blog Here
-                </p>
-                <p
-                  onClick={() => navigate("/privacy-policy")}
-                  className="text-sm cursor-pointer hover:text-purple-800 mb-2"
-                >
-                  Privacy Policy
-                </p>
-                <p
-                  onClick={() => navigate("/code-of-conduct")}
-                  className="text-sm cursor-pointer hover:text-purple-800"
-                >
-                  Code of Conduct
-                </p>
+            <div className="hidden md:block pl-4 w-80 ">
+              <div ref={stickyRightRef} className="">
+                <div>
+                  <FetchMostRead />
+                </div>
               </div>
-              <button
-                onClick={() => navigate("/new")}
-                className="bg-c text-white w-full py-2 mt-5 rounded-sm"
-              >
-                Start Writing
-              </button>
             </div>
           </section>
         </main>

@@ -26,6 +26,9 @@ import { selectUser } from "./features/userSlice";
 import MyDrafts from "./components/UserProfile/MyDrafts";
 import AllDrafts from "./components/saveDraft/AllDrafts";
 import NewDraft from "./components/saveDraft/NewDraft";
+import TestImage from "./tests/TestImage";
+import TextUpload from "./tests/TextUpload";
+import MelbiteCreatePost from "./tests/MelbiteCreatePost";
 
 ReactGA.initialize(process.env.TRACK_ID);
 function App() {
@@ -66,6 +69,8 @@ function App() {
         {/* Test Scripts */}
         <Route path="/addDraft" element={<AllDrafts />} />
         <Route path="/testDraft" element={<NewDraft />} />
+        <Route path="/testImage" element={<TextUpload />} />
+        <Route path="/melbiteTest" element={<MelbiteCreatePost />} />
 
         {/* <Route path="/subscriptions" element={<Subscriptions/>} /> */}
       </Routes>

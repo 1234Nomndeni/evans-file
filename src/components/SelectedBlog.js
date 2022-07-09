@@ -206,7 +206,10 @@ const SelectedBlog = () => {
   };
 
   return (
-    <main className="pt-24 mx-wd1 mx-auto flex justify-between pb-24 wd-screen3">
+    <main
+      onLoad={window.scroll(0, 0)}
+      className="pt-24 mx-wd1 mx-auto flex justify-between pb-24 wd-screen3"
+    >
       <Helmet>
         <title>{`${blogHeader}`}</title>
         <meta content={meta.blogHeader} name="description" />
@@ -526,10 +529,10 @@ const SelectedBlog = () => {
           </div>
         </section>
 
-        <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
-          {/* <FollowUser /> */}
+        {/* <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
+          {/* <FollowUser /> 
           Follow
-        </button>
+        </button> */}
       </section>
     </main>
   );

@@ -4,7 +4,7 @@ import { selectUser } from "../../features/userSlice";
 import { auth, db } from "../../utils/firebase";
 import { useNavigate } from "react-router-dom";
 
-const UpdateProfile = (props) => {
+const UpdateProfile = ({ userTagName }) => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
   const [tagName, setTagName] = useState();

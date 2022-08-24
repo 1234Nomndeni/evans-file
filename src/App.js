@@ -42,6 +42,9 @@ function App() {
     <main className="max-w-8xl mx-auto">
       <Helmet>
         <title>Melbite - Home Of Creators</title>
+        <meta content="Welcome to the melbite community. Melbite is a platform to read, learn, and share knowledge and skills
+    through written articles" name="description" />
+    <meta name="keywords" content="How to, where to, learning, melbite, blogging, programming, coding, careers, articles "/>
       </Helmet>
       <Header />
 

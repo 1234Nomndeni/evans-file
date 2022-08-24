@@ -71,7 +71,7 @@ const PageLinks = () => {
           </div>
           <span className="flex items-center text-center mt-4 text-gray-500">
             <p className="mt-1 text-md pr-1 ">©</p>
-            <p className="text-sm">Melbite 2022</p>
+            <p className="text-sm mt-1">Melbite 2022</p>
           </span>
         </div>
       </main>

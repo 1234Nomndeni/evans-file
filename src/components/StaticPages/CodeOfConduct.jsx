@@ -5,7 +5,7 @@ const CodeOfConduct = () => {
   return (
     <main
       onLoad={window.scroll(0, 0)}
-      className="mt-20 md:mt-24 mx-wd1 bg-white mx-auto p-2 md:p-4 text-gray-900 md:pt-12 md:pl-12 border rounded-md"
+      className="lg:max-w-7xl mt-20 md:mt-24 mx-wd1 bg-white mx-auto p-2 md:p-4 text-gray-900 md:pt-12 md:pl-12 border rounded-md"
     >
       <Helmet>
         <title>Melbite | Code Of Conduct</title>

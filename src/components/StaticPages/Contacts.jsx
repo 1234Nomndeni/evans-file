@@ -5,10 +5,12 @@ const Contacts = () => {
   return (
     <main
       onLoad={window.scroll(0, 0)}
-      className="w-full mt-24 mx-wd1 bg-white mx-auto pt-12 md:pl-12 pl-6 pb-8 border rounded-md"
+      className="lg:max-w-7xl w-full mt-24 mx-wd1 bg-white mx-auto pt-12 md:pl-12 pl-6 pb-8 border rounded-md"
     >
       <Helmet>
         <title>Melbite | Contact Us</title>
+        <meta name="description" description="Login to melbite"/>
+        <meta name="keywords" description="login, create account, start writing"/>
       </Helmet>
       <section className="mx-wd2">
         <h1 className="text-4xl text-gray-800 mb-5">Contact Melbite</h1>

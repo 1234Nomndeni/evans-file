@@ -37,10 +37,10 @@ const Feed = ({
         {/* <title>{meta.title}</title> */}
         <meta name="robots" content="follow, index" />
         <meta content={meta.description} name="description" />
-        <meta property="og:url" content={`https://melbite.com${Link.asPath}`} />
-        <link rel="canonical" href={`https://melbite.com${Link.asPath}`} />
+        <meta property="og:url" content={`https://melbite.com${blogHeader}`} />
+        <link rel="canonical" href={`https://melbite.com${blogHeader}`} />
         <meta property="og:type" content={meta.type} />
-        <meta property="og:site_name" content="Paul Knulst" />
+        <meta property="og:site_name" content="Melbite" />
         <meta property="og:description" content={meta.description} />
         <meta property="og:title" content={meta.title} />
         <meta property="og:image" content={meta.image} />

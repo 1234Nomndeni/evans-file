@@ -1,5 +1,5 @@
-import React from "react";
 import ReactTimeago from "react-timeago";
+import { HeartIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
 
 const MostReadArticle = ({
@@ -24,24 +24,31 @@ const MostReadArticle = ({
             className="rounded-lg important"
             dangerouslySetInnerHTML={{ __html: backgroundImage }}
           /> */}
-          <section className="">
-            <span className="flex space-x-3 text-xs mb-2 mt-1">
-              <p className="font-bold text-gray-900 bg-yellow-400 pl-1 pr-1">
-                {displayName}
-              </p>
-              <p className="text-gray-600">
-                <ReactTimeago
-                  date={new Date(timestamp?.toDate()).toUTCString()}
-                />
-              </p>
-              <span className="flex space-x-1">
-                <p className="font-bold text-gray-900 ">{likes?.length}</p>
-                <p className="text-gray-600 text-xs">Likes</p>
+          <section className="flex space-x-2 mt-3">
+            <article>
+              <span className="bg-yellow-300 font-mono px-2 py-1 text-lg font-bold uppercase  text-gray-800 border-2 border-yellow-300 rounded-full">
+                {displayName?.[0]}
               </span>
-            </span>
-            <p className="text-sm hover:text-purple-800 cursor-pointer font-bold concat">
-              {blogHeader}
-            </p>
+            </article>
+
+            <article>
+              <p className=" hover:text-purple-800 cursor-pointer font-bold concat">
+                {blogHeader}
+              </p>
+              <p className=" text-gray-900 mt-1 font-semibold">{displayName}</p>
+              <span className="flex space-x-5 text-xs">
+                <p className="text-gray-600">
+                  <ReactTimeago
+                    date={new Date(timestamp?.toDate()).toUTCString()}
+                  />
+                </p>
+                <span className="flex space-x-1">
+                  <HeartIcon className="w-4 text-gray-600 cursor-pointer " />
+                  <p className="font-bold text-gray-900 ">{likes?.length}</p>
+                  <p className="text-gray-600 text-xs"> Likes</p>
+                </span>
+              </span>
+            </article>
           </section>
         </article>
       </Link>

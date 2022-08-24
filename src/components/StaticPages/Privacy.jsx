@@ -5,7 +5,7 @@ const Privacy = () => {
   return (
     <main
       onLoad={window.scroll(0, 0)}
-      className="mt-24 mx-wd1 bg-white mx-auto p-4 text-gray-900 pt-12 pl-12 border rounded-md"
+      className="lg:max-w-7xl mt-24 mx-wd1 bg-white mx-auto p-4 text-gray-900 pt-12 pl-12 border rounded-md"
     >
       <Helmet>
         <title>Melbite | Privacy Policy</title>

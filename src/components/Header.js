@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { MenuIcon, XIcon, BellIcon } from "@heroicons/react/outline";
+import { MenuIcon, XIcon, BellIcon, MoonIcon, SunIcon } from "@heroicons/react/outline";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, login, logout } from "../features/userSlice";
@@ -21,6 +21,7 @@ const Header = () => {
   const location = useLocation();
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+  const [active] = useState(false)
 
   const { pathname } = location;
   const getLocation = pathname.split("/");
@@ -147,11 +148,18 @@ const Header = () => {
                   <BellIcon className="text-sm h-8 relative text-gray-700 " />
                 </span> */}
 
+                {/* Dark/Light Mode */}
+                <div>
+                  {active ? (<> <MoonIcon className="w-7 cursor-pointer text-gray-600 "/></>) : (<><SunIcon className="w-7 cursor-pointer text-gray-600 "/></>)}
+                  {/* <MoonIcon className="w-7 cursor-pointer text-gray-600 "/> */}
+                  {/* <SunIcon className="w-7 cursor-pointer text-gray-600 "/> */}
+                </div>
+
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative">
                   <div>
                     <Menu.Button className="">
-                      <span className="cursor-pointer transform hover:scale-105  ml-12 mr-4 md:mr-10 sm:block">
+                      <span className="cursor-pointer transform hover:scale-105  mr-4 md:mr-10 sm:block">
                         <p className="hidden md:absolute animate-pulse bg-red-500 text-md text-center h-4 w-4 text-white rounded-full font-bold -mt-1 ml-4 z-50 "></p>
                         <BellIcon className="text-sm h-8 font-thin relative text-gray-500 " />
                       </span>

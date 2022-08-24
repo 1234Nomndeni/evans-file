@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { db } from "../../utils/firebase";
 import MoreUserPostMap from "./MoreUserPostMap";
 
-const MoreFromUser = ({ displayName }) => {
+const MoreFromUser = () => {
   const [userPosts, setUserPosts] = useState([]);
+  const { blogId, displayName } = useParams();
 
   useEffect(() => {
     const unsubscribe = db
       .collection("posts")
-      .where("displayName", "===", displayName)
+      .where("displayName", "==", displayName)
       .orderBy("timestamp", "desc")
+      .limit(6)
       .onSnapshot((snapshot) =>
         setUserPosts(
           snapshot.docs.map((doc) => ({

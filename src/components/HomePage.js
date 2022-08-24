@@ -45,10 +45,10 @@ const HomePage = () => {
   }, []);
 
   return (
-    <main>
+    <main className="">
       <section className="mb-20">
         <nav className="w-full  bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500">
-          <div className=" pb-8 mt-16 mx-auto mx-wd p-10">
+          <div className="max-w-7xl pb-8 mt-16 mx-auto mx-wd pt-10 md:px-8 xl:px-0">
             <h1 className="lg:text-3xl md:w-1/2 text-2xl mb-14 text-gray-700 prose  font-serif">
               Hello world! let's read, write and learn through melbite
             </h1>
@@ -70,7 +70,7 @@ const HomePage = () => {
           </div>
         </nav>
 
-        <main className="mt-3 mx-auto mx-wd1 ">
+        <main className="max-w-7xl mt-3 mx-auto mx-wd1 ">
           <div className="md:hidden flex justify-center items-center space-x-16">
             <a
               href="https://twitter.com/melbite1"

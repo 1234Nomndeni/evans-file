@@ -16,6 +16,8 @@ import ReplyComment from "./ReplyComment";
 import LikePost from "./LikePost";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import MoreFromUser from "./FilterCategory/MoreFromUser";
+// import MoreFromUser from "./SuperActions/MoreFromUser";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -41,6 +43,8 @@ const SelectedBlog = () => {
   const [subcommentCount, setSubCommentCount] = useState(0);
   const [isCopied, setIsCopied] = useState(false);
   const [showReply, setShowReply] = useState(false);
+  const [userPosts, setUserPosts] = useState([]);
+
 
   useEffect(() => {
     if (blogId) {
@@ -158,6 +162,7 @@ const SelectedBlog = () => {
     }
   };
 
+  // Get the subcomment Data below
   const getSubComments = (postId, commentId) => {
     db.collection("posts")
       .doc(postId)
@@ -179,6 +184,24 @@ const SelectedBlog = () => {
       });
   };
 
+  // Get more posts/articles from a user's profile
+  useEffect(() => {
+    db.collection("posts")
+    .where("displayName", "==", displayName)
+      .orderBy("timestamp", "desc")
+      .limit(6)
+      .onSnapshot((snapshot) =>
+        setUserPosts(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+          }))
+        )
+      );
+  }, [])
+
+
+  // Return/Render the commnets below
   useEffect(() => {
     fetchCommentsCount();
   }, []);
@@ -198,6 +221,8 @@ const SelectedBlog = () => {
       toast("Please Login To Like This Article");
     }
   };
+
+  // SEO hack
   const meta = {
     title: blogHeader,
     description: blogBody,
@@ -207,8 +232,8 @@ const SelectedBlog = () => {
 
   return (
     <main
-      onLoad={window.scroll(0, 0)}
-      className="pt-24 mx-wd1 mx-auto flex justify-between pb-24 wd-screen3"
+      // onLoad={window.scroll(0, 0)}
+      className="max-w-7xl pt-24 mx-wd1 mx-auto flex justify-between pb-24 wd-screen3"
     >
       <Helmet>
         <title>{`${blogHeader}`}</title>
@@ -529,10 +554,23 @@ const SelectedBlog = () => {
           </div>
         </section>
 
-        {/* <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
-          {/* <FollowUser /> 
+
+
+        <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
+        
           Follow
-        </button> */}
+        </button>
+        {/* <section className="mt-4 bg-white pl-2 pr-2 rounded-sm border">
+          <h2 className="text-lg md:text-xl text-gray-900">More from <span className="text-purple-700">{displayName}</span></h2>
+
+          <MoreFromUser/>
+
+          {userPosts?.map(userPosts) => {
+            <section></section>
+          }}
+        </section>
+        
+          <MoreFromUser/> */}
       </section>
     </main>
   );

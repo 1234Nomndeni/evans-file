@@ -28,9 +28,9 @@ const SeoOptimization = ({
         <title>{meta.title}</title>
         <meta name="robots" content="follow, index" />
         <meta content={meta.description} name="description" />
-        <meta content={meta.slug_name} name="description" />
-        <meta property="og:url" content={`https://melbite.com${Link.asPath}`} />
-        <link rel="canonical" href={`https://melbite.com${Link.asPath}`} />
+        <meta content={meta.slug_name} name="keywords" />
+        <meta property="og:url" content={`https://melbite.com/${Link.asPath}`} />
+        <link rel="canonical" href={`https://melbite.com/${Link.asPath}`} />
         <meta property="og:type" content={meta.type} />
         <meta property="og:site_name" content="Melbite Platform" />
         <meta property="og:description" content={meta.description} />

@@ -226,6 +226,7 @@ const SelectedBlog = () => {
   const meta = {
     title: blogHeader,
     description: blogBody,
+    slugName:slug_name,
     image: backgroundImage,
     type: "website",
   };
@@ -237,8 +238,9 @@ const SelectedBlog = () => {
     >
       <Helmet>
         <title>{`${blogHeader}`}</title>
-        <meta content={meta.blogHeader} name="description" />
-        <meta content={meta.slug_name} name="description" />
+        <meta name="description" content={meta.title}  />
+        <meta  name="description" description={meta.description} />
+        <meta name="keywords" content={meta.title} />
       </Helmet>
       <section className="hidden w-28 mt-4 md:fixed lg:block flex-col md:block">
         <span className="flex flex-col items-center mt-10">

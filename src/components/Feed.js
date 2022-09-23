@@ -27,6 +27,7 @@ const Feed = ({
     description: blogBody,
     image: backgroundImage,
     type: "website",
+    // date: timestamp,
     date: new Date(timestamp?.toDate()).toUTCString(),
     ...customMeta,
   };
@@ -37,20 +38,20 @@ const Feed = ({
         {/* <title>{meta.title}</title> */}
         <meta name="robots" content="follow, index" />
         <meta content={meta.description} name="description" />
-        <meta property="og:url" content={`https://melbite.com${blogHeader}`} />
-        <link rel="canonical" href={`https://melbite.com${blogHeader}`} />
+        <link rel="canonical" href={`https://melbite.com${meta.title}`} />
         <meta property="og:type" content={meta.type} />
         <meta property="og:site_name" content="Melbite" />
         <meta property="og:description" content={meta.description} />
         <meta property="og:title" content={meta.title} />
         <meta property="og:image" content={meta.image} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="melbite.com" />
+        <meta property="og:url" content={`https://melbite.com${meta.title}`} />
         <meta name="twitter:title" content={meta.title} />
         <meta name="twitter:description" content={meta.description} />
         <meta name="twitter:image" content={meta.image} />
+        <meta name="keywords" content={meta.title}/>
+
         {meta.date && (
-          <meta property="article:published_time" content={meta.date} />
+          <meta property="article:published_time" content={ <ReactTimeago date={new Date(timestamp?.toDate()).toUTCString()} />} />
         )}
       </Helmet>
 

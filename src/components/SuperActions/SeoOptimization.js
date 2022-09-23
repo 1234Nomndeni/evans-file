@@ -27,8 +27,8 @@ const SeoOptimization = ({
       <Helmet>
         <title>{meta.title}</title>
         <meta name="robots" content="follow, index" />
-        <meta content={meta.description} name="description" />
-        <meta content={meta.slug_name} name="keywords" />
+        <meta name="description" content={meta.description} />
+        <meta name="keywords" content={meta.title}  />
         <meta property="og:url" content={`https://melbite.com/${Link.asPath}`} />
         <link rel="canonical" href={`https://melbite.com/${Link.asPath}`} />
         <meta property="og:type" content={meta.type} />

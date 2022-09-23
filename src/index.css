@@ -6,19 +6,63 @@ body {
   background-color: #f3f6fb;
 }
 
+.cont-h{
+  height: max-content;
+}
+
+.twitter{
+  color:#0EA5E9 ;
+}
+
 .footer-bg{
   background-color: #131435;
 }
 
-h1,
-h2,
-h3 {
-  font-weight: bold;
+/* ******************************** */
+/* ***** Styles for HashTags ****** */
+/* ******************************** */
+.value{
+  flex-grow: 1;
 }
 
-h1 {
-  font-size: 2rem;
+.devider{
+  align-self: stretch;
+  color: gray;
 }
+
+.caret{
+  border: 0.45rem solid transparent;
+  border-top-color: #777;
+  translate: 0 25%;
+  cursor: pointer;
+}
+
+.tag-options{
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  max-height: fit-content;
+  overflow-y: auto;
+  z-index: 100;
+  display: none;
+}
+
+.tag-options.tag-options__show{
+  display: block;
+}
+
+.tag-option{
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+}
+
+
+/* ******************************** */
+/* ***** Styles for SearchBar ****** */
+/* ******************************** */
 .ais-SearchBox-form{
   display: flex !important;
   justify-content: space-between;
@@ -39,11 +83,25 @@ h1 {
   display: none !important;
 }
 
-.ais-SearchBox-reset{
-  /* display: block !important; */
+/* .ais-SearchBox-reset{
+  display: block !important;
+} */
+
+
+
+/* ******************************** */
+/* ***** Styles for TextEditor **** */
+/* ******************************** */
+
+h1,
+h2,
+h3 {
+  font-weight: bold;
 }
 
-/************ Quill code highlight **************/
+h1 {
+  font-size: 2rem;
+}
 
 .hljs-keyword {
   color: rgb(236, 2, 71) !important;
@@ -140,20 +198,16 @@ code{
   padding-right: 4px;
 }
 
-.cont-h{
-  height: max-content;
-}
-
-.twitter{
-  color:#0EA5E9 ;
-}
-
 .important{
   width: 100px !important;
   height: 60px !important;
   background-color: yellow;
   object-fit: cover !important;
 }
+
+/* ******************************** */
+/* ***** All Custom Utilities ****** */
+/* ******************************** */
 
 @layer utilities {
   @variants hover, focus {
@@ -219,6 +273,10 @@ code{
     color: rgb(23, 0, 128);
   }
 }
+
+/* ******************************** */
+/* ***** Media Queries Styles ****** */
+/* ******************************** */
 
 @media screen and (max-width: 750px) {
   .wd-screen1 {

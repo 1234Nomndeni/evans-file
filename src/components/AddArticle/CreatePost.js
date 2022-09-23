@@ -20,6 +20,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
+import TagsOptions from "./TagsOptions";
 // Text editor
 toast.configure({
   position: toast.POSITION.TOP_CENTER,
@@ -47,7 +48,7 @@ const modules = {
     [{ color: [] }, { background: [] }],
     [{ script: "sub" }, { script: "super" }],
     [{ align: [] }],
-    ["image", "code-block", "blockquote", "link", "formula", "strike"],
+    ["image","video", "code-block", "blockquote", "link", "formula", "strike"],
     ["clean"],
   ],
 };
@@ -201,6 +202,9 @@ const CreatePost = () => {
                   required
                   placeholder="Type your title here . . ."
                 />
+              </section>
+              <section className="mx-wd2 mx-auto mt-5">
+                <TagsOptions/>
               </section>
 
               <section className="mx-wd2 mt-10 pb-12 mx-auto">

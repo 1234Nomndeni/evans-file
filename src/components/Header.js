@@ -149,11 +149,11 @@ const Header = () => {
                 </span> */}
 
                 {/* Dark/Light Mode */}
-                <div>
+                {/* <div>
                   {active ? (<> <MoonIcon className="w-7 cursor-pointer text-gray-600 "/></>) : (<><SunIcon className="w-7 cursor-pointer text-gray-600 "/></>)}
-                  {/* <MoonIcon className="w-7 cursor-pointer text-gray-600 "/> */}
-                  {/* <SunIcon className="w-7 cursor-pointer text-gray-600 "/> */}
-                </div>
+                  <MoonIcon className="w-7 cursor-pointer text-gray-600 "/>
+                  <SunIcon className="w-7 cursor-pointer text-gray-600 "/>
+                </div> */}
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative">

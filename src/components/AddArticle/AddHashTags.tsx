@@ -58,7 +58,7 @@ const AddHashTags = ({ multiple, value, onChange, options }: SelectProps) => {
                   selectTags(val);
                 }}
               >
-                # {val.label} <span className="remove font-bold text-lg hover:text-red-600">&times;</span>
+                # {val.label} <span  className="remove font-bold text-lg hover:text-red-600">&times;</span>
               </button>
             ))
           : value?.label}

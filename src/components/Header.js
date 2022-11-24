@@ -5,7 +5,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, login, logout } from "../features/userSlice";
 import { auth } from "../utils/firebase";
-import brandLogo from "./images/melbite.jpg";
+import brandLogo from "./images/melbiteLogo.png";
 import SearchBar from "./SuperActions/SearchBar";
 import LatestUpdates from "./LatestUpdates";
 // import Ether from "../tests/Ether";

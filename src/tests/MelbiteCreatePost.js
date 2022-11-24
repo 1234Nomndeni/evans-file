@@ -67,7 +67,7 @@ const MelbiteCreatePost = () => {
   const [blogHeader, setBlogHeader] = useState("");
   const [blogBody, setBlogBody] = useState("");
   const [currentTask, setCurrentTask] = useState("");
-  const [backgroundImage, setBackgroundImage] = useState(null); //
+  const [backgroundImage, setBackgroundImage] = useState(null);
   const [error, setError] = useState(false);
   const [open, setOpen] = useState(true);
   const [uploadedImage, setUploadedImage] = useState("");

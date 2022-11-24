@@ -107,7 +107,7 @@ const SignUp = () => {
     <>
       {!user ? (
         <div
-          className="mt-24 sm:w-3/6 md:w-3/6 md:p-5 mx-auto items-center"
+          className="mt-24 sm:w-3/6 md:w-3/6 md:p-5 mx-auto items-center "
           to="/"
         >
           <Helmet>

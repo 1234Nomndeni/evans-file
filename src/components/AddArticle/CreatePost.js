@@ -60,11 +60,12 @@ const modules2 = {
   toolbar: [["image"]],
 };
 
-const CreatePost = () => {
+const CreatePost = ({value}) => {
   const [blogHeader, setBlogHeader] = useState("");
   const [blogBody, setBlogBody] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
   const [currentTask, setCurrentTask] = useState("");
+  const [addtags, setAddTags] = useState("")
   const [open, setOpen] = useState(true);
 
   const navigate = useNavigate();
@@ -88,6 +89,7 @@ const CreatePost = () => {
         blogHeader: blogHeader,
         slug_name: blogHeader.replace(/\s/g, "-"),
         blogBody: blogBody,
+        addtags: addtags,
         currentTask: currentTask,
         description: user.email,
         displayName: user.displayName,
@@ -100,6 +102,7 @@ const CreatePost = () => {
       setBlogHeader("");
       setBlogBody("");
       setCurrentTask("");
+      setAddTags("");
       toast("Article Published Successfully");
     }
   };
@@ -204,7 +207,7 @@ const CreatePost = () => {
                 />
               </section>
               <section className="mx-wd2 mx-auto mt-5">
-                <TagsOptions/>
+                <TagsOptions value={addtags} onChange={(e) => setAddTags(e.target.value)} />
               </section>
 
               <section className="mx-wd2 mt-10 pb-12 mx-auto">

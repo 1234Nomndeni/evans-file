@@ -200,15 +200,15 @@ const CreatePost = ({value}) => {
                 <input
                   value={blogHeader}
                   onChange={(e) => setBlogHeader(e.target.value)}
-                  className="focus:outline-none mt-10 mb-3 text-4xl font-bold text-gray-900 w-full"
+                  className="focus:outline-none mt-10 mb-3 text:2xl md:text-4xl h-20 break-words font-bold text-gray-900 w-full"
                   type="text"
                   required
                   placeholder="Type your title here . . ."
                 />
               </section>
-              <section className="mx-wd2 mx-auto mt-5">
+              {/* <section className="mx-wd2 mx-auto mt-5">
                 <TagsOptions value={addtags} onChange={(e) => setAddTags(e.target.value)} />
-              </section>
+              </section> */}
 
               <section className="mx-wd2 mt-10 pb-12 mx-auto">
                 <ReactQuill

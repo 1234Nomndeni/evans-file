@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUser, login, logout } from "../features/userSlice";
 import { auth } from "../utils/firebase";
 import brandLogo from "./images/melbiteLogo.png";
+import brandLogo1 from "./images/melbite.jpg";
 import SearchBar from "./SuperActions/SearchBar";
 import LatestUpdates from "./LatestUpdates";
 // import Ether from "../tests/Ether";
@@ -101,10 +102,17 @@ const Header = () => {
               <div className=" flex-1 p-2 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
                   <div className=" hidden lg:block w-auto ">
-                    <img
-                      className="h-11 w-36 cursor-pointer"
+                    {/* <img
+                      className="h-10 w-40 cursor-pointer"
                       onClick={() => navigate("/")}
                       src={brandLogo}
+                      alt="melbite Logo"
+                    /> */}
+
+<img
+                      className="h-11 w-36 cursor-pointer"
+                      onClick={() => navigate("/")}
+                      src={brandLogo1}
                       alt="melbite Logo"
                     />
                     {/* <h2 onClick={() => navigate("/")} className="text-2xl text-purple-900 cursor-pointer">Melbite</h2> */}

@@ -1,6 +1,12 @@
 import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { MenuIcon, XIcon, BellIcon, MoonIcon, SunIcon } from "@heroicons/react/outline";
+import {
+  MenuIcon,
+  XIcon,
+  BellIcon,
+  MoonIcon,
+  SunIcon,
+} from "@heroicons/react/outline";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, login, logout } from "../features/userSlice";
@@ -22,7 +28,7 @@ const Header = () => {
   const location = useLocation();
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const [active] = useState(false)
+  const [active] = useState(false);
 
   const { pathname } = location;
   const getLocation = pathname.split("/");
@@ -109,7 +115,7 @@ const Header = () => {
                       alt="melbite Logo"
                     /> */}
 
-<img
+                    <img
                       className="h-11 w-36 cursor-pointer"
                       onClick={() => navigate("/")}
                       src={brandLogo1}
@@ -165,11 +171,11 @@ const Header = () => {
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative">
-                  <div>
-                    <Menu.Button className="">
-                      <span className="cursor-pointer transform hover:scale-105  mr-4 md:mr-10 sm:block">
-                        <p className="hidden md:absolute animate-pulse bg-red-500 text-md text-center h-4 w-4 text-white rounded-full font-bold -mt-1 ml-4 z-50 "></p>
-                        <BellIcon className="text-sm h-8 font-thin relative text-gray-500 " />
+                  <div className="">
+                    <Menu.Button className="mt-4">
+                      <span className=" cursor-pointer transform hover:scale-105  mr-4 md:mr-10">
+                        <p className=" animate-pulse bg-red-500 text-xs text-center h-5 w-5 pt-0.5 text-white rounded-full font-bold -mb-3 ml-4 z-50 ">8</p>
+                        <BellIcon className="h-7 md:h-8 font-thin text-gray-500 " />
                       </span>
                     </Menu.Button>
                   </div>
@@ -183,7 +189,7 @@ const Header = () => {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items>
-                      <Menu.Item className="w-64 md:w-80 origin-top-right absolute -right-20 md:-right-16 md:mt-4 w-400 rounded-md shadow-lg pb-2 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Item className="w-64 md:w-80 origin-top-right absolute -right-20 md:-right-16 -mt-1  w-400 rounded-md shadow-lg pb-2 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="">
                           <LatestUpdates />
                         </div>

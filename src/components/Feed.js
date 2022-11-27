@@ -83,7 +83,7 @@ const Feed = ({
             className="flex items-center space-x-1 hover:bg-gray-200 p-2 rounded-md cursor-pointer"
           >
             <HeartIcon className="w-6 cursor-pointer " />
-            <p className="hidden sm:block text-sm text-gray-600">
+            <p className="text-sm text-gray-600">
               {likes?.length}
             </p>
             <p className="hidden sm:block text-sm text-gray-600">Likes</p>

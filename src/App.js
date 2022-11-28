@@ -29,6 +29,7 @@ import NewDraft from "./components/saveDraft/NewDraft";
 import TestImage from "./tests/TestImage";
 import TextUpload from "./tests/TextUpload";
 import MelbiteCreatePost from "./tests/MelbiteCreatePost";
+import WritingChallenge from "./components/melbitePremiers/WritingChallenge";
 
 ReactGA.initialize(process.env.TRACK_ID);
 function App() {
@@ -69,11 +70,18 @@ function App() {
           path="/Welcome-to-Melbite-the-official-blogging-site-or-the-world"
           element={<WelcomeBlog />}
         />
+
+        {/* Melbite Premiers */}
+        <Route path="/register" element={<WritingChallenge/>} />
+
+
         {/* Test Scripts */}
         <Route path="/addDraft" element={<AllDrafts />} />
         <Route path="/testDraft" element={<NewDraft />} />
         <Route path="/testImage" element={<TextUpload />} />
         <Route path="/melbiteTest" element={<MelbiteCreatePost />} />
+
+
 
         {/* <Route path="/subscriptions" element={<Subscriptions/>} /> */}
       </Routes>

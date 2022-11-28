@@ -16,7 +16,7 @@ import ReplyComment from "./ReplyComment";
 import LikePost from "./LikePost";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MoreFromUser from "./FilterCategory/MoreFromUser";
+// import MoreFromUser from "./FilterCategory/MoreFromUser";
 import contentLoading from "./images/content-loading.gif";
 // import MoreFromUser from "./SuperActions/MoreFromUser";
 
@@ -77,6 +77,7 @@ const SelectedBlog = () => {
       .onSnapshot((snapshot) => {
         setComments(
           snapshot.docs.map((doc) => {
+            // getSubComments(blogId, doc.id);
             getSubComments(blogId, doc.id);
             return {
               id: doc.id,

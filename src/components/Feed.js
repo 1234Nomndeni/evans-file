@@ -77,7 +77,7 @@ const Feed = ({
       </section>
 
       <section className="flex justify-between mt-4">
-        <span className="flex items-center w-2/5 justify-between text-gray-400">
+        <span className="flex items-center w-2/5 gap-3 justify-between text-gray-400">
           <Link
             to={`/${name_slug}/${id}`}
             className="flex items-center space-x-1 hover:bg-gray-200 p-2 rounded-md cursor-pointer"
@@ -86,7 +86,7 @@ const Feed = ({
             <p className="text-sm text-gray-600">
               {likes?.length}
             </p>
-            <p className="hidden sm:block text-sm text-gray-600">Likes</p>
+            <p className="text-sm text-gray-600">Likes</p>
           </Link>
 
           <Link

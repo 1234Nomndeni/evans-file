@@ -54,11 +54,12 @@ function App() {
         <Route path="/new" element={<CreatePost />} />
         <Route path="/signIn" element={<SignUp />} />
         <Route path={`/:displayName/:blogId`} element={<SelectedBlog />} />
+        {/* <Route path={`/:displayName/:slug_name`} element={<SelectedBlog />} /> */}
         {/* <Route path={`/:displayName/:blogId`} element={<SelectedBlog2 />} /> */}
         {user && <Route path="/profile" element={<UpdateProfile />} />}
         {user && <Route path="/dashboard" element={<UserDashboard />} />}
         {user && <Route path="/my-drafts" element={<MyDrafts />} />}
-        <Route path="/:name_slug/:postId" element={<ViewArticle />} />
+        {/* <Route path="/:name_slug/:postId" element={<ViewArticle />} /> */}
         <Route path="/about" element={<AboutUs />} />
         <Route path="/donate" element={<Donate />} />
         <Route path="/contact-us" element={<Contacts />} />

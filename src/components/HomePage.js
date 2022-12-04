@@ -18,6 +18,7 @@ import FilterCategory from "./FilterCategory/FilterCategory";
 const HomePage = () => {
   const [articles, setArticles] = useState([]);
   const navigate = useNavigate();
+  const {slug} = useParams()
   const user = useSelector(selectUser);
   const stickyRef = useStickyBox({ offsetTop: 100, offsetBottom: 20 });
   const stickyRightRef = useStickyBox({ offsetTop: 80, offsetBottom: 20 });
@@ -31,13 +32,14 @@ const HomePage = () => {
       .collection("posts")
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) =>
-        setArticles(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
+      setArticles(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }))
         )
-      );
+        )
+        // .filter((doc) => doc.slug === slug)
 
     return () => {
       unsubscribe();
@@ -117,7 +119,7 @@ const HomePage = () => {
               ) : (
                 articles.map((article) => (
                   <Feed
-                    key={article.id}
+                    key={article.slug_name}
                     id={article.id}
                     blogHeader={article.data.blogHeader}
                     blogBody={article.data.blogBody}

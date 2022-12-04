@@ -241,6 +241,7 @@ const SelectedBlog = () => {
         <meta name="description" content={meta.title} />
         <meta name="description" description={meta.description} />
         <meta name="keywords" content={meta.title} />
+        <meta name="keywords" content={meta.slugName} />
       </Helmet>
       <section className="hidden w-28 mt-4 md:fixed lg:block flex-col md:block">
         <span className="flex flex-col items-center mt-10">
@@ -564,9 +565,9 @@ const SelectedBlog = () => {
           </div>
         </section>
 
-        <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
+        {/* <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
           Follow
-        </button>
+        </button> */}
         {/* <section className="mt-4 bg-white pl-2 pr-2 rounded-sm border">
           <h2 className="text-lg md:text-xl text-gray-900">More from <span className="text-purple-700">{displayName}</span></h2>
 

@@ -17,6 +17,7 @@ const Feed = ({
   blogBody,
   backgroundImage,
   name_slug,
+  slug_name,
   displayName,
   likes,
   commentCount,
@@ -26,6 +27,7 @@ const Feed = ({
     title: blogHeader,
     description: blogBody,
     image: backgroundImage,
+    nameSlug: slug_name,
     type: "website",
     // date: timestamp,
     date: new Date(timestamp?.toDate()).toUTCString(),
@@ -49,6 +51,7 @@ const Feed = ({
         <meta name="twitter:description" content={meta.description} />
         <meta name="twitter:image" content={meta.image} />
         <meta name="keywords" content={meta.title}/>
+        <meta name="keywords" content={meta.nameSlug}/>
 
         {meta.date && (
           <meta property="article:published_time" content={ <ReactTimeago date={new Date(timestamp?.toDate()).toUTCString()} />} />

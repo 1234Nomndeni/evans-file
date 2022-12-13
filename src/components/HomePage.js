@@ -18,7 +18,7 @@ import FilterCategory from "./FilterCategory/FilterCategory";
 const HomePage = () => {
   const [articles, setArticles] = useState([]);
   const navigate = useNavigate();
-  const {slug} = useParams()
+  const { slug } = useParams();
   const user = useSelector(selectUser);
   const stickyRef = useStickyBox({ offsetTop: 100, offsetBottom: 20 });
   const stickyRightRef = useStickyBox({ offsetTop: 80, offsetBottom: 20 });
@@ -28,22 +28,23 @@ const HomePage = () => {
   /******************************************************** */
 
   useEffect(() => {
-    const unsubscribe = db
-      .collection("posts")
+    // const unsubscribe =
+    db.collection("posts")
       .orderBy("timestamp", "desc")
+      // .limit(1)
       .onSnapshot((snapshot) =>
-      setArticles(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data(),
-        }))
+        setArticles(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+          }))
         )
-        )
-        // .filter((doc) => doc.slug === slug)
+      );
+    // .filter((doc) => doc.slug === slug)
 
-    return () => {
-      unsubscribe();
-    };
+    // return () => {
+    //   unsubscribe();
+    // };
   }, []);
 
   return (
@@ -107,16 +108,17 @@ const HomePage = () => {
             <div className=" lg:w-3/5 sm:w-full">
               <WelcomeNote />
 
-              {!articles || articles.length === 0 ? (
-                <div className="flex flex-col items-center justify-center w-full mx-auto">
-                  <img
-                    className="w-16"
-                    src={loader}
-                    alt="Loading articles . . ."
-                  />
-                  <p className="mt-2 text-sm">Loading articles. . .</p>
-                </div>
-              ) : (
+              {
+                // !articles || articles.length === 0 ? (
+                //   <div className="flex flex-col items-center justify-center w-full mx-auto">
+                //     <img
+                //       className="w-16"
+                //       src={loader}
+                //       alt="Loading articles . . ."
+                //     />
+                //     <p className="mt-2 text-sm">Loading articles. . .</p>
+                //   </div>
+                // ) : (
                 articles.map((article) => (
                   <Feed
                     key={article.slug_name}
@@ -135,7 +137,8 @@ const HomePage = () => {
                     uid={article.data.uid}
                   />
                 ))
-              )}
+                // )
+              }
             </div>
 
             <div className="hidden md:block pl-4 w-80 ">

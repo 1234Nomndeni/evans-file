@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import CodeIcon from "@mui/icons-material/Code";
 import DirectionsOutlinedIcon from "@mui/icons-material/DirectionsOutlined";
 import PrivacyTipOutlinedIcon from "@mui/icons-material/PrivacyTipOutlined";
 import CodeOffOutlinedIcon from "@mui/icons-material/CodeOffOutlined";
@@ -23,6 +24,10 @@ const PageLinks = () => {
           <span className="flex space-x-2 text-sm items-center cursor-pointer hover:text-purple-800 mb-2">
             <EmailOutlinedIcon className=" text-purple-900" />
             <p onClick={() => navigate("/contact-us")}>Contact Us</p>
+          </span>
+          <span className="flex space-x-2 text-sm items-center cursor-pointer hover:text-purple-800 mb-2">
+            <CodeIcon className=" text-green-600" />
+            <p onClick={() => navigate("/workspace")}>WorkSpace</p>
           </span>
           <span className="flex space-x-2 text-sm items-center cursor-pointer hover:text-purple-800 mb-2">
             <FavoriteIcon className="text-pink-600 font-bold" />

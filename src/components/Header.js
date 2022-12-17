@@ -130,6 +130,21 @@ const Header = () => {
                 </div>
               </div>
               <div className="absolute space-x-5 inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              <li
+                  className={
+                    getLocation[2] === "workspace"
+                      ? "list-none text-purple-900 font-bold"
+                      : "list-none"
+                  }
+                >
+                  <Link
+                    to="/workspace"
+                    className="hidden md:block text-md pl-2 cursor-pointer mr-10  p-2  "
+                  >
+                    Workspace
+                  </Link>
+                </li>
+
                 <li
                   className={
                     getLocation[1] === "about"
@@ -144,6 +159,7 @@ const Header = () => {
                     Our Story
                   </Link>
                 </li>
+                
 
                 <p
                   onClick={() => navigate("/new")}

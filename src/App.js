@@ -30,6 +30,7 @@ import TestImage from "./tests/TestImage";
 import TextUpload from "./tests/TextUpload";
 import MelbiteCreatePost from "./tests/MelbiteCreatePost";
 import WritingChallenge from "./components/melbitePremiers/WritingChallenge";
+import WorkSpace from "./tests/Workspace/WorkSpace";
 
 ReactGA.initialize(process.env.TRACK_ID);
 function App() {
@@ -80,6 +81,7 @@ function App() {
         <Route path="/addDraft" element={<AllDrafts />} />
         <Route path="/testDraft" element={<NewDraft />} />
         <Route path="/testImage" element={<TextUpload />} />
+        <Route path="/workspace" element={<WorkSpace />} />
         <Route path="/melbiteTest" element={<MelbiteCreatePost />} />
 
 

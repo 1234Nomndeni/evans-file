@@ -31,6 +31,7 @@ import TextUpload from "./tests/TextUpload";
 import MelbiteCreatePost from "./tests/MelbiteCreatePost";
 import WritingChallenge from "./components/melbitePremiers/WritingChallenge";
 import WorkSpace from "./tests/Workspace/WorkSpace";
+// import WorkSpace from "./tests/Workspace/CodeEditorWindow";
 
 ReactGA.initialize(process.env.TRACK_ID);
 function App() {

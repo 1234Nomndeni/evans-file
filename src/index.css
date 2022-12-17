@@ -234,6 +234,12 @@ blockquote p {
   object-fit: cover !important;
 }
 
+.workspace-bg{
+  /* background-color: #05203b; */
+  /* background-color: #042e58; */
+  /* color: rgb(61, 0, 61); */
+}
+
 /* ******************************** */
 /* ***** All Custom Utilities ****** */
 /* ******************************** */

@@ -109,8 +109,8 @@ const WorkSpace = () => {
       .catch((err) => {
         let error = err.response ? err.response.data : err;
         // get error status
-        let status = err.response.status;
-        console.log("status", status);
+        let status = err?.response?.status;
+        // console.log("status", status);
         if (status === 429) {
           console.log("too many requests", status);
 
@@ -122,6 +122,7 @@ const WorkSpace = () => {
         setProcessing(false);
         console.log("catch block...", error);
       });
+
   };
 
   const checkStatus = async (token) => {
@@ -199,7 +200,7 @@ const WorkSpace = () => {
   };
 
   return (
-    <main className="workspace-bg">
+    <main className="">
       <ToastContainer
         position="top-right"
         autoClose={2000}
@@ -213,8 +214,8 @@ const WorkSpace = () => {
       />
 
 
-      {/* <div className="mt-20 h-4 w-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"></div> */}
-      <div className="pt-20 flex flex-row">
+      <div className="pt-24 h-10 w-full bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500"></div>
+      <div className=" flex flex-row">
         <div className="px-4 py-2">
           <LanguagesDropdown onSelectChange={onSelectChange} />
         </div>
@@ -222,7 +223,7 @@ const WorkSpace = () => {
           <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
         </div>
       </div>
-      <div className="flex flex-row space-x-4 items-start px-4 py-4">
+      <div className="flex md:flex-row flex-col md:space-x-4 items-start px-4 py-4">
         <div className="flex flex-col w-full h-full justify-start items-end">
           <CodeEditorWindow
             code={code}
@@ -232,7 +233,7 @@ const WorkSpace = () => {
           />
         </div>
 
-        <div className="right-container flex flex-shrink-0 w-[30%] flex-col">
+        <div className="flex flex-shrink-0 w-full md:w-2/6 flex-col ">
           <OutputWindow outputDetails={outputDetails} />
           <div className="flex flex-col items-end">
             <CustomInput
@@ -243,7 +244,7 @@ const WorkSpace = () => {
               onClick={handleCompile}
               disabled={!code}
               className={classnames(
-                "mt-4 border-2 border-black z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 bg-white flex-shrink-0",
+                "mt-4  z-10 rounded-md shadow-[5px_5px_0px_0px_rgba(0,0,0)] px-4 py-2 hover:shadow transition duration-200 flex-shrink-0 bg-gradient-to-r  from-yellow-500 via-red-500 to-pink-500",
                 !code ? "opacity-50" : ""
               )}
             >

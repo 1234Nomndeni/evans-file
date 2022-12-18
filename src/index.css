@@ -235,8 +235,9 @@ blockquote p {
 }
 
 .workspace-bg{
-  /* background-color: #05203b; */
+  background-color: #05203b;
   /* background-color: #042e58; */
+  /* background-color: rgb(101, 0, 121); */
   /* color: rgb(61, 0, 61); */
 }
 

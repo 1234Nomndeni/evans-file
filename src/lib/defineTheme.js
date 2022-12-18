@@ -10,7 +10,7 @@ const monacoThemes = {
   "brilliance-dull": "Brilliance Dull",
   "chrome-devtools": "Chrome DevTools",
   "clouds-midnight": "Clouds Midnight",
-  clouds: "Clouds",
+  // clouds: "Clouds",
   cobalt: "Cobalt",
   dawn: "Dawn",
   dreamweaver: "Dreamweaver",

@@ -1,6 +1,5 @@
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
-import TestImage from "../../tests/TestImage";
 
 const AboutUs = () => {
   const navigate = useNavigate();
@@ -10,9 +9,15 @@ const AboutUs = () => {
       className="lg:max-w-7xl mt-24 mx-wd1 bg-white mx-auto p-4 pt-12 pb-12 pl-12 border rounded-md"
     >
       <Helmet>
-        <title> About  Melbite Community</title>
-        <meta name="description" content="Melbite is a community of people and people who are not in the world of life. Melbite is a community of people and people who are not in the world of life" />
-        <meta name="keywords" content="How to, Learning, Article, blogging, melbite"/>
+        <title> About Melbite Community</title>
+        <meta
+          name="description"
+          content="Melbite is a community of people and people who are not in the world of life. Melbite is a community of people and people who are not in the world of life"
+        />
+        <meta
+          name="keywords"
+          content="How to, Learning, Article, blogging, melbite"
+        />
       </Helmet>
       <section className="bg mx-wd2">
         <h2 className="text-3xl text-gray-800">About Melbite</h2>
@@ -28,9 +33,10 @@ const AboutUs = () => {
           Technologies
         </h2>
         <p className="leading-7 text-md text-gray-900">
-          Melbite is built with this amazing Javascript libraries that are ReactJs and NodeJs.
-          We also make use of firebase realtime database, firestore and firebase
-          storage. Our amazing search bar is powered by Algolia-search.
+          Melbite is built with this amazing Javascript libraries that are
+          ReactJs and NodeJs. We also make use of firebase realtime database,
+          firestore and firebase storage. Our amazing search bar is powered by
+          Algolia-search.
         </p>
         <p className="leading-7 text-md text-gray-900">
           We make use of customised Quill Editor supporting various features and

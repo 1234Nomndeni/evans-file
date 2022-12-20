@@ -31,6 +31,7 @@
     "react-ga": "^3.3.0",
     "react-helmet": "^6.1.0",
     "react-hook-form": "^7.29.0",
+    "react-icons": "^4.4.0",
     "react-instantsearch-dom": "^6.26.0",
     "react-loading-skeleton": "^3.0.3",
     "react-local-storage-manager": "^0.1.2",

@@ -1,6 +1,12 @@
 import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { MenuIcon, XIcon, BellIcon, MoonIcon, SunIcon } from "@heroicons/react/outline";
+import {
+  MenuIcon,
+  XIcon,
+  BellIcon,
+  MoonIcon,
+  SunIcon,
+} from "@heroicons/react/outline";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, login, logout } from "../features/userSlice";
@@ -21,7 +27,7 @@ const Header = () => {
   const location = useLocation();
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const [active] = useState(false)
+  const [active] = useState(false);
 
   const { pathname } = location;
   const getLocation = pathname.split("/");
@@ -111,7 +117,7 @@ const Header = () => {
                   </div>
                 </div>
                 <div className="hidden lg:block ml-10 w-4/5 ">
-                  {/* <SearchBar/> */}
+                  {/* <SearchBar /> */}
                   <SearchBar />
                 </div>
               </div>
@@ -150,7 +156,16 @@ const Header = () => {
 
                 {/* Dark/Light Mode */}
                 <div>
-                  {active ? (<> <MoonIcon className="w-7 cursor-pointer text-gray-600 "/></>) : (<><SunIcon className="w-7 cursor-pointer text-gray-600 "/></>)}
+                  {/* {active ? (
+                    <>
+                      {" "}
+                      <MoonIcon className="w-7 cursor-pointer text-gray-600 " />
+                    </>
+                  ) : (
+                    <>
+                      <SunIcon className="w-7 cursor-pointer text-gray-600 " />
+                    </>
+                  )} */}
                   {/* <MoonIcon className="w-7 cursor-pointer text-gray-600 "/> */}
                   {/* <SunIcon className="w-7 cursor-pointer text-gray-600 "/> */}
                 </div>

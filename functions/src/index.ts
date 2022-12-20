@@ -20,3 +20,4 @@ export const onProductDeleted = functions.firestore
 .onDelete((snap, ctx) => {
 return index.deleteObject(snap.id)
 })
+

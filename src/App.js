@@ -29,6 +29,9 @@ import NewDraft from "./components/saveDraft/NewDraft";
 import TestImage from "./tests/TestImage";
 import TextUpload from "./tests/TextUpload";
 import MelbiteCreatePost from "./tests/MelbiteCreatePost";
+import WritingChallenge from "./components/melbitePremiers/WritingChallenge";
+import WorkSpace from "./tests/Workspace/WorkSpace";
+// import WorkSpace from "./tests/Workspace/CodeEditorWindow";
 
 ReactGA.initialize(process.env.TRACK_ID);
 function App() {
@@ -53,11 +56,12 @@ function App() {
         <Route path="/new" element={<CreatePost />} />
         <Route path="/signIn" element={<SignUp />} />
         <Route path={`/:displayName/:blogId`} element={<SelectedBlog />} />
+        {/* <Route path={`/:displayName/:slug_name`} element={<SelectedBlog />} /> */}
         {/* <Route path={`/:displayName/:blogId`} element={<SelectedBlog2 />} /> */}
         {user && <Route path="/profile" element={<UpdateProfile />} />}
         {user && <Route path="/dashboard" element={<UserDashboard />} />}
         {user && <Route path="/my-drafts" element={<MyDrafts />} />}
-        <Route path="/:name_slug/:postId" element={<ViewArticle />} />
+        {/* <Route path="/:name_slug/:postId" element={<ViewArticle />} /> */}
         <Route path="/about" element={<AboutUs />} />
         <Route path="/donate" element={<Donate />} />
         <Route path="/contact-us" element={<Contacts />} />
@@ -69,11 +73,19 @@ function App() {
           path="/Welcome-to-Melbite-the-official-blogging-site-or-the-world"
           element={<WelcomeBlog />}
         />
+
+        {/* Melbite Premiers */}
+        <Route path="/register" element={<WritingChallenge/>} />
+
+
         {/* Test Scripts */}
         <Route path="/addDraft" element={<AllDrafts />} />
         <Route path="/testDraft" element={<NewDraft />} />
         <Route path="/testImage" element={<TextUpload />} />
+        <Route path="/workspace" element={<WorkSpace />} />
         <Route path="/melbiteTest" element={<MelbiteCreatePost />} />
+
+
 
         {/* <Route path="/subscriptions" element={<Subscriptions/>} /> */}
       </Routes>

@@ -16,7 +16,8 @@ import ReplyComment from "./ReplyComment";
 import LikePost from "./LikePost";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MoreFromUser from "./FilterCategory/MoreFromUser";
+// import MoreFromUser from "./FilterCategory/MoreFromUser";
+import contentLoading from "./images/content-loading.gif";
 // import MoreFromUser from "./SuperActions/MoreFromUser";
 
 function classNames(...classes) {
@@ -44,7 +45,6 @@ const SelectedBlog = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [showReply, setShowReply] = useState(false);
   const [userPosts, setUserPosts] = useState([]);
-
 
   useEffect(() => {
     if (blogId) {
@@ -77,6 +77,7 @@ const SelectedBlog = () => {
       .onSnapshot((snapshot) => {
         setComments(
           snapshot.docs.map((doc) => {
+            // getSubComments(blogId, doc.id);
             getSubComments(blogId, doc.id);
             return {
               id: doc.id,
@@ -187,7 +188,7 @@ const SelectedBlog = () => {
   // Get more posts/articles from a user's profile
   useEffect(() => {
     db.collection("posts")
-    .where("displayName", "==", displayName)
+      .where("displayName", "==", displayName)
       .orderBy("timestamp", "desc")
       .limit(6)
       .onSnapshot((snapshot) =>
@@ -198,8 +199,7 @@ const SelectedBlog = () => {
           }))
         )
       );
-  }, [])
-
+  }, []);
 
   // Return/Render the commnets below
   useEffect(() => {
@@ -226,6 +226,7 @@ const SelectedBlog = () => {
   const meta = {
     title: blogHeader,
     description: blogBody,
+    slugName: slug_name,
     image: backgroundImage,
     type: "website",
   };
@@ -237,8 +238,10 @@ const SelectedBlog = () => {
     >
       <Helmet>
         <title>{`${blogHeader}`}</title>
-        <meta content={meta.blogHeader} name="description" />
-        <meta content={meta.slug_name} name="description" />
+        <meta name="description" content={meta.title} />
+        <meta name="description" description={meta.description} />
+        <meta name="keywords" content={meta.title} />
+        <meta name="keywords" content={meta.slugName} />
       </Helmet>
       <section className="hidden w-28 mt-4 md:fixed lg:block flex-col md:block">
         <span className="flex flex-col items-center mt-10">
@@ -405,10 +408,18 @@ const SelectedBlog = () => {
             {blogHeader}
           </h2>
           <span>
-            <p
-              className="font-sans pt-8 text-lg leading-7"
-              dangerouslySetInnerHTML={{ __html: blogBody }}
-            />
+            {!blogBody ? (
+              <section className="flex flex-col items-center justify-center w-full mx-auto -mt-16 h-48">
+                <img className="flex items-center h-28 w-36 text-center" src={contentLoading} alt="" />
+                <p className="-mt-10" >Loading content . . .</p>              
+              </section>
+            ) : (
+                <p
+                  className="font-sans pt-8 text-lg leading-7"
+                  dangerouslySetInnerHTML={{ __html: blogBody }}
+                />
+            )}
+
           </span>
         </div>
 
@@ -554,12 +565,9 @@ const SelectedBlog = () => {
           </div>
         </section>
 
-
-
-        <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
-        
+        {/* <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
           Follow
-        </button>
+        </button> */}
         {/* <section className="mt-4 bg-white pl-2 pr-2 rounded-sm border">
           <h2 className="text-lg md:text-xl text-gray-900">More from <span className="text-purple-700">{displayName}</span></h2>
 

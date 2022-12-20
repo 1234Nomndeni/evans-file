@@ -4,6 +4,8 @@ import "firebase/compat/firestore";
 import "firebase/compat/storage";
 import "firebase/compat/performance";
 import { getAnalytics, logEvent } from "firebase/analytics";
+import { getPerformance} from "firebase/performance"
+// import { getPerformance } from "firebase/performance";
 
 const firebaseApp = firebase.initializeApp({
   apiKey: "AIzaSyADk94g6iWNHDgYYpNMGGVO73h2ioge1OY",
@@ -26,7 +28,8 @@ const storage = firebase.storage();
 const provider = new firebase.auth.GoogleAuthProvider();
 const gitProvider = new firebase.auth.GithubAuthProvider();
 const twitterProvider = new firebase.auth.TwitterAuthProvider();
+const perf = getPerformance(firebaseApp);
 
-export { analytics, db, storage, auth, provider, gitProvider, twitterProvider };
+export { analytics, perf, db, storage, auth, provider, gitProvider, twitterProvider };
 
 // deployment and avoid cloud functions => firebase deploy --except functions

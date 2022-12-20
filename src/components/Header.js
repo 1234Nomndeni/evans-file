@@ -11,7 +11,8 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, login, logout } from "../features/userSlice";
 import { auth } from "../utils/firebase";
-import brandLogo from "./images/melbite.jpg";
+import brandLogo from "./images/melbiteLogo.png";
+import brandLogo1 from "./images/melbite.jpg";
 import SearchBar from "./SuperActions/SearchBar";
 import LatestUpdates from "./LatestUpdates";
 // import Ether from "../tests/Ether";
@@ -107,10 +108,17 @@ const Header = () => {
               <div className=" flex-1 p-2 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
                   <div className=" hidden lg:block w-auto ">
+                    {/* <img
+                      className="h-10 w-40 cursor-pointer"
+                      onClick={() => navigate("/")}
+                      src={brandLogo}
+                      alt="melbite Logo"
+                    /> */}
+
                     <img
                       className="h-11 w-36 cursor-pointer"
                       onClick={() => navigate("/")}
-                      src={brandLogo}
+                      src={brandLogo1}
                       alt="melbite Logo"
                     />
                     {/* <h2 onClick={() => navigate("/")} className="text-2xl text-purple-900 cursor-pointer">Melbite</h2> */}
@@ -122,6 +130,21 @@ const Header = () => {
                 </div>
               </div>
               <div className="absolute space-x-5 inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              <li
+                  className={
+                    getLocation[2] === "workspace"
+                      ? "list-none text-purple-900 font-bold"
+                      : "list-none"
+                  }
+                >
+                  <Link
+                    to="/workspace"
+                    className="hidden md:block text-md pl-2 cursor-pointer mr-10  p-2  "
+                  >
+                    Workspace
+                  </Link>
+                </li>
+
                 <li
                   className={
                     getLocation[1] === "about"
@@ -136,6 +159,7 @@ const Header = () => {
                     Our Story
                   </Link>
                 </li>
+                
 
                 <p
                   onClick={() => navigate("/new")}
@@ -155,6 +179,7 @@ const Header = () => {
                 </span> */}
 
                 {/* Dark/Light Mode */}
+<<<<<<< HEAD
                 <div>
                   {/* {active ? (
                     <>
@@ -169,14 +194,21 @@ const Header = () => {
                   {/* <MoonIcon className="w-7 cursor-pointer text-gray-600 "/> */}
                   {/* <SunIcon className="w-7 cursor-pointer text-gray-600 "/> */}
                 </div>
+=======
+                {/* <div>
+                  {active ? (<> <MoonIcon className="w-7 cursor-pointer text-gray-600 "/></>) : (<><SunIcon className="w-7 cursor-pointer text-gray-600 "/></>)}
+                  <MoonIcon className="w-7 cursor-pointer text-gray-600 "/>
+                  <SunIcon className="w-7 cursor-pointer text-gray-600 "/>
+                </div> */}
+>>>>>>> 2656ad310d2456f10214d56e344d1c14cb308f54
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative">
-                  <div>
-                    <Menu.Button className="">
-                      <span className="cursor-pointer transform hover:scale-105  mr-4 md:mr-10 sm:block">
-                        <p className="hidden md:absolute animate-pulse bg-red-500 text-md text-center h-4 w-4 text-white rounded-full font-bold -mt-1 ml-4 z-50 "></p>
-                        <BellIcon className="text-sm h-8 font-thin relative text-gray-500 " />
+                  <div className="">
+                    <Menu.Button className="mt-4">
+                      <span className=" cursor-pointer transform hover:scale-105  mr-4 md:mr-10">
+                        <p className=" animate-pulse bg-red-500 text-xs text-center h-5 w-5 pt-0.5 text-white rounded-full font-bold -mb-3 ml-4 z-50 ">8</p>
+                        <BellIcon className="h-7 md:h-8 font-thin text-gray-500 " />
                       </span>
                     </Menu.Button>
                   </div>
@@ -190,7 +222,7 @@ const Header = () => {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items>
-                      <Menu.Item className="w-64 md:w-80 origin-top-right absolute -right-20 md:-right-16 md:mt-4 w-400 rounded-md shadow-lg pb-2 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Item className="w-64 md:w-80 origin-top-right absolute -right-20 md:-right-16 -mt-1  w-400 rounded-md shadow-lg pb-2 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="">
                           <LatestUpdates />
                         </div>

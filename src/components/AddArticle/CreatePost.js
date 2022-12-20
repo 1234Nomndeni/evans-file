@@ -20,6 +20,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
+import TagsOptions from "./TagsOptions";
 // Text editor
 toast.configure({
   position: toast.POSITION.TOP_CENTER,
@@ -47,7 +48,7 @@ const modules = {
     [{ color: [] }, { background: [] }],
     [{ script: "sub" }, { script: "super" }],
     [{ align: [] }],
-    ["image", "code-block", "blockquote", "link", "formula", "strike"],
+    ["image","video", "code-block", "blockquote", "link", "formula", "strike"],
     ["clean"],
   ],
 };
@@ -59,11 +60,12 @@ const modules2 = {
   toolbar: [["image"]],
 };
 
-const CreatePost = () => {
+const CreatePost = ({value}) => {
   const [blogHeader, setBlogHeader] = useState("");
   const [blogBody, setBlogBody] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
   const [currentTask, setCurrentTask] = useState("");
+  const [addtags, setAddTags] = useState("")
   const [open, setOpen] = useState(true);
 
   const navigate = useNavigate();
@@ -87,6 +89,7 @@ const CreatePost = () => {
         blogHeader: blogHeader,
         slug_name: blogHeader.replace(/\s/g, "-"),
         blogBody: blogBody,
+        addtags: addtags,
         currentTask: currentTask,
         description: user.email,
         displayName: user.displayName,
@@ -99,6 +102,7 @@ const CreatePost = () => {
       setBlogHeader("");
       setBlogBody("");
       setCurrentTask("");
+      setAddTags("");
       toast("Article Published Successfully");
     }
   };
@@ -196,12 +200,15 @@ const CreatePost = () => {
                 <input
                   value={blogHeader}
                   onChange={(e) => setBlogHeader(e.target.value)}
-                  className="focus:outline-none mt-10 mb-3 text-4xl font-bold text-gray-900 w-full"
+                  className="focus:outline-none mt-10 mb-3 text:2xl md:text-4xl h-20 break-words font-bold text-gray-900 w-full"
                   type="text"
                   required
                   placeholder="Type your title here . . ."
                 />
               </section>
+              {/* <section className="mx-wd2 mx-auto mt-5">
+                <TagsOptions value={addtags} onChange={(e) => setAddTags(e.target.value)} />
+              </section> */}
 
               <section className="mx-wd2 mt-10 pb-12 mx-auto">
                 <ReactQuill

@@ -17,6 +17,7 @@ const Feed = ({
   blogBody,
   backgroundImage,
   name_slug,
+  slug_name,
   displayName,
   likes,
   commentCount,
@@ -26,7 +27,9 @@ const Feed = ({
     title: blogHeader,
     description: blogBody,
     image: backgroundImage,
+    nameSlug: slug_name,
     type: "website",
+    // date: timestamp,
     date: new Date(timestamp?.toDate()).toUTCString(),
     ...customMeta,
   };
@@ -37,20 +40,21 @@ const Feed = ({
         {/* <title>{meta.title}</title> */}
         <meta name="robots" content="follow, index" />
         <meta content={meta.description} name="description" />
-        <meta property="og:url" content={`https://melbite.com${blogHeader}`} />
-        <link rel="canonical" href={`https://melbite.com${blogHeader}`} />
+        <link rel="canonical" href={`https://melbite.com${meta.title}`} />
         <meta property="og:type" content={meta.type} />
         <meta property="og:site_name" content="Melbite" />
         <meta property="og:description" content={meta.description} />
         <meta property="og:title" content={meta.title} />
         <meta property="og:image" content={meta.image} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="melbite.com" />
+        <meta property="og:url" content={`https://melbite.com${meta.title}`} />
         <meta name="twitter:title" content={meta.title} />
         <meta name="twitter:description" content={meta.description} />
         <meta name="twitter:image" content={meta.image} />
+        <meta name="keywords" content={meta.title}/>
+        <meta name="keywords" content={meta.nameSlug}/>
+
         {meta.date && (
-          <meta property="article:published_time" content={meta.date} />
+          <meta property="article:published_time" content={ <ReactTimeago date={new Date(timestamp?.toDate()).toUTCString()} />} />
         )}
       </Helmet>
 
@@ -76,16 +80,16 @@ const Feed = ({
       </section>
 
       <section className="flex justify-between mt-4">
-        <span className="flex items-center w-2/5 justify-between text-gray-400">
+        <span className="flex items-center w-2/5 gap-3 justify-between text-gray-400">
           <Link
             to={`/${name_slug}/${id}`}
             className="flex items-center space-x-1 hover:bg-gray-200 p-2 rounded-md cursor-pointer"
           >
             <HeartIcon className="w-6 cursor-pointer " />
-            <p className="hidden sm:block text-sm text-gray-600">
+            <p className="text-sm text-gray-600">
               {likes?.length}
             </p>
-            <p className="hidden sm:block text-sm text-gray-600">Likes</p>
+            <p className="text-sm text-gray-600">Likes</p>
           </Link>
 
           <Link

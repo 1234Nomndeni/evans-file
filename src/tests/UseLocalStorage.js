@@ -1,15 +1,18 @@
-import React from 'react'
-
-const UseLocalStorage = () => {
+export const UseLocalStorage = () => {
     const getLocalStorage = () => {
         const local = localStorage.getItem(name)
         if(local != null){
             return JSON.parse(local)
         }
+        return null
     }
-  return (
-    <div>UseLocalStorage</div>
-  )
-}
 
-export default UseLocalStorage
+    const setLocalStorage = (item) => {
+        localStorage.setItem(name, JSON.stringify(item))
+    }
+
+    const removeLocalStorage = () => {
+        return localStorage.removeItem(name)
+    }
+  return [getLocalStorage, setLocalStorage, removeLocalStorage]
+}

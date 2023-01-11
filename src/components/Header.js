@@ -179,7 +179,7 @@ const Header = () => {
                 </span> */}
 
                 {/* Dark/Light Mode */}
-<<<<<<< HEAD
+
                 <div>
                   {/* {active ? (
                     <>
@@ -194,13 +194,12 @@ const Header = () => {
                   {/* <MoonIcon className="w-7 cursor-pointer text-gray-600 "/> */}
                   {/* <SunIcon className="w-7 cursor-pointer text-gray-600 "/> */}
                 </div>
-=======
                 {/* <div>
                   {active ? (<> <MoonIcon className="w-7 cursor-pointer text-gray-600 "/></>) : (<><SunIcon className="w-7 cursor-pointer text-gray-600 "/></>)}
                   <MoonIcon className="w-7 cursor-pointer text-gray-600 "/>
                   <SunIcon className="w-7 cursor-pointer text-gray-600 "/>
                 </div> */}
->>>>>>> 2656ad310d2456f10214d56e344d1c14cb308f54
+
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative">

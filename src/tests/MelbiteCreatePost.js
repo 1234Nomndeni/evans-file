@@ -24,6 +24,7 @@ import SignUp from "../components/SignUp";
 import { selectUser, logout, login } from "../features/userSlice";
 import { auth, db, storage } from "../utils/firebase";
 import BackgroundImage from "../components/AddArticle/BackgroundImage";
+import { UseLocalStorage } from "./UseLocalStorage";
 // Text editor
 toast.configure({
   position: toast.POSITION.TOP_CENTER,
@@ -72,6 +73,12 @@ const MelbiteCreatePost = () => {
   const [open, setOpen] = useState(true);
   const [uploadedImage, setUploadedImage] = useState("");
 
+  // settsavedDraft, settsavedDrafting up local storage
+  // const [savedDraft, setSavedDraft, clearLocalStorage] = UseLocalStorage("")
+  // const [allDraftState, setAllDraftState] = useState(savedDraft() || blogHeader)
+
+ 
+
   const navigate = useNavigate();
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
@@ -79,7 +86,12 @@ const MelbiteCreatePost = () => {
   const handleChange = (value, delta, source, editor) => {
     setBlogBody(value);
   };
-
+  // if(name === "name" || name === "website"){
+  //   setInputFormState((prev) => {
+  //     const newForm = {...prev}
+  //     newForm[name] = value
+  //     return newForm
+  //   })}
   // let uploadedImage = "";
   React.useEffect(() => {
     console.log("Uploaded Image Is: ", uploadedImage);
@@ -151,6 +163,10 @@ const MelbiteCreatePost = () => {
       }
     }
   };
+
+  // useEffect(() => {
+  //   setSavedForm(inputFormState)
+  // },[setSavedForm,inputFormState])
 
   //validate and keep the user loggedIn
   useEffect(() => {
@@ -230,7 +246,8 @@ const MelbiteCreatePost = () => {
                   ></textarea>
                 </div>
 
-                <input
+                <input 
+                name=""
                   value={blogHeader}
                   onChange={(e) => setBlogHeader(e.target.value)}
                   className="focus:outline-none mt-10 mb-3 text-4xl font-bold text-gray-900 w-full"

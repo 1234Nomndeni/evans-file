@@ -32,6 +32,7 @@ import MelbiteCreatePost from "./tests/MelbiteCreatePost";
 import WritingChallenge from "./components/melbitePremiers/WritingChallenge";
 import WorkSpace from "./tests/Workspace/WorkSpace";
 import EditProfile from "./components/UserProfile/EditProfile";
+import ProfilePreview from "./components/UserProfile/ProfilePreview";
 // import WorkSpace from "./tests/Workspace/CodeEditorWindow";
 
 ReactGA.initialize(process.env.TRACK_ID);
@@ -81,6 +82,7 @@ function App() {
 
         {/* Test Scripts */}
         {user && <Route path="/editprofile" element={<EditProfile />} />}
+        {user && <Route path="/previewprofile" element={<ProfilePreview />} />}
         <Route path="/addDraft" element={<AllDrafts />} />
         <Route path="/testDraft" element={<NewDraft />} />
         <Route path="/testImage" element={<TextUpload />} />

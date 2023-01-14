@@ -6,51 +6,65 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import EditIcon from "@mui/icons-material/Edit";
 import PreviewIcon from "@mui/icons-material/Preview";
 import LogoutIcon from "@mui/icons-material/Logout";
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import ContactSupportIcon from '@mui/icons-material/ContactSupport';
+import { useNavigate } from "react-router-dom";
 
 const EditProfile = () => {
+  const navigate = useNavigate()
   return (
     <main className="pt-20 md:pt-28 mx-wd1 flex justify-between mx-auto">
       <section className="flex flex-col justify-between mx-h bg-white py-5 px-8 shadow-md">
         <section>
-          <div className="flex items-center gap-2 mb-6 cursor-pointer">
+          <div onClick={() => navigate("/dashboard")} className="flex items-center gap-2 mb-6 cursor-pointer">
             <DashboardIcon className="text-green-400" />
             <p className="text-md md:text-xl">Dashboard</p>
           </div>
-          <div className="flex items-center gap-2 mb-6 cursor-pointer">
+          <div onClick={() => navigate("/notifications")} className="flex items-center gap-2 mb-6 cursor-pointer">
             <NotificationImportantIcon className="text-yellow-400" />
             <p className="text-md md:text-xl">Notifications</p>
           </div>
-          <div className="flex items-center gap-2 mb-6 cursor-pointer">
+          <div onClick={() => navigate("/settings")} className="flex items-center gap-2 mb-6 cursor-pointer">
             <SettingsIcon className="text-pink-500" />
             <p className="text-md md:text-xl">Settings</p>
+          </div>
+          <div onClick={() => navigate("/analytics")} className="flex items-center gap-2 mb-6 cursor-pointer">
+            <AnalyticsIcon className="text-blue-500" />
+            <p className="text-md md:text-xl">Analytics</p>
           </div>
           <div className="flex gap-2 mb-3">
             <ManageAccountsIcon className="text-purple-600" />
             <div>
               <p className="text-md md:text-xl">Profile</p>
-              <span className="flex ml-3 mt-2 cursor-pointer">
+              <span onClick={() => navigate("/editprofile")}  className="flex ml-2 mt-2 cursor-pointer">
                 <EditIcon className="w-6 h-2 mr-1 text-green-400" />
                 <p className="">Edit</p>
               </span>
-              <span className="flex ml-3 mt-2 cursor-pointer">
+              <span onClick={() => navigate("/previewprofile")}  className="flex ml-2 mt-2 cursor-pointer">
                 <PreviewIcon className="w-6 h-2 mr-1 text-yellow-600" />
                 <p>View</p>
               </span>
             </div>
           </div>
         </section>
+        <section>
+        <div className="flex items-between gap-2 cursor-pointer mb-4 font-semibold">
+          <ContactSupportIcon className="text-green-500"/>
+          <p>Support</p>
+        </div>
         <div className="flex items-between gap-2 cursor-pointer mb-4 font-semibold">
           <LogoutIcon className="text-purple-600" />
           <p className="">Log Out</p>
         </div>
+        </section>
       </section>
 
       <section className="w-full ml-20">
         <div className="bg-white rounded-md shadow-md px-5 py-4 flex justify-between gap-3 items-center">
           <h2 className="text-xl">Edit Profile</h2>
-          <span className="flex gap-6">
-            <NotificationImportantIcon />
-            <span>M</span>
+          <span className="flex gap-6 items-center">
+            <NotificationImportantIcon className="text-pink-500"/>
+            <img className="rounded-full h-10 w-10 border-2 ring-4 ring-opacity-5" src="https://media.licdn.com/dms/image/C5603AQHorwJKFNaR3Q/profile-displayphoto-shrink_800_800/0/1604525502427?e=1678924800&v=beta&t=GyjN_4oha_XLHHeaQ3lGRM9RRc4KELCBoj2mcEcRhuE" alt=""/>
           </span>
         </div>
 
@@ -146,20 +160,20 @@ const EditProfile = () => {
               </button>
             </div>
           </div>
-          <div className="w-2/6 bg-white mt-5 px-5 py-3 shadow-md ">
+          <div className="w-2/6 bg-white mt-5 px-5 py-3 shadow-md h-1/6">
             <p className="font-semibold text-gray-700 mb-3">
               Choose your Main Interest
             </p>
             {/* <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600"> */}
-            <div class="flex items-center pl-3">
+            <div className="flex items-center pl-3 h-">
               <input
-                id="vue-checkbox"
+                id="all-checkbox"
                 type="checkbox"
                 value=""
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
               />
               <label
-                for="vue-checkbox"
+                for="all-checkbox"
                 class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
               >
                 All
@@ -167,13 +181,13 @@ const EditProfile = () => {
             </div>
             <div class="flex items-center pl-3">
               <input
-                id="vue-checkbox"
+                id="art-checkbox"
                 type="checkbox"
                 value=""
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
               />
               <label
-                for="vue-checkbox"
+                for="art-checkbox"
                 class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
               >
                 Art
@@ -181,13 +195,13 @@ const EditProfile = () => {
             </div>
             <div class="flex items-center pl-3">
               <input
-                id="vue-checkbox"
+                id="programming-checkbox"
                 type="checkbox"
                 value=""
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
               />
               <label
-                for="vue-checkbox"
+                for="programming-checkbox"
                 class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
               >
                 Programming
@@ -195,13 +209,27 @@ const EditProfile = () => {
             </div>
             <div class="flex items-center pl-3">
               <input
-                id="vue-checkbox"
+                id="programming-checkbox"
                 type="checkbox"
                 value=""
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
               />
               <label
-                for="vue-checkbox"
+                for="programming-checkbox"
+                class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >
+                Crypto & Money
+              </label>
+            </div>
+            <div class="flex items-center pl-3">
+              <input
+                id="health-checkbox"
+                type="checkbox"
+                value=""
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+              />
+              <label
+                for="health-checkbox"
                 class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
               >
                 Health
@@ -209,30 +237,16 @@ const EditProfile = () => {
             </div>
             <div class="flex items-center pl-3">
               <input
-                id="vue-checkbox"
+                id="business-checkbox"
                 type="checkbox"
                 value=""
                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
               />
               <label
-                for="vue-checkbox"
+                for="business-checkbox"
                 class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
               >
                 Business
-              </label>
-            </div>
-            <div class="flex items-center pl-3">
-              <input
-                id="vue-checkbox"
-                type="checkbox"
-                value=""
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-              />
-              <label
-                for="vue-checkbox"
-                class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >
-                Vue JS
               </label>
             </div>
             {/* </li> */}

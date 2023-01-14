@@ -410,16 +410,19 @@ const SelectedBlog = () => {
           <span>
             {!blogBody ? (
               <section className="flex flex-col items-center justify-center w-full mx-auto -mt-16 h-48">
-                <img className="flex items-center h-28 w-36 text-center" src={contentLoading} alt="" />
-                <p className="-mt-10" >Loading content . . .</p>              
+                <img
+                  className="flex items-center h-28 w-36 text-center"
+                  src={contentLoading}
+                  alt=""
+                />
+                <p className="-mt-10">Loading content . . .</p>
               </section>
             ) : (
-                <p
-                  className="font-sans pt-8 text-lg leading-7"
-                  dangerouslySetInnerHTML={{ __html: blogBody }}
-                />
+              <p
+                className="font-sans pt-8 text-lg leading-7"
+                dangerouslySetInnerHTML={{ __html: blogBody }}
+              />
             )}
-
           </span>
         </div>
 
@@ -489,6 +492,7 @@ const SelectedBlog = () => {
                   </div>
                 </div>
                 <div className="flex space-x-4 items-center">
+                  
                   <div
                     onClick={() => setShowReply((prev) => !prev)}
                     className="text-gray-600 flex space-x-2 items-center ml-3 cursor-pointer rounded-md duration-100 hover:bg-gray-200 w-20 p-1 mt-1"

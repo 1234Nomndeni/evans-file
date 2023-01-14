@@ -20,6 +20,7 @@ const UpdateProfile = ({ userTagName }) => {
       {
         tagName: tagName,
         website: website,
+        location: location,
         workExperience: workExperience,
         skills: skills,
         biography: biography,
@@ -30,6 +31,7 @@ const UpdateProfile = ({ userTagName }) => {
 
     setTagName("");
     setWebsite("");
+    setLocation("")
     setWorkExperience("");
     setSkills("");
     setBiography("");
@@ -128,9 +130,9 @@ const UpdateProfile = ({ userTagName }) => {
           >
             Update Profile
           </button>
-          {/* <button className="bg-red-600 p-3 text-white rounded-md hover:bg-red-700 duration-100">
+          <button className="bg-red-600 p-3 text-white rounded-md hover:bg-red-700 duration-100">
             Delete Account
-          </button> */}
+          </button>
         </div>
       </section>
 

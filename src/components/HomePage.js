@@ -14,7 +14,7 @@ import PageLinks from "./StaticPages/PageLinks";
 import { useStickyBox } from "react-sticky-box";
 import FetchMostRead from "./FilterCategory/FetchMostRead";
 import FilterCategory from "./FilterCategory/FilterCategory";
-import { collection, getDocs } from "firebase/firestore";
+// import { collection, getDocs } from "firebase/firestore";
 
 
 const HomePage = () => {

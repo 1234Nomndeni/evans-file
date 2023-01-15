@@ -1,27 +1,18 @@
-import { useState } from "react";
 import { Helmet } from "react-helmet";
 import googleIcon from "./images/google-icon.png";
 import gitHubIcon from "./images/github.png";
 import twitterIcon from "./images/twitter.png";
 import {
   auth,
-  db,
   gitProvider,
   provider,
   twitterProvider,
 } from "../utils/firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser } from "../features/userSlice";
+import { login, selectUser } from "../features/userSlice";
 import HomePage from "./HomePage";
 
 const SignUp = () => {
-  const [email, setEmail] = useState("");
-  const [displayName, setDisplayName] = useState("");
-  const [tagName, setTagName] = useState("");
-  const [website, setWebsite] = useState("");
-  const [workExperience, setWorkExperience] = useState("");
-  const [skills, setSkills] = useState("");
-  const [biography, setBiography] = useState("");
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
@@ -30,77 +21,50 @@ const SignUp = () => {
     auth
       .signInWithPopup(provider)
       .then((result) => {
-        db.collection("Users").doc(result.user?.uid).set(
-          {
-            email: email,
-            tagName: tagName,
-            website: website,
-            workExperience: workExperience,
-            skills: skills,
-            biography: biography,
-            followers: [],
-          },
-          { merge: true }
+        dispatch(
+          login({
+            displayName: result.user.displayName,
+            email: result.user.email,
+          })
         );
-        setEmail("");
-        setDisplayName("");
-        setTagName("");
-        setWebsite("");
-        setWorkExperience("");
-        setSkills("");
-        setBiography("");
       })
       .catch((error) => {
         alert(error.message);
-      })
-      .then(() => {});
+      });
   };
 
   const githubSignUp = (e) => {
     e.preventDefault();
-    auth.signInWithPopup(gitProvider).then((result) => {
-      db.collection("Users").doc(result.user.uid).set(
-        {
-          displayName: displayName,
-          tagName: tagName,
-          website: website,
-          workExperience: workExperience,
-          skills: skills,
-          biography: biography,
-          followers: [],
-        },
-        { merge: true }
-      );
-      setDisplayName("");
-      setTagName("");
-      setWebsite("");
-      setWorkExperience("");
-      setSkills("");
-      setBiography("");
-    });
+    auth
+      .signInWithPopup(gitProvider)
+      .then((result) => {
+        dispatch(
+          login({
+            displayName: result.user.displayName,
+            email: result.user.email,
+          })
+        );
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   const twitterSignUp = (e) => {
     e.preventDefault();
-    auth.signInWithPopup(twitterProvider).then((result) => {
-      db.collection("Users").doc(result.user.uid).set(
-        {
-          tagName: tagName,
-          website: website,
-          workExperience: workExperience,
-          skills: skills,
-          biography: biography,
-          followers: [],
-        },
-        { merge: true }
-      );
-      setDisplayName("");
-      setTagName("");
-      setWebsite("");
-      setWorkExperience("");
-      setSkills("");
-      setBiography("");
-    });
+    auth
+      .signInWithPopup(twitterProvider)
+      .then((result) => {
+        dispatch(
+          login({
+            displayName: result.user.displayName,
+            email: result.user.email,
+          })
+        );
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   return (

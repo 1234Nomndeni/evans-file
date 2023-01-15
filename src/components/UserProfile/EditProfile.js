@@ -12,15 +12,32 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/userSlice";
 import { db, storage } from "../../utils/firebase";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
-const EditProfile = () => {
+
+toast.configure({
+  position: toast.POSITION.TOP_CENTER,
+  autoClose: 3000,
+  pauseOnFocusLoss: false,
+  className: {
+    backgroundColor: "red-red-200",
+  },
+  bodyClassName: {
+    backgroundColor: "blue",
+    height: "100%",
+    width: "100%",
+  },
+});
+
+const EditProfile = ({uid, editLocation}) => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
   const [profilePic, setProfilePic] = useState(null);
   const [uploadedImage, setUploadedImage] = useState("");
   const [tagName, setTagName] = useState();
   const [website, setWebsite] = useState();
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState("" || editLocation);
   const [workExperience, setWorkExperience] = useState("");
   const [skills, setSkills] = useState("");
   const [biography, setBiography] = useState("");
@@ -70,7 +87,7 @@ const EditProfile = () => {
                   skills: skills,
                   biography: biography,
                 },
-                { merger: true }
+                { merge: true }
               );
               setProgress(0);
               setProfilePic(null);
@@ -80,6 +97,7 @@ const EditProfile = () => {
               setWorkExperience("");
               setSkills("");
               setBiography("");
+              toast("Profile Details updated Successfully");
             });
         }
       );
@@ -176,7 +194,6 @@ const EditProfile = () => {
                 type="file"
                 accept=".jpeg, .jpg, .png"
                 onChange={handleImageChange}
-                required
                 className="mb-3 mt-1"
               />
               {/* <progress className=" text-blue-600" value={progress} max="100"/> */}

@@ -105,14 +105,9 @@ const ProfilePreview = () => {
           userProfileDetails.map((userData) => {
             return (
               <>
-                {/* <div className="blog-container">
-                  <h4>{userData.location}</h4>
-                  <p>{userData.skills}</p>
-                </div> */}
-
                 <article className="flex items-top">
                   <img
-                    className="rounded-md w-48 h-32"
+                    className="rounded-md w-52 h-52"
                     src={userData.profileImage}
                     alt=""
                   />

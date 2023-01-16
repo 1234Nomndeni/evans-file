@@ -203,6 +203,7 @@ const EditProfile = ({uid, editLocation}) => {
                 Profile Image
               </label>
               <input
+              required
                 type="file"
                 accept=".jpeg, .jpg, .png"
                 onChange={handleImageChange}
@@ -216,6 +217,7 @@ const EditProfile = ({uid, editLocation}) => {
                 #TagName
               </label>
               <input
+              required
                 value={tagName}
                 onChange={(e) => setTagName(e.target.value)}
                 className="mt h-10 p-3 border border-gray-300 focus:outline-none focus:border-purple-700 rounded mt-1"
@@ -226,6 +228,7 @@ const EditProfile = ({uid, editLocation}) => {
             <div className="flex flex-col mt-5">
               <label className="font-semibold">Add Website</label>
               <input
+              required
                 value={website}
                 onChange={(e) => setWebsite(e.target.value)}
                 className="mt h-10 p-3 border border-gray-300 focus:outline-none focus:border-purple-700 rounded mt-1"
@@ -235,6 +238,7 @@ const EditProfile = ({uid, editLocation}) => {
             <div className="flex flex-col mt-5">
               <label className="font-semibold">Add Location</label>
               <input
+              required
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 className="mt h-10 p-3 border border-gray-300 focus:outline-none focus:border-purple-700 rounded mt-1"
@@ -248,6 +252,7 @@ const EditProfile = ({uid, editLocation}) => {
               </label>
               <input
                 value={workExperience}
+                required
                 onChange={(e) => setWorkExperience(e.target.value)}
                 className="mt h-10 p-3 border border-gray-300 focus:outline-none focus:border-purple-700 rounded mt-1"
                 placeholder="Tech Lead,CEO etc.."
@@ -259,6 +264,7 @@ const EditProfile = ({uid, editLocation}) => {
               </label>
               <textarea
                 value={skills}
+                required
                 onChange={(e) => setSkills(e.target.value)}
                 className="mt h-18 p-3 pt-1 border border-gray-300 focus:outline-none focus:border-purple-700 rounded mt-1"
                 placeholder="Lawyer, software dev, Content Creator"
@@ -269,6 +275,7 @@ const EditProfile = ({uid, editLocation}) => {
                 Add Bio
               </label>
               <textarea
+              required
                 value={biography}
                 onChange={(e) => setBiography(e.target.value)}
                 className="mt h-32 p-3 border border-gray-300 focus:outline-none focus:border-purple-700 rounded mt-1"
@@ -283,9 +290,9 @@ const EditProfile = ({uid, editLocation}) => {
               >
                 Update Profile
               </button>
-              <button className="bg-red-600 p-3 text-white rounded-md hover:bg-red-700 duration-100">
+              {/* <button className="bg-red-600 p-3 text-white rounded-md hover:bg-red-700 duration-100">
                 Delete Account
-              </button>
+              </button> */}
             </div>
           </div>
           <div className="w-2/6 bg-white mt-5 px-5 py-3 shadow-md h-1/6">

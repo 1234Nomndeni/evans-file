@@ -15,7 +15,6 @@ import { auth, db, storage } from "../../utils/firebase";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 
-
 toast.configure({
   position: toast.POSITION.TOP_CENTER,
   autoClose: 3000,
@@ -30,7 +29,7 @@ toast.configure({
   },
 });
 
-const EditProfile = ({uid, editLocation}) => {
+const EditProfile = ({ uid, editLocation }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
@@ -45,7 +44,6 @@ const EditProfile = ({uid, editLocation}) => {
   const [progress, setProgress] = useState(0);
 
   const [userProfileDetails, setUserProfileDetails] = useState([]);
-
 
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
@@ -78,7 +76,7 @@ const EditProfile = ({uid, editLocation}) => {
             .getDownloadURL()
             .then((uploadedImage) => {
               setUploadedImage(uploadedImage);
-              console.log(uploadedImage)
+              console.log(uploadedImage);
 
               db.collection("Users").doc(user?.uid).set(
                 {
@@ -192,11 +190,17 @@ const EditProfile = ({uid, editLocation}) => {
           </div>
         </section>
         <section>
-          <div onClick={() => navigate("/contact-us")} className="flex items-between gap-2 cursor-pointer mb-4 font-semibold">
+          <div
+            onClick={() => navigate("/contact-us")}
+            className="flex items-between gap-2 cursor-pointer mb-4 font-semibold"
+          >
             <ContactSupportIcon className="text-green-500" />
             <p>Support</p>
           </div>
-          <div onClick={signOutOfApp} className="flex items-between gap-2 cursor-pointer mb-4 font-semibold">
+          <div
+            onClick={signOutOfApp}
+            className="flex items-between gap-2 cursor-pointer mb-4 font-semibold"
+          >
             <LogoutIcon className="text-purple-600" />
             <p className="">Log Out</p>
           </div>
@@ -208,11 +212,24 @@ const EditProfile = ({uid, editLocation}) => {
           <h2 className="text-xl">Edit Profile</h2>
           <span className="flex gap-6 items-center">
             <NotificationImportantIcon className="text-pink-500" />
-            <img
-              className="rounded-full h-10 w-10 border-2 ring-4 ring-opacity-5"
-              src="https://media.licdn.com/dms/image/C5603AQHorwJKFNaR3Q/profile-displayphoto-shrink_800_800/0/1604525502427?e=1678924800&v=beta&t=GyjN_4oha_XLHHeaQ3lGRM9RRc4KELCBoj2mcEcRhuE"
-              alt=""
-            />
+            {userProfileDetails &&
+              userProfileDetails.map((userData) => {
+                return (
+                  <article>
+                    {!profilePic ? (
+                      <img
+                        className="rounded-full h-10 w-10 border-2 ring-4 ring-opacity-5"
+                        src={userData.profileImage}
+                        alt=""
+                      />
+                    ) : (
+                      <span className="bg-c w-10 font-mono p-1 uppercase text-lg text-white h-10 border-2 rounded-full text-center">
+                        {user?.displayName[0] || user?.email[0]}
+                      </span>
+                    )}
+                  </article>
+                );
+              })}
           </span>
         </div>
 
@@ -223,7 +240,7 @@ const EditProfile = ({uid, editLocation}) => {
                 Profile Image
               </label>
               <input
-              required
+                required
                 type="file"
                 accept=".jpeg, .jpg, .png"
                 onChange={handleImageChange}
@@ -237,7 +254,7 @@ const EditProfile = ({uid, editLocation}) => {
                 #TagName
               </label>
               <input
-              required
+                required
                 value={tagName}
                 onChange={(e) => setTagName(e.target.value)}
                 className="mt h-10 p-3 border border-gray-300 focus:outline-none focus:border-purple-700 rounded mt-1"
@@ -248,7 +265,7 @@ const EditProfile = ({uid, editLocation}) => {
             <div className="flex flex-col mt-5">
               <label className="font-semibold">Add Website</label>
               <input
-              required
+                required
                 value={website}
                 onChange={(e) => setWebsite(e.target.value)}
                 className="mt h-10 p-3 border border-gray-300 focus:outline-none focus:border-purple-700 rounded mt-1"
@@ -258,7 +275,7 @@ const EditProfile = ({uid, editLocation}) => {
             <div className="flex flex-col mt-5">
               <label className="font-semibold">Add Location</label>
               <input
-              required
+                required
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 className="mt h-10 p-3 border border-gray-300 focus:outline-none focus:border-purple-700 rounded mt-1"
@@ -295,7 +312,7 @@ const EditProfile = ({uid, editLocation}) => {
                 Add Bio
               </label>
               <textarea
-              required
+                required
                 value={biography}
                 onChange={(e) => setBiography(e.target.value)}
                 className="mt h-32 p-3 border border-gray-300 focus:outline-none focus:border-purple-700 rounded mt-1"

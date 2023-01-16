@@ -33,6 +33,7 @@ import WritingChallenge from "./components/melbitePremiers/WritingChallenge";
 import WorkSpace from "./tests/Workspace/WorkSpace";
 import EditProfile from "./components/UserProfile/EditProfile";
 import ProfilePreview from "./components/UserProfile/ProfilePreview";
+import Notifications from "./components/UserProfile/Notifications";
 // import WorkSpace from "./tests/Workspace/CodeEditorWindow";
 
 ReactGA.initialize(process.env.TRACK_ID);
@@ -60,8 +61,10 @@ function App() {
         <Route path={`/:displayName/:blogId`} element={<SelectedBlog />} />
         {/* <Route path={`/:displayName/:slug_name`} element={<SelectedBlog />} /> */}
         {/* <Route path={`/:displayName/:blogId`} element={<SelectedBlog2 />} /> */}
-        {user && <Route path="/profile" element={<UpdateProfile />} />}
         {user && <Route path="/dashboard" element={<UserDashboard />} />}
+        {user && <Route path="/editprofile" element={<EditProfile />} />}
+        {user && <Route path="/previewprofile" element={<ProfilePreview />} />}
+        {user && <Route path="/notifications" element={<Notifications />} />}
         {user && <Route path="/my-drafts" element={<MyDrafts />} />}
         {/* <Route path="/:name_slug/:postId" element={<ViewArticle />} /> */}
         <Route path="/about" element={<AboutUs />} />
@@ -74,15 +77,14 @@ function App() {
         <Route
           path="/Welcome-to-Melbite-the-official-blogging-site-or-the-world"
           element={<WelcomeBlog />}
-        />
+          />
 
         {/* Melbite Premiers */}
         <Route path="/register" element={<WritingChallenge/>} />
 
 
         {/* Test Scripts */}
-        {user && <Route path="/editprofile" element={<EditProfile />} />}
-        {user && <Route path="/previewprofile" element={<ProfilePreview />} />}
+          {/* {user && <Route path="/profile" element={<UpdateProfile />} />} */}
         <Route path="/addDraft" element={<AllDrafts />} />
         <Route path="/testDraft" element={<NewDraft />} />
         <Route path="/testImage" element={<TextUpload />} />

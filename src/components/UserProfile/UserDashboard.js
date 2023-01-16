@@ -1,8 +1,8 @@
 import { useEffect, useState, Fragment } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { selectUser } from "../../features/userSlice";
-import { db } from "../../utils/firebase";
+import { logout, selectUser } from "../../features/userSlice";
+import { auth, db } from "../../utils/firebase";
 import { Menu, Transition } from "@headlessui/react";
 import { Helmet } from "react-helmet";
 import {
@@ -32,15 +32,17 @@ function classNames(...classes) {
 
 const UserDashboard = ({ name_slug, open, setOpen }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [userPosts, setUserPosts] = useState([]);
   const user = useSelector(selectUser);
   const [articlesCount, setArticlesCount] = useState(0);
+
 
   const fetchData = async () => {
     try {
       await db
         .collection(`posts`)
-        .where("uid", "==", user?.uid)
+        .where("uid", "==", user?.uid )
         .orderBy("timestamp", "desc")
         .onSnapshot((snapshot) =>
           setUserPosts(
@@ -68,6 +70,17 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
     fetchArticleCount();
   }, []);
 
+  const signOutOfApp = () => {
+    dispatch(logout);
+    auth.signOut();
+    window.location.reload(false);
+
+    if (user) {
+      auth.signOut();
+    }
+    navigate("/");
+  };
+
   return (
     <main className="pt-20 md:pt-28 mx-wd1 flex justify-between mx-auto">
       <Helmet>
@@ -93,14 +106,14 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
             <p className="text-md md:text-xl">Notifications</p>
           </div>
           <div
-            onClick={() => navigate("/settings")}
+            onClick={() => navigate("")}
             className="flex items-center gap-2 mb-6 cursor-pointer"
           >
             <SettingsIcon className="text-pink-500" />
             <p className="text-md md:text-xl">Settings</p>
           </div>
           <div
-            onClick={() => navigate("/analytics")}
+            onClick={() => navigate("")}
             className="flex items-center gap-2 mb-6 cursor-pointer"
           >
             <AnalyticsIcon className="text-blue-500" />
@@ -128,11 +141,11 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
           </div>
         </section>
         <section>
-          <div className="flex items-between gap-2 cursor-pointer mb-4 font-semibold">
+          <div onClick={() => navigate("/contact-us")} className="flex items-between gap-2 cursor-pointer mb-4 font-semibold">
             <ContactSupportIcon className="text-green-500" />
             <p>Support</p>
           </div>
-          <div className="flex items-between gap-2 cursor-pointer mb-4 font-semibold">
+          <div onClick={signOutOfApp} className="flex items-between gap-2 cursor-pointer mb-4 font-semibold">
             <LogoutIcon className="text-purple-600" />
             <p className="">Log Out</p>
           </div>
@@ -328,7 +341,7 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
               </>
             )}
           </article>
-          <div className="rounded-md md:w-2/6 w-full">
+          <div className="rounded-md md:w-2/6 w-full ml-3">
           <div className="">
             <div className="bg-white rounded-md flex space-x-5 p-3 shadow-lg mb-3">
               <DocumentAddIcon className="text-blue-600 p-2 rounded-full bg-green-200 w-12 h-12" />
@@ -350,10 +363,10 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
               <EyeIcon className="text-blue-600 p-2 rounded-full bg-green-200 w-12 h-12" />
               <span className="ml-3">
                 <p className="text-sm text-gray-700">Total Articles Views</p>
-                <p className="text-2xl text-gray-800 font-bold">8,069</p>
-                {/* <p className="text-xs text-purple-700">
+                {/* <p className="text-2xl text-gray-800 font-bold">8,069</p> */}
+                <p className="text-xs text-purple-700">
                   Oops! We are Working on it.
-                </p> */}
+                </p>
               </span>
             </div>
           </div>

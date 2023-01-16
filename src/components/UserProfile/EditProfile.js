@@ -9,9 +9,9 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AnalyticsIcon from "@mui/icons-material/Analytics";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../features/userSlice";
-import { db, storage } from "../../utils/firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectUser } from "../../features/userSlice";
+import { auth, db, storage } from "../../utils/firebase";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 
@@ -32,6 +32,7 @@ toast.configure({
 
 const EditProfile = ({uid, editLocation}) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const [profilePic, setProfilePic] = useState(null);
   const [uploadedImage, setUploadedImage] = useState("");
@@ -106,6 +107,17 @@ const EditProfile = ({uid, editLocation}) => {
     }
   };
 
+  const signOutOfApp = () => {
+    dispatch(logout);
+    auth.signOut();
+    window.location.reload(false);
+
+    if (user) {
+      auth.signOut();
+    }
+    navigate("/");
+  };
+
   return (
     <main className="pt-20 md:pt-28 mx-wd1 flex justify-between mx-auto">
       <section className="flex flex-col justify-between mx-h bg-white py-5 px-8 shadow-md">
@@ -125,14 +137,14 @@ const EditProfile = ({uid, editLocation}) => {
             <p className="text-md md:text-xl">Notifications</p>
           </div>
           <div
-            onClick={() => navigate("/settings")}
+            onClick={() => navigate("")}
             className="flex items-center gap-2 mb-6 cursor-pointer"
           >
             <SettingsIcon className="text-pink-500" />
             <p className="text-md md:text-xl">Settings</p>
           </div>
           <div
-            onClick={() => navigate("/analytics")}
+            onClick={() => navigate("")}
             className="flex items-center gap-2 mb-6 cursor-pointer"
           >
             <AnalyticsIcon className="text-blue-500" />
@@ -160,11 +172,11 @@ const EditProfile = ({uid, editLocation}) => {
           </div>
         </section>
         <section>
-          <div className="flex items-between gap-2 cursor-pointer mb-4 font-semibold">
+          <div onClick={() => navigate("/contact-us")} className="flex items-between gap-2 cursor-pointer mb-4 font-semibold">
             <ContactSupportIcon className="text-green-500" />
             <p>Support</p>
           </div>
-          <div className="flex items-between gap-2 cursor-pointer mb-4 font-semibold">
+          <div onClick={signOutOfApp} className="flex items-between gap-2 cursor-pointer mb-4 font-semibold">
             <LogoutIcon className="text-purple-600" />
             <p className="">Log Out</p>
           </div>

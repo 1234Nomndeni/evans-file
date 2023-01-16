@@ -44,6 +44,9 @@ const EditProfile = ({uid, editLocation}) => {
   const [biography, setBiography] = useState("");
   const [progress, setProgress] = useState(0);
 
+  const [userProfileDetails, setUserProfileDetails] = useState([]);
+
+
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
       setProfilePic(e.target.files[0]);
@@ -106,6 +109,23 @@ const EditProfile = ({uid, editLocation}) => {
       console.log(error);
     }
   };
+
+  const fetchUserProfileDetails = async () => {
+    await db
+      .collection("Users")
+      .where("uid", "==", user?.uid)
+      .onSnapshot((snapshot) => {
+        setUserProfileDetails(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }))
+        );
+      });
+  };
+  useEffect(() => {
+    fetchUserProfileDetails();
+  }, []);
 
   const signOutOfApp = () => {
     dispatch(logout);

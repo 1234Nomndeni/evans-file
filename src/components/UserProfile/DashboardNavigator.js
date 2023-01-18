@@ -9,10 +9,28 @@ import PreviewIcon from "@mui/icons-material/Preview";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AnalyticsIcon from "@mui/icons-material/Analytics";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
+import { logout } from "../../features/userSlice";
+import { auth } from "../../utils/firebase";
+import { useDispatch } from "react-redux";
 
 
 const DashboardNavigator = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const user = useSelector(selectUser);
+
+    
+  const signOutOfApp = () => {
+    dispatch(logout);
+    auth.signOut();
+    window.location.reload(false);
+
+    if (user) {
+      auth.signOut();
+    }
+    navigate("/");
+  };
+
   return (
     <main>
       <section className="hidden md:flex flex-col justify-between mx-h bg-white py-5 px-8 shadow-md">

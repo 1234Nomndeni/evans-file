@@ -37,12 +37,11 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
   const user = useSelector(selectUser);
   const [articlesCount, setArticlesCount] = useState(0);
 
-
   const fetchData = async () => {
     try {
       await db
         .collection(`posts`)
-        .where("uid", "==", user?.uid )
+        .where("uid", "==", user?.uid)
         .orderBy("timestamp", "desc")
         .onSnapshot((snapshot) =>
           setUserPosts(
@@ -141,11 +140,17 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
           </div>
         </section>
         <section>
-          <div onClick={() => navigate("/contact-us")} className="flex items-between gap-2 cursor-pointer mb-4 font-semibold">
+          <div
+            onClick={() => navigate("/contact-us")}
+            className="flex items-between gap-2 cursor-pointer mb-4 font-semibold"
+          >
             <ContactSupportIcon className="text-green-500" />
             <p>Support</p>
           </div>
-          <div onClick={signOutOfApp} className="flex items-between gap-2 cursor-pointer mb-4 font-semibold">
+          <div
+            onClick={signOutOfApp}
+            className="flex items-between gap-2 cursor-pointer mb-4 font-semibold"
+          >
             <LogoutIcon className="text-purple-600" />
             <p className="">Log Out</p>
           </div>
@@ -341,36 +346,36 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
               </>
             )}
           </article>
-          <div className="rounded-md md:w-2/6 w-full ml-3">
-          <div className="">
-            <div className="bg-white rounded-md flex space-x-5 p-3 shadow-lg mb-3">
-              <DocumentAddIcon className="text-blue-600 p-2 rounded-full bg-green-200 w-12 h-12" />
-              <span className="ml-3">
-                <p className="text-sm text-gray-700">Total Articles</p>
-                <p className="text-2xl text-gray-800 font-bold">
-                  {articlesCount}
-                </p>
-              </span>
-            </div>
-            <div className="bg-white rounded-md flex space-x-5 p-3 shadow-lg mb-3">
-              <DocumentDuplicateIcon className="text-blue-600 p-2 rounded-full bg-green-200 w-12 h-12" />
-              <span className="ml-3">
-                <p className="text-sm text-gray-700">Total Drafts</p>
-                <p className="text-2xl text-gray-800 font-bold">0</p>
-              </span>
-            </div>
-            <div className="bg-white rounded-md flex space-x-5 p-3 shadow-lg mb-3">
-              <EyeIcon className="text-blue-600 p-2 rounded-full bg-green-200 w-12 h-12" />
-              <span className="ml-3">
-                <p className="text-sm text-gray-700">Total Articles Views</p>
-                {/* <p className="text-2xl text-gray-800 font-bold">8,069</p> */}
-                <p className="text-xs text-purple-700">
-                  Oops! We are Working on it.
-                </p>
-              </span>
+          <div className="hidden md:block rounded-md md:w-2/6 w-full ml-3">
+            <div className="">
+              <div className="bg-white rounded-md flex space-x-5 p-3 shadow-lg mb-3">
+                <DocumentAddIcon className="text-blue-600 p-2 rounded-full bg-green-200 w-12 h-12" />
+                <span className="ml-3">
+                  <p className="text-sm text-gray-700">Total Articles</p>
+                  <p className="text-2xl text-gray-800 font-bold">
+                    {articlesCount}
+                  </p>
+                </span>
+              </div>
+              <div className="bg-white rounded-md flex space-x-5 p-3 shadow-lg mb-3">
+                <DocumentDuplicateIcon className="text-blue-600 p-2 rounded-full bg-green-200 w-12 h-12" />
+                <span className="ml-3">
+                  <p className="text-sm text-gray-700">Total Drafts</p>
+                  <p className="text-2xl text-gray-800 font-bold">0</p>
+                </span>
+              </div>
+              <div className="bg-white rounded-md flex space-x-5 p-3 shadow-lg mb-3">
+                <EyeIcon className="text-blue-600 p-2 rounded-full bg-green-200 w-12 h-12" />
+                <span className="ml-3">
+                  <p className="text-sm text-gray-700">Total Articles Views</p>
+                  {/* <p className="text-2xl text-gray-800 font-bold">8,069</p> */}
+                  <p className="text-xs text-purple-700">
+                    Oops! We are Working on it.
+                  </p>
+                </span>
+              </div>
             </div>
           </div>
-        </div> 
         </section>
       </section>
       {/* </section> */}
@@ -379,6 +384,3 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
 };
 
 export default UserDashboard;
-
-
-

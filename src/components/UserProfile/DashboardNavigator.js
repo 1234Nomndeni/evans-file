@@ -1,5 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import SettingsIcon from "@mui/icons-material/Settings";
+import EditIcon from "@mui/icons-material/Edit";
+import PreviewIcon from "@mui/icons-material/Preview";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AnalyticsIcon from "@mui/icons-material/Analytics";
+import ContactSupportIcon from "@mui/icons-material/ContactSupport";
+
 
 const DashboardNavigator = () => {
     const navigate = useNavigate()

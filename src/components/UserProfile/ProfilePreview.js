@@ -49,7 +49,7 @@ const ProfilePreview = () => {
 
   return (
     <main className="pt-20 md:pt-28 mx-wd1 flex justify-between mx-auto">
-      <section className="flex flex-col justify-between mx-h bg-white py-5 px-8 shadow-md">
+      <section className="hidden md:flex flex-col justify-between mx-h bg-white py-5 px-8 shadow-md">
         <section>
           <div
             onClick={() => navigate("/dashboard")}
@@ -112,7 +112,7 @@ const ProfilePreview = () => {
         </section>
       </section>
 
-      <section className="w-full ml-20 bg-white">
+      <section className="w-full ml-0 md:ml-20 bg-white">
         {userProfileDetails &&
           userProfileDetails.map((userData) => {
             return (

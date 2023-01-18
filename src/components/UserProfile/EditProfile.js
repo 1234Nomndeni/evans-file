@@ -138,7 +138,7 @@ const EditProfile = ({ uid, editLocation }) => {
 
   return (
     <main className="pt-20 md:pt-28 mx-wd1 flex justify-between mx-auto">
-      <section className="flex flex-col justify-between mx-h bg-white py-5 px-8 shadow-md">
+      <section className="hidden md:flex flex-col justify-between mx-h bg-white py-5 px-8 shadow-md">
         <section>
           <div
             onClick={() => navigate("/dashboard")}
@@ -207,7 +207,7 @@ const EditProfile = ({ uid, editLocation }) => {
         </section>
       </section>
 
-      <section className="w-full ml-20">
+      <section className="w-full ml-0 md:ml-20">
         <div className="bg-white rounded-md shadow-md px-5 py-4 flex justify-between gap-3 items-center">
           <h2 className="text-xl">Edit Profile</h2>
           <span className="flex gap-6 items-center">

@@ -158,7 +158,7 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
       </section>
       {/* </section> */}
 
-      <section className="mk-0 md:ml-20 w-full">
+      <section className="ml-0 md:ml-20 w-full">
         <section className="mb-3">
           <h3 className="text-lg font-serif md:text-3xl text-gray-600">
             Hello {user?.displayName},

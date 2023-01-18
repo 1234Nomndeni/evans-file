@@ -88,7 +88,7 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
 
       {/* <section className="flex"> */}
       {/* <section> */}
-      <section className="flex flex-col justify-between mx-h bg-white py-5 px-8 shadow-md">
+      <section className="hidden md:flex flex-col justify-between mx-h bg-white py-5 px-8 shadow-md">
         <section>
           <div
             onClick={() => navigate("/dashboard")}
@@ -158,7 +158,7 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
       </section>
       {/* </section> */}
 
-      <section className="ml-20 w-full">
+      <section className="mk-0 md:ml-20 w-full">
         <section className="mb-3">
           <h3 className="text-lg font-serif md:text-3xl text-gray-600">
             Hello {user?.displayName},

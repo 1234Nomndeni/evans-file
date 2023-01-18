@@ -31,7 +31,7 @@ const Notifications = () => {
 
   return (
     <main className="pt-20 md:pt-28 mx-wd1 flex justify-between mx-auto">
-      <section className="flex flex-col justify-between mx-h bg-white py-5 px-8 shadow-md">
+      <section className="hidden md:flex flex-col justify-between mx-h bg-white py-5 px-8 shadow-md">
         <section>
           <div
             onClick={() => navigate("/dashboard")}
@@ -98,7 +98,7 @@ const Notifications = () => {
       </section>
 
 
-      <section className="w-full ml-20">
+      <section className="w-full ml-0 md:ml-20">
         <h1>Notifications</h1>
         <p className="mt-20">Your Notifications will appear here</p>
       </section>

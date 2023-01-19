@@ -1,107 +1,119 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import SettingsIcon from "@mui/icons-material/Settings";
-import EditIcon from "@mui/icons-material/Edit";
-import PreviewIcon from "@mui/icons-material/Preview";
-import LogoutIcon from "@mui/icons-material/Logout";
-import AnalyticsIcon from "@mui/icons-material/Analytics";
-import ContactSupportIcon from "@mui/icons-material/ContactSupport";
-import { logout } from "../../features/userSlice";
-import { auth } from "../../utils/firebase";
-import { useDispatch } from "react-redux";
+import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
 
+function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+}
 
 const DashboardNavigator = () => {
-    const navigate = useNavigate()
-    const dispatch = useDispatch();
-    const user = useSelector(selectUser);
-
-    
-  const signOutOfApp = () => {
-    dispatch(logout);
-    auth.signOut();
-    window.location.reload(false);
-
-    if (user) {
-      auth.signOut();
-    }
-    navigate("/");
-  };
-
   return (
-    <main>
-      <section className="hidden md:flex flex-col justify-between mx-h bg-white py-5 px-8 shadow-md">
-        <section>
-          <div
-            onClick={() => navigate("/dashboard")}
-            className="flex items-center gap-2 mb-6 cursor-pointer"
-          >
-            <DashboardIcon className="text-green-400" />
-            <p className="text-md md:text-xl">Dashboard</p>
-          </div>
-          <div
-            onClick={() => navigate("/notifications")}
-            className="flex items-center gap-2 mb-6 cursor-pointer"
-          >
-            <NotificationImportantIcon className="text-yellow-400" />
-            <p className="text-md md:text-xl">Notifications</p>
-          </div>
-          <div
-            onClick={() => navigate("")}
-            className="flex items-center gap-2 mb-6 cursor-pointer"
-          >
-            <SettingsIcon className="text-pink-500" />
-            <p className="text-md md:text-xl">Settings</p>
-          </div>
-          <div
-            onClick={() => navigate("")}
-            className="flex items-center gap-2 mb-6 cursor-pointer"
-          >
-            <AnalyticsIcon className="text-blue-500" />
-            <p className="text-md md:text-xl">Analytics</p>
-          </div>
-          <div className="flex gap-2 mb-3">
-            <ManageAccountsIcon className="text-purple-600" />
-            <div>
-              <p className="text-md md:text-xl">Profile</p>
-              <span
-                onClick={() => navigate("/editprofile")}
-                className="flex ml-2 mt-2 cursor-pointer"
-              >
-                <EditIcon className="w-6 h-2 mr-1 text-green-400" />
-                <p className="">Edit</p>
-              </span>
-              <span
-                onClick={() => navigate("/previewprofile")}
-                className="flex ml-2 mt-2 cursor-pointer"
-              >
-                <PreviewIcon className="w-6 h-2 mr-1 text-yellow-600" />
-                <p>View</p>
-              </span>
+    <Menu as="div" className="relative  text-left mt-20 mx-wd1 mx-auto">
+    <div>
+        <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+            Dashboard Navigations
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-5 h-5 ml-20 -mr-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+            >
+                <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19 9l-7 7-7-7"
+                />
+            </svg>
+        </Menu.Button>
+    </div>
+
+    <Transition
+        as={Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+    >
+        <Menu.Items className="absolute right-0 w-full mt-2 origin-top-right text-red-500 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div className="py-1">
+                <Menu.Item>
+                    {() => (
+                        <a
+                            href="dashboard"
+                            className="block px-4 py-2 text-sm text-gray-600"
+                        >
+                            Account settings
+                        </a>
+                    )}
+                </Menu.Item>
+                <Menu.Item>
+                    {({ active }) => (
+                        <a
+                            href="notifications"
+                            className={classNames(
+                                active
+                                    ? "bg-gray-100 text-gray-900"
+                                    : "text-gray-700",
+                                "block px-4 py-2 text-sm"
+                            )}
+                        >
+                            Notifications
+                        </a>
+                    )}
+                </Menu.Item>
+                <Menu.Item>
+                    {({ active }) => (
+                        <a
+                            href=""
+                            className={classNames(
+                                active
+                                    ? "bg-gray-100 text-gray-900"
+                                    : "text-gray-700",
+                                "block px-4 py-2 text-sm"
+                            )}
+                        >
+                            Settings
+                        </a>
+                    )}
+                </Menu.Item>
+                <Menu.Item>
+                    {({ active }) => (
+                        <a
+                            href="editprofile"
+                            className={classNames(
+                                active
+                                    ? "bg-gray-100 text-gray-900"
+                                    : "text-gray-700",
+                                "block px-4 py-2 text-sm"
+                            )}
+                        >
+                            Edit Profile
+                        </a>
+                    )}
+                </Menu.Item>
+                <Menu.Item>
+                    {({ active }) => (
+                        <a
+                            href="previewprofile"
+                            className={classNames(
+                                active
+                                    ? "bg-gray-100 text-gray-900"
+                                    : "text-gray-700",
+                                "block px-4 py-2 text-sm"
+                            )}
+                        >
+                            View Profile
+                        </a>
+                    )}
+                </Menu.Item>
+                
             </div>
-          </div>
-        </section>
-        <section>
-          <div
-            onClick={() => navigate("/contact-us")}
-            className="flex items-between gap-2 cursor-pointer mb-4 font-semibold"
-          >
-            <ContactSupportIcon className="text-green-500" />
-            <p>Support</p>
-          </div>
-          <div
-            onClick={signOutOfApp}
-            className="flex items-between gap-2 cursor-pointer mb-4 font-semibold"
-          >
-            <LogoutIcon className="text-purple-600" />
-            <p className="">Log Out</p>
-          </div>
-        </section>
-      </section>
-    </main>
+        </Menu.Items>
+    </Transition>
+</Menu>
   );
 };
 

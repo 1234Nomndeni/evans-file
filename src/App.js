@@ -34,6 +34,7 @@ import WorkSpace from "./tests/Workspace/WorkSpace";
 import EditProfile from "./components/UserProfile/EditProfile";
 import ProfilePreview from "./components/UserProfile/ProfilePreview";
 import Notifications from "./components/UserProfile/Notifications";
+import DashboardNavigator from "./components/UserProfile/DashboardNavigator";
 // import WorkSpace from "./tests/Workspace/CodeEditorWindow";
 
 ReactGA.initialize(process.env.TRACK_ID);
@@ -85,6 +86,7 @@ function App() {
 
         {/* Test Scripts */}
           {/* {user && <Route path="/profile" element={<UpdateProfile />} />} */}
+        <Route path="/dashNavigator" element={<DashboardNavigator />} />
         <Route path="/addDraft" element={<AllDrafts />} />
         <Route path="/testDraft" element={<NewDraft />} />
         <Route path="/testImage" element={<TextUpload />} />

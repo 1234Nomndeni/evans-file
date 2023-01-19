@@ -9,11 +9,11 @@ const DashboardNavigator = () => {
   return (
     <Menu as="div" className="relative  text-left mt-20 mx-wd1 mx-auto">
     <div>
-        <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+        <Menu.Button className="inline-flex justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
             Dashboard Navigations
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5 ml-20 -mr-1"
+                className="w-5 h-5 -mr-1"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"

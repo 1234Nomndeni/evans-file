@@ -45,7 +45,7 @@ const DashboardNavigator = () => {
                             href="dashboard"
                             className="block px-4 py-2 text-sm text-gray-600"
                         >
-                            Account settings
+                            My Dashboard
                         </a>
                     )}
                 </Menu.Item>

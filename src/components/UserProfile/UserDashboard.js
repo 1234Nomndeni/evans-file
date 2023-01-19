@@ -25,6 +25,7 @@ import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import ReactTimeago from "react-timeago";
 import DeleteMyArticle from "./DeleteMyArticle";
 import EditMyArticle from "./EditMyArticle";
+import DashboardNavigator from "./DashboardNavigator";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -81,13 +82,16 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
   };
 
   return (
-    <main className="pt-20 md:pt-28 mx-wd1 flex justify-between mx-auto">
+    <main className="md:pt-28 mx-wd1 flex justify-between md:flex-row flex-col mx-auto">
       <Helmet>
         <title>Melbite | Dashboard</title>
       </Helmet>
 
       {/* <section className="flex"> */}
       {/* <section> */}
+      <div className="block md:hidden">
+        <DashboardNavigator />
+      </div>
       <section className="hidden md:flex flex-col justify-between mx-h bg-white py-5 px-8 shadow-md">
         <section>
           <div

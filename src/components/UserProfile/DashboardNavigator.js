@@ -7,7 +7,7 @@ function classNames(...classes) {
 
 const DashboardNavigator = () => {
   return (
-    <Menu as="div" className="relative  text-left mt-20 mx-wd1 mx-auto">
+    <Menu as="div" className="relative text-left mt-20 mb-2 mx-auto">
     <div>
         <Menu.Button className="inline-flex justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
             Dashboard Navigations

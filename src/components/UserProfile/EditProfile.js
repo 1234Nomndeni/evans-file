@@ -14,6 +14,7 @@ import { logout, selectUser } from "../../features/userSlice";
 import { auth, db, storage } from "../../utils/firebase";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import DashboardNavigator from "./DashboardNavigator";
 
 toast.configure({
   position: toast.POSITION.TOP_CENTER,
@@ -137,7 +138,10 @@ const EditProfile = ({ uid, editLocation }) => {
   };
 
   return (
-    <main className="pt-20 md:pt-28 mx-wd1 flex justify-between mx-auto">
+    <main className="md:pt-28 mx-wd1 flex justify-between md:flex-row flex-col mx-auto">
+      <div className="block md:hidden">
+        <DashboardNavigator />
+      </div>
       <section className="hidden md:flex flex-col justify-between mx-h bg-white py-5 px-8 shadow-md">
         <section>
           <div

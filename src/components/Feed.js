@@ -72,7 +72,7 @@ const Feed = ({
       </section>
 
       <section className="mt-2">
-        <Link to={`/${name_slug}/${id}`}>
+        <Link to={`/${name_slug}/${slug_name}`} state={{blogId:id}}>
           <h1 className="leading-9 text-3xl text-gray-900 hover:text-purple-900 cursor-pointer">
             {blogHeader}{" "}
           </h1>

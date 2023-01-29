@@ -59,7 +59,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/new" element={<CreatePost />} />
         <Route path="/signIn" element={<SignUp />} />
-        <Route path={`/:displayName/:blogId`} element={<SelectedBlog />} />
+        <Route path={`/:displayName/:slugName`} element={<SelectedBlog />} />
         {/* <Route path={`/:displayName/:slug_name`} element={<SelectedBlog />} /> */}
         {/* <Route path={`/:displayName/:blogId`} element={<SelectedBlog2 />} /> */}
         {user && <Route path="/dashboard" element={<UserDashboard />} />}

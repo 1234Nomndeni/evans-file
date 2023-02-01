@@ -14,8 +14,8 @@ import PageLinks from "./StaticPages/PageLinks";
 import { useStickyBox } from "react-sticky-box";
 import FetchMostRead from "./FilterCategory/FetchMostRead";
 import FilterCategory from "./FilterCategory/FilterCategory";
+import PostCard from "./FetchArticles/PostCard";
 // import { collection, getDocs } from "firebase/firestore";
-
 
 const HomePage = () => {
   const [articles, setArticles] = useState([]);
@@ -29,10 +29,9 @@ const HomePage = () => {
   /*Make the blog visible from the firebase to the front-end*/
   /******************************************************** */
 
-
   useEffect(() => {
-    const unsubscribe =
-    db.collection("posts")
+    const unsubscribe = db
+      .collection("posts")
       .orderBy("timestamp", "desc")
       // .limit(1)
       // .limitToLast(3)
@@ -111,18 +110,18 @@ const HomePage = () => {
 
             <div className=" lg:w-3/5 sm:w-full">
               <WelcomeNote />
+              {/* <PostCard /> */}
 
-              {
-                !articles || articles.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center w-full mx-auto">
-                    <img
-                      className="w-16"
-                      src={loader}
-                      alt="Loading articles . . ."
-                    />
-                    <p className="mt-2 text-sm">Loading articles. . .</p>
-                  </div>
-                ) : (
+              {!articles || articles.length === 0 ? (
+                <div className="flex flex-col items-center justify-center w-full mx-auto">
+                  <img
+                    className="w-16"
+                    src={loader}
+                    alt="Loading articles . . ."
+                  />
+                  <p className="mt-2 text-sm">Loading articles. . .</p>
+                </div>
+              ) : (
                 articles.map((article) => (
                   <Feed
                     key={article.slug_name}
@@ -141,8 +140,7 @@ const HomePage = () => {
                     uid={article.data.uid}
                   />
                 ))
-                )
-              }
+              )}
             </div>
 
             <div className="hidden md:block pl-4 w-80 ">

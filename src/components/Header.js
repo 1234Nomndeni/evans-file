@@ -126,11 +126,11 @@ const Header = () => {
                 </div>
                 <div className="hidden lg:block ml-10 w-4/5 ">
                   {/* <SearchBar /> */}
-                  <SearchBar />
+                  {/* <SearchBar /> */}
                 </div>
               </div>
               <div className="absolute space-x-5 inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-              {/* <li
+                {/* <li
                   className={
                     getLocation[2] === "workspace"
                       ? "list-none text-purple-900 font-bold"
@@ -159,7 +159,6 @@ const Header = () => {
                     Our Story
                   </Link>
                 </li>
-                
 
                 <p
                   onClick={() => navigate("/new")}
@@ -200,13 +199,14 @@ const Header = () => {
                   <SunIcon className="w-7 cursor-pointer text-gray-600 "/>
                 </div> */}
 
-
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative">
                   <div className="">
                     <Menu.Button className="mt-4">
                       <span className=" cursor-pointer transform hover:scale-105  mr-4 md:mr-10">
-                        <p className=" animate-pulse bg-red-500 text-xs text-center h-5 w-5 pt-0.5 text-white rounded-full font-bold -mb-3 ml-4 z-50 ">8</p>
+                        <p className=" animate-pulse bg-red-500 text-xs text-center h-5 w-5 pt-0.5 text-white rounded-full font-bold -mb-3 ml-4 z-50 ">
+                          8
+                        </p>
                         <BellIcon className="h-7 md:h-8 font-thin text-gray-500 " />
                       </span>
                     </Menu.Button>

@@ -51,6 +51,9 @@ const SelectedBlog = () => {
   const location = useLocation();
   const blogId = location.state?.blogId;
 
+  const location = useLocation();
+  const blogId = location.state?.blogId;
+
   useEffect(() => {
     if (slugName) {
       // db.collection("posts")
@@ -82,7 +85,7 @@ const SelectedBlog = () => {
         );
       fetchComments();
 
-      // return;
+      return;
     }
   }, []);
 

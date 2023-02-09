@@ -46,62 +46,32 @@ const SelectedBlog = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [showReply, setShowReply] = useState(false);
   const [userPosts, setUserPosts] = useState([]);
-  const [myData, setMyData] = useState();
 
   const location = useLocation();
   const blogId = location.state?.blogId;
 
   useEffect(() => {
-    if (slugName) {
+    if (blogId) {
       db.collection("posts")
-        .where("slug_name", "==", slugName)
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            console.log(`${doc.id}`, " => ", doc.data().blogHeader);
+        .doc(blogId)
+        .onSnapshot(
+          (snapshot) => (
+            setBlogHeader(snapshot.data().blogHeader),
+            setBackgroundImage(snapshot.data().backgroundImage),
+            setBlogBody(snapshot.data().blogBody),
+            setCurrentTask(snapshot.data().currentTask),
+            setTimestamp(snapshot.data().timestamp),
+            setSlugName(snapshot.data().slug_name),
+            setNameSlug(snapshot.data().name_slug),
+            setLikes(snapshot.data().likes),
+            setUid(snapshot.data().uid)
+          )
+        );
+      fetchComments();
 
-            setMyData(doc?.data());
-          });
-        })
-        .catch((err) => console.log("Error: ", err));
-
-      // db.collection("posts")
-      // .doc(blogId)
-      //   .onSnapshot(
-      //     (snapshot) => (
-      //       setBlogHeader(snapshot.data().blogHeader),
-      //       setBackgroundImage(snapshot.data().backgroundImage),
-      //       setBlogBody(snapshot.data().blogBody),
-      //       setCurrentTask(snapshot.data().currentTask),
-      //       setTimestamp(snapshot.data().timestamp),
-      //       setSlugName(snapshot.data().slug_name),
-      //       setNameSlug(snapshot.data().name_slug),
-      //       setLikes(snapshot.data().likes),
-      //       setUid(snapshot.data().uid)
-      //     )
-      //   );
-      // fetchComments();
-
-      // return;
+      return;
     }
   }, []);
-
-  useEffect(() => {
-    if (myData) {
-      console.log("MY DATA: ", myData);
-      console.log("TYpe of MY DATA: ", typeof myData);
-
-      //   setBlogHeader(myData?.blogHeader ?? ""),
-      //     setBackgroundImage(myData?.backgroundImage ?? ""),
-      //     setBlogBody(myData?.blogBody ?? ""),
-      //     setCurrentTask(myData?.currentTask ?? ""),
-      //     setTimestamp(myData?.timestamp ?? ""),
-      //     setSlugName(myData?.slug_name ?? ""),
-      //     setNameSlug(myData?.name_slug ?? ""),
-      //     setLikes(myData?.likes ?? ""),
-      //     setUid(myData?.uid ?? "");
-    }
-  }, [myData]);
 
   function fetchComments() {
     db.collection("posts")

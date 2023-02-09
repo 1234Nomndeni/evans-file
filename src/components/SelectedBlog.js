@@ -4,6 +4,7 @@ import { Menu, Transition } from "@headlessui/react";
 import Avatar from "@mui/material/Avatar";
 import { ChatIcon, ShareIcon, HeartIcon } from "@heroicons/react/outline";
 import ReplyIcon from "@mui/icons-material/Reply";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 // import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { db } from "../utils/firebase";
 import ReactTimeago from "react-timeago";
@@ -384,7 +385,7 @@ const SelectedBlog = () => {
               />
             </p> */}
             </span>
-            <span className="md:hidden flex flex-wrap items-center space-x-2 ml-7">
+            <span className="md:hidden flex flex-wrap items-center space-x-1 ml-7">
               {!user ? (
                 <HeartIcon
                   onClick={loginToLike}
@@ -402,7 +403,20 @@ const SelectedBlog = () => {
               <p className="text-xs">Likes</p>
             </span>
           </div>
-          <div className="flex space-x-5 items-center"></div>
+          <div className="flex space-x-5 items-center">
+            <CopyToClipboard
+              text={`https://melbite.com/${name_slug}/${blogId} `}
+              onCopy={onArticleCopyLink}
+            >
+              <span>
+                {isCopied ? (
+                  <ContentCopyIcon className="text-pink-600" />
+                ) : (
+                  <ContentCopyIcon className="cursor-pointer block text-gray-700" />
+                )}
+              </span>
+            </CopyToClipboard>
+          </div>
         </div>
         <div className="ml-7 mr-7 mt-5 mb-4">
           <h2 className="text-lg lg:text-4xl md:text-2xl sm:text-md text-gray-900 md:leading-10">

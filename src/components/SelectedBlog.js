@@ -53,34 +53,34 @@ const SelectedBlog = () => {
 
   useEffect(() => {
     if (slugName) {
-      db.collection("posts")
-        .where("slug_name", "==", slugName)
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            console.log(`${doc.id}`, " => ", doc.data().blogHeader);
-
-            setMyData(doc?.data());
-          });
-        })
-        .catch((err) => console.log("Error: ", err));
-
       // db.collection("posts")
-      // .doc(blogId)
-      //   .onSnapshot(
-      //     (snapshot) => (
-      //       setBlogHeader(snapshot.data().blogHeader),
-      //       setBackgroundImage(snapshot.data().backgroundImage),
-      //       setBlogBody(snapshot.data().blogBody),
-      //       setCurrentTask(snapshot.data().currentTask),
-      //       setTimestamp(snapshot.data().timestamp),
-      //       setSlugName(snapshot.data().slug_name),
-      //       setNameSlug(snapshot.data().name_slug),
-      //       setLikes(snapshot.data().likes),
-      //       setUid(snapshot.data().uid)
-      //     )
-      //   );
-      // fetchComments();
+      //   .where("slug_name", "==", slugName)
+      //   .get()
+      //   .then((querySnapshot) => {
+      //     querySnapshot.forEach((doc) => {
+      //       console.log(`${doc.id}`, " => ", doc.data().blogHeader);
+
+      //       setMyData(doc?.data());
+      //     });
+      //   })
+      //   .catch((err) => console.log("Error: ", err));
+
+      db.collection("posts")
+        .doc(blogId)
+        .onSnapshot(
+          (snapshot) => (
+            setBlogHeader(snapshot.data().blogHeader),
+            setBackgroundImage(snapshot.data().backgroundImage),
+            setBlogBody(snapshot.data().blogBody),
+            setCurrentTask(snapshot.data().currentTask),
+            setTimestamp(snapshot.data().timestamp),
+            setSlugName(snapshot.data().slug_name),
+            setNameSlug(snapshot.data().name_slug),
+            setLikes(snapshot.data().likes),
+            setUid(snapshot.data().uid)
+          )
+        );
+      fetchComments();
 
       // return;
     }
@@ -434,22 +434,6 @@ const SelectedBlog = () => {
               <p className="text-xs font-semibold">{likes?.length}</p>
               <p className="text-xs">Likes</p>
             </span>
-            <CopyToClipboard
-              text={`https://melbite.com/${name_slug}/${blogId} `}
-              onCopy={onArticleCopyLink}
-            >
-              <span>
-                {isCopied ? (
-                  <p className="block cursor-pointer px-4 py-2 text-sm text-gray-700">
-                    Link Copied!
-                  </p>
-                ) : (
-                  <p className="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:text-purple-900">
-                    Copy to Clipboard
-                  </p>
-                )}
-              </span>
-            </CopyToClipboard>
           </div>
           <div className="flex space-x-5 items-center"></div>
         </div>

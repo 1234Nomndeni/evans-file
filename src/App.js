@@ -49,9 +49,15 @@ function App() {
     <main className="max-w-8xl mx-auto">
       <Helmet>
         <title>Melbite - Home Of Creators</title>
-        <meta content="Welcome to the melbite community. Melbite is a platform to read, learn, and share knowledge and skills
-    through written articles" name="description" />
-    <meta name="keywords" content="How to, where to, learning, melbite, blogging, programming, coding, careers, articles "/>
+        <meta
+          content="Welcome to the melbite community. Melbite is a platform to read, learn, and share knowledge and skills
+    through written articles"
+          name="description"
+        />
+        <meta
+          name="keywords"
+          content="How to, where to, learning, melbite, blogging, programming, coding, careers, articles "
+        />
       </Helmet>
       <Header />
 
@@ -59,7 +65,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/new" element={<CreatePost />} />
         <Route path="/signIn" element={<SignUp />} />
-        <Route path={`/:displayName/:slugName`} element={<SelectedBlog />} />
+        <Route path={`/:displayName/:blogId`} element={<SelectedBlog />} />
         {/* <Route path={`/:displayName/:slug_name`} element={<SelectedBlog />} /> */}
         {/* <Route path={`/:displayName/:blogId`} element={<SelectedBlog2 />} /> */}
         {user && <Route path="/dashboard" element={<UserDashboard />} />}
@@ -78,22 +84,19 @@ function App() {
         <Route
           path="/Welcome-to-Melbite-the-official-blogging-site-or-the-world"
           element={<WelcomeBlog />}
-          />
+        />
 
         {/* Melbite Premiers */}
-        <Route path="/register" element={<WritingChallenge/>} />
-
+        <Route path="/register" element={<WritingChallenge />} />
 
         {/* Test Scripts */}
-          {/* {user && <Route path="/profile" element={<UpdateProfile />} />} */}
+        {/* {user && <Route path="/profile" element={<UpdateProfile />} />} */}
         <Route path="/dashNavigator" element={<DashboardNavigator />} />
         <Route path="/addDraft" element={<AllDrafts />} />
         <Route path="/testDraft" element={<NewDraft />} />
         <Route path="/testImage" element={<TextUpload />} />
         <Route path="/workspace" element={<WorkSpace />} />
         {/* <Route path="/melbiteTest" element={<MelbiteCreatePost />} /> */}
-
-
 
         {/* <Route path="/subscriptions" element={<Subscriptions/>} /> */}
       </Routes>

@@ -28,7 +28,7 @@ function classNames(...classes) {
 const SelectedBlog = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-  const { slugName, displayName } = useParams();
+  const { blogId, displayName } = useParams();
   const [blogHeader, setBlogHeader] = useState("");
   const [blogBody, setBlogBody] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
@@ -46,28 +46,9 @@ const SelectedBlog = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [showReply, setShowReply] = useState(false);
   const [userPosts, setUserPosts] = useState([]);
-  const [myData, setMyData] = useState();
-
-  const location = useLocation();
-  const blogId = location.state?.blogId;
-
-  const location = useLocation();
-  const blogId = location.state?.blogId;
 
   useEffect(() => {
-    if (slugName) {
-      // db.collection("posts")
-      //   .where("slug_name", "==", slugName)
-      //   .get()
-      //   .then((querySnapshot) => {
-      //     querySnapshot.forEach((doc) => {
-      //       console.log(`${doc.id}`, " => ", doc.data().blogHeader);
-
-      //       setMyData(doc?.data());
-      //     });
-      //   })
-      //   .catch((err) => console.log("Error: ", err));
-
+    if (blogId) {
       db.collection("posts")
         .doc(blogId)
         .onSnapshot(
@@ -88,23 +69,6 @@ const SelectedBlog = () => {
       return;
     }
   }, []);
-
-  useEffect(() => {
-    if (myData) {
-      console.log("MY DATA: ", myData);
-      console.log("TYpe of MY DATA: ", typeof myData);
-
-      //   setBlogHeader(myData?.blogHeader ?? ""),
-      //     setBackgroundImage(myData?.backgroundImage ?? ""),
-      //     setBlogBody(myData?.blogBody ?? ""),
-      //     setCurrentTask(myData?.currentTask ?? ""),
-      //     setTimestamp(myData?.timestamp ?? ""),
-      //     setSlugName(myData?.slug_name ?? ""),
-      //     setNameSlug(myData?.name_slug ?? ""),
-      //     setLikes(myData?.likes ?? ""),
-      //     setUid(myData?.uid ?? "");
-    }
-  }, [myData]);
 
   function fetchComments() {
     db.collection("posts")

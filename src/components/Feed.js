@@ -50,11 +50,18 @@ const Feed = ({
         <meta name="twitter:title" content={meta.title} />
         <meta name="twitter:description" content={meta.description} />
         <meta name="twitter:image" content={meta.image} />
-        <meta name="keywords" content={meta.title}/>
-        <meta name="keywords" content={meta.nameSlug}/>
+        <meta name="keywords" content={meta.title} />
+        <meta name="keywords" content={meta.nameSlug} />
 
         {meta.date && (
-          <meta property="article:published_time" content={ <ReactTimeago date={new Date(timestamp?.toDate()).toUTCString()} />} />
+          <meta
+            property="article:published_time"
+            content={
+              <ReactTimeago
+                date={new Date(timestamp?.toDate()).toUTCString()}
+              />
+            }
+          />
         )}
       </Helmet>
 
@@ -72,7 +79,7 @@ const Feed = ({
       </section>
 
       <section className="mt-2">
-        <Link to={`/${name_slug}/${slug_name}`} state={{blogId:id}}>
+        <Link to={`/${name_slug}/${id}`} state={{ blogId: id }}>
           <h1 className="leading-9 text-3xl text-gray-900 hover:text-purple-900 cursor-pointer">
             {blogHeader}{" "}
           </h1>
@@ -86,9 +93,7 @@ const Feed = ({
             className="flex items-center space-x-1 hover:bg-gray-200 p-2 rounded-md cursor-pointer"
           >
             <HeartIcon className="w-6 cursor-pointer " />
-            <p className="text-sm text-gray-600">
-              {likes?.length}
-            </p>
+            <p className="text-sm text-gray-600">{likes?.length}</p>
             <p className="text-sm text-gray-600">Likes</p>
           </Link>
 

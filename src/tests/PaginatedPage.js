@@ -64,12 +64,13 @@ const PaginatedPage = () => {
 
   return (
     <main>
-      {!posts || posts.length === 0 ? (
-        <div className="flex flex-col items-center justify-center w-full mx-auto">
-          {/* <img className="w-16" src={loader} alt="Loading articles . . ." /> */}
-          <p className="mt-2 text-sm">Loading articles. . .</p>
-        </div>
-      ) : (
+      {
+        //   !posts || posts.length === 0 ? (
+        //     <div className="flex flex-col items-center justify-center w-full mx-auto">
+        //       {/* <img className="w-16" src={loader} alt="Loading articles . . ." /> */}
+        //       <p className="mt-2 text-sm">Loading articles. . .</p>
+        //     </div>
+        //   ) : (
         posts.map((post) => (
           <section
             className="w-full border-2 rounded-md bg-white p-5 mb-2 hover:border-purple-800 duration-150"
@@ -204,8 +205,14 @@ const PaginatedPage = () => {
             </section>
           </section>
         ))
+        //   )
+      }
+      {loading && (
+        <div>
+          <p className="text-center mt-3">Loading posts... </p>
+          <p className="text-center mt-3">Scroll down to see the posts </p>
+        </div>
       )}
-      {loading && <p className="text-center mt-3">Loading more posts...</p>}
     </main>
   );
 };

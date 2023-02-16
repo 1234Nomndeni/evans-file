@@ -15,6 +15,7 @@ import { useStickyBox } from "react-sticky-box";
 import FetchMostRead from "./FilterCategory/FetchMostRead";
 import FilterCategory from "./FilterCategory/FilterCategory";
 import PostCard from "./FetchArticles/PostCard";
+import PaginatedPage from "../tests/PaginatedPage";
 // import { collection, getDocs } from "firebase/firestore";
 
 const HomePage = () => {
@@ -112,6 +113,7 @@ const HomePage = () => {
               <WelcomeNote />
               {/* <PostCard /> */}
 
+              {/* 
               {!articles || articles.length === 0 ? (
                 <div className="flex flex-col items-center justify-center w-full mx-auto">
                   <img
@@ -140,7 +142,9 @@ const HomePage = () => {
                     uid={article.data.uid}
                   />
                 ))
-              )}
+              )} */}
+
+              <PaginatedPage />
             </div>
 
             <div className="hidden md:block pl-4 w-80 ">

@@ -88,15 +88,15 @@ function App() {
         />
 
         {/* Melbite Premiers */}
-        <Route path="/register" element={<WritingChallenge />} />
+        {/* <Route path="/register" element={<WritingChallenge />} /> */}
 
         {/* Test Scripts */}
         {/* {user && <Route path="/profile" element={<UpdateProfile />} />} */}
         {user && <Route path="/adminDash" element={<AdminDashboard />} />}
         <Route path="/dashNavigator" element={<DashboardNavigator />} />
-        <Route path="/addDraft" element={<AllDrafts />} />
-        <Route path="/testDraft" element={<NewDraft />} />
-        <Route path="/testImage" element={<TextUpload />} />
+        {/* <Route path="/addDraft" element={<AllDrafts />} /> */}
+        {/* <Route path="/testDraft" element={<NewDraft />} /> */}
+        {/* <Route path="/testImage" element={<TextUpload />} /> */}
         <Route path="/workspace" element={<WorkSpace />} />
         {/* <Route path="/melbiteTest" element={<MelbiteCreatePost />} /> */}
 

@@ -209,8 +209,10 @@ const PaginatedPage = () => {
       }
       {loading && (
         <div>
-          <p className="text-center mt-3">Loading posts... </p>
-          <p className="text-center mt-3">Scroll down to see the posts </p>
+          <p className="text-center mt-3">Loading posts . . . </p>
+          <p className="text-center mt-3 text-sm">
+            You may scroll down to see the articles{" "}
+          </p>
         </div>
       )}
     </main>
@@ -218,8 +220,3 @@ const PaginatedPage = () => {
 };
 
 export default PaginatedPage;
-
-{
-  /* <ul>
-      </ul> */
-}

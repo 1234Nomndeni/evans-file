@@ -81,6 +81,9 @@ const PaginatedPage = () => {
                 {post.displayName?.[0]}
               </span>
               <span className="ml-2">
+                <Link to={`/user/${post?.displayName}`}>
+                  {post.displayName}
+                </Link>
                 <h3 className="text-sm">{post.displayName}</h3>
                 <p className="text-sm text-gray-500">
                   Published{" "}

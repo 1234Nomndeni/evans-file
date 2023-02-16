@@ -41,8 +41,8 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
   const fetchData = async () => {
     try {
       await db
-        .collection(`posts`)
-        .where("uid", "==", user?.uid)
+        .collection("posts")
+        .where("uid", "==", user.uid)
         .orderBy("timestamp", "desc")
         .onSnapshot((snapshot) =>
           setUserPosts(

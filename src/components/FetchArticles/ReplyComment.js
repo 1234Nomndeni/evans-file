@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectUser } from "../features/userSlice";
+import { selectUser } from "../../features/userSlice";
 
 const ReplyComment = ({ show, cb, commentId }) => {
-
   const [replyComment, setReplyComment] = useState("");
 
   const navigate = useNavigate();
@@ -18,7 +17,6 @@ const ReplyComment = ({ show, cb, commentId }) => {
 
   return (
     <div>
-    
       <div
         class={` items-center justify-center w-full ${
           show ? "flex" : "hidden"

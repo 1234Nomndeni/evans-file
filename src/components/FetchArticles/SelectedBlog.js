@@ -6,9 +6,9 @@ import { ChatIcon, ShareIcon, HeartIcon } from "@heroicons/react/outline";
 import ReplyIcon from "@mui/icons-material/Reply";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 // import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { db } from "../utils/firebase";
+import { db } from "../../utils/firebase";
 import ReactTimeago from "react-timeago";
-import { selectUser } from "../features/userSlice";
+import { selectUser } from "../../features/userSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import { useSelector } from "react-redux";
@@ -18,9 +18,8 @@ import LikePost from "./LikePost";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import MoreFromUser from "./FilterCategory/MoreFromUser";
-import contentLoading from "./images/content-loading.gif";
+import contentLoading from "../images/content-loading.gif";
 // import MoreFromUser from "./SuperActions/MoreFromUser";
-import { useLocation } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -186,22 +185,6 @@ const SelectedBlog = () => {
         );
       });
   };
-
-  // Get more posts/articles from a user's profile
-  useEffect(() => {
-    db.collection("posts")
-      .where("displayName", "==", displayName)
-      .orderBy("timestamp", "desc")
-      .limit(6)
-      .onSnapshot((snapshot) =>
-        setUserPosts(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
-        )
-      );
-  }, []);
 
   // Return/Render the commnets below
   useEffect(() => {
@@ -378,12 +361,12 @@ const SelectedBlog = () => {
             </span>
             <span className="ml-2">
               <p className="text-md">{displayName}</p>
-              {/* <p className="text-sm text-gray-500 -mt-1">
-              Published{" "}
-              <ReactTimeago
-                date={new Date(timestamp.timestamp?.toDate()).toUTCString()}
-              />
-            </p> */}
+              <p className="text-sm text-gray-500 -mt-1">
+                Published{" "}
+                <ReactTimeago
+                  date={new Date(timestamp?.timestamp?.toDate()).toUTCString()}
+                />
+              </p>
             </span>
             <span className="md:hidden flex flex-wrap items-center space-x-1 ml-7">
               {!user ? (

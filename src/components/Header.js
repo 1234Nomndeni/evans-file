@@ -13,8 +13,8 @@ import { selectUser, login, logout } from "../features/userSlice";
 import { auth } from "../utils/firebase";
 import brandLogo from "./images/melbiteLogo.png";
 import brandLogo1 from "./images/melbite.jpg";
-import SearchBar from "./SuperActions/SearchBar";
-import LatestUpdates from "./LatestUpdates";
+// import SearchBar from "./SuperActions/SearchBar";
+import LatestUpdates from "./StaticPages/LatestUpdates";
 // import Ether from "../tests/Ether";
 
 function classNames(...classes) {

@@ -5,7 +5,7 @@ import HomePage from "./components/HomePage";
 import { Routes, Route } from "react-router-dom";
 import CreatePost from "./components/AddArticle/CreatePost";
 import SignUp from "./components/SignUp";
-import SelectedBlog from "./components/SelectedBlog";
+import SelectedBlog from "./components/FetchArticles/SelectedBlog";
 // import SelectedBlog2 from './components/SelectedBlog2';
 import Footer from "./components/StaticPages/Footer";
 import UpdateProfile from "./components/UserProfile/UpdateProfile";
@@ -17,19 +17,12 @@ import CodeOfConduct from "./components/StaticPages/CodeOfConduct";
 import HowToBlogHere from "./components/StaticPages/HowToBlogHere";
 import ReactGA from "react-ga";
 import WelcomeBlog from "./components/StaticPages/WelcomeBlog";
-import ViewArticle from "./components/UserProfile/ViewArticle";
 import Donate from "./components/SuperActions/Donate";
 import PageNotFound from "./components/StaticPages/PageNotFound";
 // import Subscriptions from './components/StaticPages/Subscriptions';
 import { useSelector } from "react-redux";
 import { selectUser } from "./features/userSlice";
 import MyDrafts from "./components/UserProfile/MyDrafts";
-import AllDrafts from "./components/saveDraft/AllDrafts";
-import NewDraft from "./components/saveDraft/NewDraft";
-import TestImage from "./tests/TestImage";
-import TextUpload from "./tests/TextUpload";
-import MelbiteCreatePost from "./tests/MelbiteCreatePost";
-import WritingChallenge from "./components/melbitePremiers/WritingChallenge";
 import WorkSpace from "./tests/Workspace/WorkSpace";
 import EditProfile from "./components/UserProfile/EditProfile";
 import ProfilePreview from "./components/UserProfile/ProfilePreview";
@@ -37,7 +30,6 @@ import Notifications from "./components/UserProfile/Notifications";
 import DashboardNavigator from "./components/UserProfile/DashboardNavigator";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import OtherUserProfile from "./components/UserProfile/OtherUserProfile";
-// import WorkSpace from "./tests/Workspace/CodeEditorWindow";
 
 ReactGA.initialize(process.env.TRACK_ID);
 function App() {
@@ -68,14 +60,11 @@ function App() {
         <Route path="/new" element={<CreatePost />} />
         <Route path="/signIn" element={<SignUp />} />
         <Route path={`/:displayName/:blogId`} element={<SelectedBlog />} />
-        {/* <Route path={`/:displayName/:slug_name`} element={<SelectedBlog />} /> */}
-        {/* <Route path={`/:displayName/:blogId`} element={<SelectedBlog2 />} /> */}
         {user && <Route path="/dashboard" element={<UserDashboard />} />}
         {user && <Route path="/editprofile" element={<EditProfile />} />}
         {user && <Route path="/previewprofile" element={<ProfilePreview />} />}
         {user && <Route path="/notifications" element={<Notifications />} />}
         {user && <Route path="/my-drafts" element={<MyDrafts />} />}
-        {/* <Route path="/:name_slug/:postId" element={<ViewArticle />} /> */}
         <Route path="/about" element={<AboutUs />} />
         <Route path="/donate" element={<Donate />} />
         <Route path="/contact-us" element={<Contacts />} />
@@ -91,16 +80,10 @@ function App() {
         {/* Melbite Premiers */}
         {/* <Route path="/register" element={<WritingChallenge />} /> */}
 
-        {/* Test Scripts */}
-        {/* {user && <Route path="/profile" element={<UpdateProfile />} />} */}
         <Route path="/user/:username" component={<OtherUserProfile />} />
         {user && <Route path="/adminDash" element={<AdminDashboard />} />}
         <Route path="/dashNavigator" element={<DashboardNavigator />} />
-        {/* <Route path="/addDraft" element={<AllDrafts />} /> */}
-        {/* <Route path="/testDraft" element={<NewDraft />} /> */}
-        {/* <Route path="/testImage" element={<TextUpload />} /> */}
         <Route path="/workspace" element={<WorkSpace />} />
-        {/* <Route path="/melbiteTest" element={<MelbiteCreatePost />} /> */}
 
         {/* <Route path="/subscriptions" element={<Subscriptions/>} /> */}
       </Routes>

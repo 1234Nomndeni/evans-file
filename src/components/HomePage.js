@@ -82,7 +82,7 @@ const HomePage = () => {
             </div>
 
             <div className=" lg:w-3/5 sm:w-full">
-              <WelcomeNote />
+              {/* <WelcomeNote /> */}
               <PaginatedPage />
             </div>
 

@@ -47,8 +47,11 @@ const PaginatedPage = () => {
   }, []);
 
   const filteredPosts = searchText
-    ? posts.filter((post) =>
-        post.blogHeader?.toLowerCase().includes(searchText.toLowerCase())
+    ? posts.filter(
+        (post) =>
+          post.blogHeader.toLowerCase().includes(searchText.toLowerCase()) ||
+          post.blogBody.toLowerCase().includes(searchText.toLowerCase()) ||
+          post.displayName.toLowerCase().includes(searchText.toLowerCase())
       )
     : posts;
 
@@ -70,12 +73,6 @@ const PaginatedPage = () => {
   return (
     <main>
       <form onSubmit={(e) => e.preventDefault()} className="mb-5">
-        <label
-          for="default-search"
-          class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-        >
-          Search
-        </label>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg
@@ -97,7 +94,7 @@ const PaginatedPage = () => {
           <input
             type="search"
             value={searchText}
-            className="block w-full p-4 pl-10 text:sm md:text-md text-gray-900 border border-gray-300 rounded-lg bg-white 
+            className="w-full p-4 pl-10 text:sm md:text-md text-gray-900 border border-gray-300 rounded-lg bg-white 
               focus:border-transparent"
             placeholder="Search Article..."
             required
@@ -105,7 +102,7 @@ const PaginatedPage = () => {
           />
           <button
             type="submit"
-            class="text-white absolute right-2.5 bottom-2.5 bg-purple-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
+            class="text-white absolute right-2.5 bottom-2.5 bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
           >
             Search
           </button>

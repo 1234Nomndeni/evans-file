@@ -1,82 +1,54 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import firebase from "firebase/app";
+import "firebase/auth";
 import "firebase/firestore";
 import { db } from "../../utils/firebase";
 
-const OtherUserProfile = ({ match }) => {
+const OtherUserProfile = () => {
+  console.log("Hello world");
+  const { uid } = useParams();
   const [user, setUser] = useState(null);
-  const [posts, setPosts] = useState([]);
+  const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const displayName = match.params.displayName;
-      const usersRef = db.collection("Users");
-      const userQuery = usersRef
-        .where("displayName", "==", displayName)
-        .limit(1);
-      const userSnapshot = await userQuery.get();
-      if (userSnapshot.empty) {
-        setUser(null);
+    const userRef = db.collection("Users").doc(uid);
+    userRef.get().then((doc) => {
+      if (doc.exists) {
+        setUser(doc.data());
       } else {
-        setUser({
-          id: userSnapshot.docs[0].id,
-          ...userSnapshot.docs[0].data(),
-        });
+        console.log("No such user!");
       }
-    };
-    fetchUser();
-  }, [match.params.displayName]);
+    });
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      if (user) {
-        const postsRef = db.collection("posts");
-        const postsQuery = postsRef
-          .where("uid", "==", user.uid)
-          .orderBy("timestamp", "desc");
-        const postsSnapshot = await postsQuery.get();
-        const newPosts = postsSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setPosts(newPosts);
-      }
-    };
-    fetchPosts();
-  }, [user]);
+    const articlesRef = db.collection("posts").where("uid", "==", uid);
+    const unsubscribe = articlesRef.onSnapshot((snapshot) => {
+      const articles = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setArticles(articles);
+      console.log("uid");
+    });
+    return unsubscribe;
+  }, [uid]);
 
   return (
     <div>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      {user ? (
-        <div className="pt-20 h-[100vh]">
-          <h1>{user.name}</h1>
-          <p>Username: {user.displayName}</p>
-          <h2>Blog Articles</h2>
-          <ul>
-            {posts.map((post) => (
-              <li key={post.id}>
-                <h3>{post.blogHeader}</h3>
-                <p>{post.blogBody}</p>
-              </li>
-            ))}
-          </ul>
+      <h1>User Profile</h1>
+      {user && (
+        <div>
+          <h2>{user.displayName}</h2>
+          <p>Email: {user.email}</p>
         </div>
-      ) : (
-        <p>User not found.</p>
       )}
+      <h3>Blog Articles</h3>
+      {articles.map((article) => (
+        <div key={article.id}>
+          <h4>{article.title}</h4>
+          <p>{article.content}</p>
+        </div>
+      ))}
     </div>
   );
 };

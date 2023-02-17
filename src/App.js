@@ -93,7 +93,7 @@ function App() {
 
         {/* Test Scripts */}
         {/* {user && <Route path="/profile" element={<UpdateProfile />} />} */}
-        <Route path="/user/:username" component={<OtherUserProfile />} />
+        <Route path="/Users/:displayName" component={<OtherUserProfile />} />
         {user && <Route path="/adminDash" element={<AdminDashboard />} />}
         <Route path="/dashNavigator" element={<DashboardNavigator />} />
         {/* <Route path="/addDraft" element={<AllDrafts />} /> */}

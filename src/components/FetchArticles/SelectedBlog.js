@@ -360,13 +360,13 @@ const SelectedBlog = () => {
               {displayName?.[0]}
             </span>
             <span className="ml-2">
-              <p className="text-md">{displayName}</p>
-              <p className="text-sm text-gray-500 -mt-1">
+              <h3 className="text-md">{displayName}</h3>
+              {/* <p className="text-sm text-gray-500 -mt-1">
                 Published{" "}
                 <ReactTimeago
-                  date={new Date(timestamp?.timestamp?.toDate()).toUTCString()}
+                  date={new Date(timestamp.timestamp.toDate()).toUTCString()}
                 />
-              </p>
+              </p> */}
             </span>
             <span className="md:hidden flex flex-wrap items-center space-x-1 ml-7">
               {!user ? (

@@ -47,19 +47,6 @@ const OtherUserProfile = ({ match }) => {
 
   return (
     <div>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
-      <h1>Hello world</h1>
       {user ? (
         <div className="pt-20 h-[100vh]">
           <h1>{user.name}</h1>

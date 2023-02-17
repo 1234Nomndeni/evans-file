@@ -79,19 +79,24 @@ const EditProfile = ({ uid, editLocation }) => {
               setUploadedImage(uploadedImage);
               console.log(uploadedImage);
 
-              db.collection("Users").doc(user?.uid).set(
-                {
-                  uid: user.uid,
-                  profileImage: uploadedImage,
-                  tagName: tagName,
-                  website: website,
-                  location: location,
-                  workExperience: workExperience,
-                  skills: skills,
-                  biography: biography,
-                },
-                { merge: true }
-              );
+              db.collection("Users")
+                .doc(user?.uid)
+                .set(
+                  {
+                    uid: user.uid,
+                    profileImage: uploadedImage,
+                    tagName: tagName,
+                    website: website,
+                    location: location,
+                    workExperience: workExperience,
+                    skills: skills,
+                    biography: biography,
+                    description: user.email,
+                    displayName: user.displayName,
+                    name_slug: user.displayName.replace(/\s/g, "-"),
+                  },
+                  { merge: true }
+                );
               setProgress(0);
               setProfilePic(null);
               setTagName("");

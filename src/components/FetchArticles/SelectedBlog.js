@@ -566,20 +566,22 @@ const SelectedBlog = () => {
           </div>
         </section>
 
-        {/* <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
-          Follow
-        </button> */}
-        {/* <section className="mt-4 bg-white pl-2 pr-2 rounded-sm border">
-          <h2 className="text-lg md:text-xl text-gray-900">More from <span className="text-purple-700">{displayName}</span></h2>
+        <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
+          View Profile
+        </button>
+        <section className="mt-10 pl-2 pr-2 ">
+          <h2 className="text-lg md:text-xl text-gray-900">
+            More from <span className="text-purple-700">{displayName}</span>
+          </h2>
 
-          <MoreFromUser/>
+          {/* <MoreFromUser /> */}
 
-          {userPosts?.map(userPosts) => {
+          {/* {userPosts?.map(userPosts) => {
             <section></section>
-          }}
+          }} */}
         </section>
-        
-          <MoreFromUser/> */}
+
+        {/* <MoreFromUser /> */}
       </section>
     </main>
   );

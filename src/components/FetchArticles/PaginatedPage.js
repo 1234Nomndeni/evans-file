@@ -14,7 +14,8 @@ const PaginatedPage = () => {
   const [posts, setPosts] = useState([]);
   const [lastVisible, setLastVisible] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [searchText, setSearchText] = useState("");
+  // const [searchText, setSearchText] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const perPage = 7;
 
@@ -46,14 +47,37 @@ const PaginatedPage = () => {
     loadMorePosts();
   }, []);
 
-  const filteredPosts = searchText
-    ? posts.filter(
-        (post) =>
-          post.blogHeader.toLowerCase().includes(searchText.toLowerCase()) ||
-          post.blogBody.toLowerCase().includes(searchText.toLowerCase()) ||
-          post.displayName.toLowerCase().includes(searchText.toLowerCase())
-      )
-    : posts;
+  // Filter posts to search with terms
+  const filterPosts = (posts, searchTerm) => {
+    if (!searchTerm) {
+      return posts;
+    }
+
+    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+    return posts.filter((post) => {
+      const titleMatch = post.blogHeader
+        .toLowerCase()
+        .includes(lowerCaseSearchTerm);
+      const contentMatch = post.blogBody
+        .toLowerCase()
+        .includes(lowerCaseSearchTerm);
+      const displayNameMatch = post.displayName
+        .toLowerCase()
+        .includes(lowerCaseSearchTerm);
+      return titleMatch || contentMatch || displayNameMatch;
+    });
+  };
+
+  const filteredPosts = filterPosts(posts, searchTerm);
+
+  // const filteredPosts = searchText
+  //   ? posts.filter(
+  //       (post) =>
+  //         post.blogHeader.toLowerCase().includes(searchText.toLowerCase()) ||
+  //         post.blogBody.toLowerCase().includes(searchText.toLowerCase()) ||
+  //         post.displayName.toLowerCase().includes(searchText.toLowerCase())
+  //     )
+  //   : posts;
 
   const handleScroll = () => {
     if (
@@ -93,19 +117,19 @@ const PaginatedPage = () => {
           </div>
           <input
             type="search"
-            value={searchText}
+            value={searchTerm}
             className="w-full p-4 pl-10 text:sm md:text-md text-gray-900 border border-gray-300 rounded-lg bg-white 
               focus:border-transparent"
             placeholder="Search Article..."
             required
-            onChange={(e) => setSearchText(e.target.value)}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button
+          {/* <button
             type="submit"
             class="text-white absolute right-2.5 bottom-2.5 bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
           >
             Search
-          </button>
+          </button> */}
         </div>
       </form>
 

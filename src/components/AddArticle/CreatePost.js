@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { XIcon } from "@heroicons/react/outline";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, logout, login } from "../../features/userSlice";
-import { auth, db, storage } from "../../utils/firebase";
+import { auth, db } from "../../utils/firebase";
 import SignUp from "../SignUp";
 import firebase from "firebase/compat/app";
 import brandLogo from "../images/melbite.jpg";
@@ -48,7 +48,7 @@ const modules = {
     [{ color: [] }, { background: [] }],
     [{ script: "sub" }, { script: "super" }],
     [{ align: [] }],
-    ["image","video", "code-block", "blockquote", "link", "formula", "strike"],
+    ["image", "video", "code-block", "blockquote", "link", "formula", "strike"],
     ["clean"],
   ],
 };
@@ -60,12 +60,12 @@ const modules2 = {
   toolbar: [["image"]],
 };
 
-const CreatePost = ({value}) => {
+const CreatePost = ({ value }) => {
   const [blogHeader, setBlogHeader] = useState("");
   const [blogBody, setBlogBody] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
   const [currentTask, setCurrentTask] = useState("");
-  const [addtags, setAddTags] = useState("")
+  const [addtags, setAddTags] = useState("");
   const [open, setOpen] = useState(true);
 
   const navigate = useNavigate();
@@ -79,6 +79,23 @@ const CreatePost = ({value}) => {
   const handleBackgroundChange = (value, delta, source, editor) => {
     setBackgroundImage(value);
   };
+
+  useEffect(() => {
+    const storedValues = JSON.parse(localStorage.getItem("blogPostValues"));
+    if (storedValues) {
+      setBlogHeader(storedValues.blogHeader);
+      setBlogBody(storedValues.blogBody);
+      setBackgroundImage(storedValues.backgroundImage);
+      setCurrentTask(storedValues.currentTask);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "blogPostValues",
+      JSON.stringify({ blogHeader, blogBody, backgroundImage, currentTask })
+    );
+  }, [blogHeader, blogBody, backgroundImage, currentTask]);
 
   const publishBlog = (e) => {
     e.preventDefault();
@@ -104,6 +121,7 @@ const CreatePost = ({value}) => {
       setCurrentTask("");
       setAddTags("");
       toast("Article Published Successfully");
+      localStorage.removeItem("blogPostValues");
     }
   };
 

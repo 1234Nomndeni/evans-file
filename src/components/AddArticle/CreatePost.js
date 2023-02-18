@@ -64,7 +64,8 @@ const CreatePost = () => {
   const [blogBody, setBlogBody] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
   const [currentTask, setCurrentTask] = useState("");
-  const [addtags, setAddTags] = useState("");
+  const [tags, setTags] = useState([]);
+  const [selectedTag, setSelectedTag] = useState("");
   const [open, setOpen] = useState(true);
 
   const navigate = useNavigate();
@@ -96,6 +97,18 @@ const CreatePost = () => {
     );
   }, [blogHeader, blogBody, backgroundImage, currentTask]);
 
+  const handleAddTag = (event) => {
+    event.preventDefault();
+    if (selectedTag && !tags.includes(selectedTag)) {
+      setTags([...tags, selectedTag]);
+      setSelectedTag("");
+    }
+  };
+
+  const handleRemoveTag = (tagToRemove) => {
+    setTags(tags.filter((tag) => tag !== tagToRemove));
+  };
+
   const publishBlog = (e) => {
     e.preventDefault();
     if (blogHeader && blogBody) {
@@ -105,7 +118,7 @@ const CreatePost = () => {
         blogHeader: blogHeader,
         slug_name: blogHeader.replace(/\s/g, "-"),
         blogBody: blogBody,
-        addtags: addtags,
+        hashTags: selectedTag,
         currentTask: currentTask,
         description: user.email,
         displayName: user.displayName,
@@ -118,7 +131,8 @@ const CreatePost = () => {
       setBlogHeader("");
       setBlogBody("");
       setCurrentTask("");
-      setAddTags("");
+      setTags([]);
+      setSelectedTag("");
       toast("Article Published Successfully");
       localStorage.removeItem("blogPostValues");
     }
@@ -223,9 +237,32 @@ const CreatePost = () => {
                   placeholder="Type your title here . . ."
                 />
               </section>
-              {/* <section className="mx-wd2 mx-auto mt-5">
-                <TagsOptions value={addtags} onChange={(e) => setAddTags(e.target.value)} />
-              </section> */}
+              <label htmlFor="tag">Tag</label>
+              <div>
+                <select
+                  id="tag"
+                  value={selectedTag}
+                  onChange={(e) => setSelectedTag(e.target.value)}
+                >
+                  <option value="">Select a tag</option>
+                  <option value="react">React</option>
+                  <option value="firebase">Firebase</option>
+                  <option value="javascript">JavaScript</option>
+                </select>
+                <button type="button" onClick={handleAddTag}>
+                  Add Tag
+                </button>
+              </div>
+              <div>
+                {tags.map((tag) => (
+                  <span key={tag}>
+                    {tag}
+                    <button type="button" onClick={() => handleRemoveTag(tag)}>
+                      X
+                    </button>
+                  </span>
+                ))}
+              </div>
 
               <section className="mx-wd2 mt-10 pb-12 mx-auto">
                 <ReactQuill

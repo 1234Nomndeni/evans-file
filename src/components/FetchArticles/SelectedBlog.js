@@ -19,7 +19,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import MoreFromUser from "./FilterCategory/MoreFromUser";
 import contentLoading from "../images/content-loading.gif";
-import { async } from "@firebase/util";
 // import MoreFromUser from "./SuperActions/MoreFromUser";
 
 function classNames(...classes) {
@@ -563,14 +562,14 @@ const SelectedBlog = () => {
           </div>
         </section>
 
-        <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
+        {/* <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
           View Profile
         </button>
         <section className="mt-10 pl-2 pr-2 ">
           <h2 className="text-lg md:text-xl text-gray-900">
             More from <span className="text-purple-700">{displayName}</span>
           </h2>
-        </section>
+        </section> */}
       </section>
     </main>
   );

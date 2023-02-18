@@ -1,8 +1,7 @@
-import React, { useState, useEffect, Fragment } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { HeartIcon, ChatIcon, ShareIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
 import { db } from "../../utils/firebase";
 import ReactTimeago from "react-timeago";
 

@@ -1,16 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
-import WelcomeNote from "./StaticPages/WelcomeNote";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import loader from "./images/dark-loader.gif";
 import PageLinks from "./StaticPages/PageLinks";
 import { useStickyBox } from "react-sticky-box";
 import FetchMostRead from "./FilterCategory/FetchMostRead";
 import FilterCategory from "./FilterCategory/FilterCategory";
 import PaginatedPage from "./FetchArticles/PaginatedPage";
+// import WelcomeNote from "./StaticPages/WelcomeNote";
 // import { collection, getDocs } from "firebase/firestore";
 
 const HomePage = () => {

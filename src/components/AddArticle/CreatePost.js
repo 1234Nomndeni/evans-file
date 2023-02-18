@@ -20,7 +20,6 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
-import TagsOptions from "./TagsOptions";
 // Text editor
 toast.configure({
   position: toast.POSITION.TOP_CENTER,
@@ -60,7 +59,7 @@ const modules2 = {
   toolbar: [["image"]],
 };
 
-const CreatePost = ({ value }) => {
+const CreatePost = () => {
   const [blogHeader, setBlogHeader] = useState("");
   const [blogBody, setBlogBody] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
@@ -72,11 +71,11 @@ const CreatePost = ({ value }) => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
-  const handleChange = (value, delta, source, editor) => {
+  const handleChange = (value) => {
     setBlogBody(value);
   };
 
-  const handleBackgroundChange = (value, delta, source, editor) => {
+  const handleBackgroundChange = (value) => {
     setBackgroundImage(value);
   };
 

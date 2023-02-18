@@ -8,7 +8,6 @@ import SignUp from "./components/SignUp";
 import SelectedBlog from "./components/FetchArticles/SelectedBlog";
 // import SelectedBlog2 from './components/SelectedBlog2';
 import Footer from "./components/StaticPages/Footer";
-import UpdateProfile from "./components/UserProfile/UpdateProfile";
 import AboutUs from "./components/StaticPages/AboutUs";
 import UserDashboard from "./components/UserProfile/UserDashboard";
 import Contacts from "./components/StaticPages/Contacts";

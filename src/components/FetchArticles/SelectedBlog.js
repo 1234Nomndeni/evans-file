@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import MoreFromUser from "./FilterCategory/MoreFromUser";
 import contentLoading from "../images/content-loading.gif";
+import { async } from "@firebase/util";
 // import MoreFromUser from "./SuperActions/MoreFromUser";
 
 function classNames(...classes) {
@@ -45,7 +46,6 @@ const SelectedBlog = () => {
   const [subcommentCount, setSubCommentCount] = useState(0);
   const [isCopied, setIsCopied] = useState(false);
   const [showReply, setShowReply] = useState(false);
-  const [userPosts, setUserPosts] = useState([]);
 
   useEffect(() => {
     if (blogId) {
@@ -78,7 +78,6 @@ const SelectedBlog = () => {
       .onSnapshot((snapshot) => {
         setComments(
           snapshot.docs.map((doc) => {
-            // getSubComments(blogId, doc.id);
             getSubComments(blogId, doc.id);
             return {
               id: doc.id,
@@ -465,8 +464,6 @@ const SelectedBlog = () => {
               message.name === displayName && "chat__reciever"
             }`}
           >
-            {/* */}
-            {console.log("subComments: ", subComments)}
             <div className="flex">
               <span className="bg-yellow-300 w-8 h-8 md:w-10 md:h-10 font-mono p-1 md:pl-3 md:pr-3 pl-2 uppercase md:text-xl text-gray-800 border-2 border-yellow-300 rounded-full">
                 {message.name?.[0]}
@@ -573,15 +570,7 @@ const SelectedBlog = () => {
           <h2 className="text-lg md:text-xl text-gray-900">
             More from <span className="text-purple-700">{displayName}</span>
           </h2>
-
-          {/* <MoreFromUser /> */}
-
-          {/* {userPosts?.map(userPosts) => {
-            <section></section>
-          }} */}
         </section>
-
-        {/* <MoreFromUser /> */}
       </section>
     </main>
   );

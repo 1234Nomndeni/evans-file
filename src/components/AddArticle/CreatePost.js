@@ -87,15 +87,22 @@ const CreatePost = () => {
       setBlogBody(storedValues.blogBody);
       setBackgroundImage(storedValues.backgroundImage);
       setCurrentTask(storedValues.currentTask);
+      setSelectedTag(storedValues.selectedTag);
     }
   }, []);
 
   useEffect(() => {
     localStorage.setItem(
       "blogPostValues",
-      JSON.stringify({ blogHeader, blogBody, backgroundImage, currentTask })
+      JSON.stringify({
+        blogHeader,
+        blogBody,
+        backgroundImage,
+        currentTask,
+        selectedTag,
+      })
     );
-  }, [blogHeader, blogBody, backgroundImage, currentTask]);
+  }, [blogHeader, blogBody, backgroundImage, currentTask, selectedTag]);
 
   const handleAddTag = (event) => {
     event.preventDefault();
@@ -237,7 +244,7 @@ const CreatePost = () => {
                   placeholder="Type your title here . . ."
                 />
               </section>
-              <section className="bg-red-500 mx-wd2 mx-auto">
+              <section className="border mx-wd2 mx-auto p-3 rounded-lg">
                 <div>
                   <select
                     id="tag"
@@ -245,25 +252,28 @@ const CreatePost = () => {
                     onChange={(e) => setSelectedTag(e.target.value)}
                   >
                     <option value="">Select a tag</option>
-                    <option value="react">React</option>
-                    <option value="firebase">Firebase</option>
-                    <option value="javascript">JavaScript</option>
+                    <option value="React">React</option>
+                    <option value="Firebase">Firebase</option>
+                    <option value="Javascript">JavaScript</option>
                   </select>
                   <button type="button" onClick={handleAddTag}>
                     Add Tag
                   </button>
                 </div>
-                <div>
+                <div className="flex gap-5">
                   {tags.map((tag) => (
-                    <span key={tag}>
-                      {tag}
-                      <button
-                        type="button"
+                    <div
+                      key={tag}
+                      className="flex items-center gap-1 rounded-md bg-green-100 py-1 px-2"
+                    >
+                      #{tag}
+                      <span
+                        className="text-sm ml-1 hover:text-red-500 cursor-pointer font-semibold"
                         onClick={() => handleRemoveTag(tag)}
                       >
                         X
-                      </button>
-                    </span>
+                      </span>
+                    </div>
                   ))}
                 </div>
               </section>

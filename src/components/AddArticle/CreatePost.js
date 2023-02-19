@@ -237,32 +237,36 @@ const CreatePost = () => {
                   placeholder="Type your title here . . ."
                 />
               </section>
-              <label htmlFor="tag">Tag</label>
-              <div>
-                <select
-                  id="tag"
-                  value={selectedTag}
-                  onChange={(e) => setSelectedTag(e.target.value)}
-                >
-                  <option value="">Select a tag</option>
-                  <option value="react">React</option>
-                  <option value="firebase">Firebase</option>
-                  <option value="javascript">JavaScript</option>
-                </select>
-                <button type="button" onClick={handleAddTag}>
-                  Add Tag
-                </button>
-              </div>
-              <div>
-                {tags.map((tag) => (
-                  <span key={tag}>
-                    {tag}
-                    <button type="button" onClick={() => handleRemoveTag(tag)}>
-                      X
-                    </button>
-                  </span>
-                ))}
-              </div>
+              <section className="bg-red-500 mx-wd2 mx-auto">
+                <div>
+                  <select
+                    id="tag"
+                    value={selectedTag}
+                    onChange={(e) => setSelectedTag(e.target.value)}
+                  >
+                    <option value="">Select a tag</option>
+                    <option value="react">React</option>
+                    <option value="firebase">Firebase</option>
+                    <option value="javascript">JavaScript</option>
+                  </select>
+                  <button type="button" onClick={handleAddTag}>
+                    Add Tag
+                  </button>
+                </div>
+                <div>
+                  {tags.map((tag) => (
+                    <span key={tag}>
+                      {tag}
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveTag(tag)}
+                      >
+                        X
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </section>
 
               <section className="mx-wd2 mt-10 pb-12 mx-auto">
                 <ReactQuill

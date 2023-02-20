@@ -125,7 +125,7 @@ const CreatePost = () => {
         blogHeader: blogHeader,
         slug_name: blogHeader.replace(/\s/g, "-"),
         blogBody: blogBody,
-        hashTags: selectedTag,
+        hashTags: tags,
         currentTask: currentTask,
         description: user.email,
         displayName: user.displayName,
@@ -248,19 +248,26 @@ const CreatePost = () => {
                 <div>
                   <select
                     id="tag"
+                    className="w-28 p-1 cursor-pointer hover:bg-gray-100"
                     value={selectedTag}
                     onChange={(e) => setSelectedTag(e.target.value)}
                   >
                     <option value="">Select a tag</option>
+                    <option value="React">Mental Health</option>
+                    <option value="React">React</option>
                     <option value="React">React</option>
                     <option value="Firebase">Firebase</option>
                     <option value="Javascript">JavaScript</option>
                   </select>
-                  <button type="button" onClick={handleAddTag}>
+                  <button
+                    type="button"
+                    className="ml-2 hover:font-bold"
+                    onClick={handleAddTag}
+                  >
                     Add Tag
                   </button>
                 </div>
-                <div className="flex gap-5">
+                <div className="flex gap-5 mt-1">
                   {tags.map((tag) => (
                     <div
                       key={tag}

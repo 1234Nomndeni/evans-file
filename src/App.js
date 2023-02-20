@@ -22,7 +22,6 @@ import PageNotFound from "./components/StaticPages/PageNotFound";
 import { useSelector } from "react-redux";
 import { selectUser } from "./features/userSlice";
 import MyDrafts from "./components/UserProfile/MyDrafts";
-import WorkSpace from "./tests/Workspace/WorkSpace";
 import EditProfile from "./components/UserProfile/EditProfile";
 import ProfilePreview from "./components/UserProfile/ProfilePreview";
 import Notifications from "./components/UserProfile/Notifications";
@@ -82,7 +81,6 @@ function App() {
         <Route path="/user/:username" component={<OtherUserProfile />} />
         {user && <Route path="/adminDash" element={<AdminDashboard />} />}
         <Route path="/dashNavigator" element={<DashboardNavigator />} />
-        <Route path="/workspace" element={<WorkSpace />} />
 
         {/* <Route path="/subscriptions" element={<Subscriptions/>} /> */}
       </Routes>

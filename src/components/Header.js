@@ -1,12 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import {
-  MenuIcon,
-  XIcon,
-  BellIcon,
-  MoonIcon,
-  SunIcon,
-} from "@heroicons/react/outline";
+import { MenuIcon, XIcon, BellIcon } from "@heroicons/react/outline";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, login, logout } from "../features/userSlice";
@@ -123,21 +117,6 @@ const Header = () => {
                 <div className="hidden lg:block ml-10 w-4/5 "></div>
               </div>
               <div className="absolute space-x-5 inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {/* <li
-                  className={
-                    getLocation[2] === "workspace"
-                      ? "list-none text-purple-900 font-bold"
-                      : "list-none"
-                  }
-                >
-                  <Link
-                    to="/workspace"
-                    className="hidden md:block text-md pl-2 cursor-pointer mr-10  p-2  "
-                  >
-                    Workspace
-                  </Link>
-                </li> */}
-
                 <li
                   className={
                     getLocation[1] === "about"
@@ -236,32 +215,7 @@ const Header = () => {
                             </Link>
                           )}
                         </Menu.Item>
-                        {/* <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="/profile"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Settings
-                            </a>
-                          )}
-                        </Menu.Item> */}
-                        {/* <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="/dashboard"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              My Dashboard
-                            </a>
-                          )}
-                        </Menu.Item> */}
+
                         <Menu.Item>
                           {({ active }) => (
                             <a

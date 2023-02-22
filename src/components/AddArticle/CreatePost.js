@@ -255,9 +255,7 @@ const CreatePost = () => {
                     onChange={(e) => setSelectedTag(e.target.value)}
                   >
                     <option value="">Select a tag</option>
-                    <option value="MentalHealth">
-                      MentalHealth <p>Hello world</p>{" "}
-                    </option>
+                    <option value="MentalHealth">MentalHealth</option>
                     <option value="General">General</option>
                     <option value="Programming">Programming</option>
                     <option value="Javascript">JavaScript</option>
@@ -268,7 +266,9 @@ const CreatePost = () => {
                     <option value="Productivity">Productivity</option>
                     <option value="Beginners">Beginners</option>
                     <option value="Career">Career</option>
-                    <option value="MachineLearning">MachineLearning</option>
+                    <option value="MachineLearning" title="">
+                      MachineLearning
+                    </option>
                   </select>
                 </div>
                 <div className="flex gap-3 mt-1">

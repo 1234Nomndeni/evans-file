@@ -123,12 +123,6 @@ const PaginatedPage = () => {
             required
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          {/* <button
-            type="submit"
-            class="text-white absolute right-2.5 bottom-2.5 bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
-          >
-            Search
-          </button> */}
         </div>
       </form>
 
@@ -161,7 +155,17 @@ const PaginatedPage = () => {
                   </h1>
                 </Link>
               </section>
-              <section className="flex justify-between mt-4">
+              <section className="flex gap-3 mt-4">
+                {post.hashTags?.map((tag) => (
+                  <div
+                    key={tag}
+                    className="flex items-center gap-1 rounded-md bg-green-100 py-1 px-2 cursor-pointer"
+                  >
+                    #{tag}
+                  </div>
+                ))}
+              </section>
+              <section className="flex justify-between">
                 <span className="flex items-center w-2/5 gap-3 justify-between text-gray-400">
                   <Link
                     to={`/${post.name_slug}/${post.id}`}

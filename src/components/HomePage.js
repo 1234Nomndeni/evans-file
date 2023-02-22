@@ -9,8 +9,6 @@ import { useStickyBox } from "react-sticky-box";
 import FetchMostRead from "./FilterCategory/FetchMostRead";
 import FilterCategory from "./FilterCategory/FilterCategory";
 import PaginatedPage from "./FetchArticles/PaginatedPage";
-// import WelcomeNote from "./StaticPages/WelcomeNote";
-// import { collection, getDocs } from "firebase/firestore";
 
 const HomePage = () => {
   const navigate = useNavigate();

@@ -105,12 +105,13 @@ const CreatePost = () => {
   }, [blogHeader, blogBody, backgroundImage, currentTask, selectedTag]);
 
   const handleAddTag = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     if (selectedTag && !tags.includes(selectedTag)) {
       setTags([...tags, selectedTag]);
       setSelectedTag("");
     }
   };
+  handleAddTag();
 
   const handleRemoveTag = (tagToRemove) => {
     setTags(tags.filter((tag) => tag !== tagToRemove));
@@ -248,26 +249,29 @@ const CreatePost = () => {
                 <div>
                   <select
                     id="tag"
-                    className="w-28 p-1 cursor-pointer hover:bg-gray-100"
+                    // className="w-28 p-1 cursor-pointer hover:bg-gray-100"
+                    className="w-40 p-2 cursor-pointer bg-white border rounded-md shadow-sm outline-none focus:border-indigo-600"
                     value={selectedTag}
                     onChange={(e) => setSelectedTag(e.target.value)}
                   >
                     <option value="">Select a tag</option>
-                    <option value="React">Mental Health</option>
-                    <option value="React">React</option>
-                    <option value="React">React</option>
-                    <option value="Firebase">Firebase</option>
+                    <option value="MentalHealth">
+                      MentalHealth <p>Hello world</p>{" "}
+                    </option>
+                    <option value="General">General</option>
+                    <option value="Programming">Programming</option>
                     <option value="Javascript">JavaScript</option>
+                    <option value="Python">Python</option>
+                    <option value="React">React</option>
+                    <option value="NextJs">NextJs</option>
+                    <option value="Firebase">Firebase</option>
+                    <option value="Productivity">Productivity</option>
+                    <option value="Beginners">Beginners</option>
+                    <option value="Career">Career</option>
+                    <option value="MachineLearning">MachineLearning</option>
                   </select>
-                  <button
-                    type="button"
-                    className="ml-2 hover:font-bold"
-                    onClick={handleAddTag}
-                  >
-                    Add Tag
-                  </button>
                 </div>
-                <div className="flex gap-5 mt-1">
+                <div className="flex gap-3 mt-1">
                   {tags.map((tag) => (
                     <div
                       key={tag}

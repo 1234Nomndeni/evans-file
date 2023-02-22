@@ -33,6 +33,8 @@ const SelectedBlog = () => {
   const [blogBody, setBlogBody] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
   const [currentTask, setCurrentTask] = useState("");
+  const [tags, setTags] = useState([]);
+  const [hashTags, setHashTags] = useState("");
   const [timestamp, setTimestamp] = useState("");
   const [slug_name, setSlugName] = useState("");
   const [uid, setUid] = useState("");
@@ -59,6 +61,8 @@ const SelectedBlog = () => {
             setTimestamp(snapshot.data().timestamp),
             setSlugName(snapshot.data().slug_name),
             setNameSlug(snapshot.data().name_slug),
+            setTags(snapshot.data().tags),
+            setHashTags(snapshot.data().hashTags),
             setLikes(snapshot.data().likes),
             setUid(snapshot.data().uid)
           )
@@ -403,6 +407,16 @@ const SelectedBlog = () => {
           <h2 className="text-lg lg:text-4xl md:text-2xl sm:text-md text-gray-900 md:leading-10">
             {blogHeader}
           </h2>
+          {/* <section className="flex gap-3 mt-4">
+            {blogId.hashTags?.map((tag) => (
+              <div
+                key={tag}
+                className="flex items-center gap-1 rounded-md bg-green-50 hover:bg-green-100 py-1 px-2 cursor-pointer"
+              >
+                #{tag}
+              </div>
+            ))}
+          </section> */}
           <span>
             {!blogBody ? (
               <section className="flex flex-col items-center justify-center w-full mx-auto -mt-16 h-48">

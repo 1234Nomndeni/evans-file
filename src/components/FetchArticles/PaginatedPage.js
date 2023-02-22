@@ -159,7 +159,7 @@ const PaginatedPage = () => {
                 {post.hashTags?.map((tag) => (
                   <div
                     key={tag}
-                    className="flex items-center gap-1 rounded-md bg-green-100 py-1 px-2 cursor-pointer"
+                    className="flex items-center gap-1 rounded-md bg-green-50 hover:bg-green-100 py-1 px-2 cursor-pointer"
                   >
                     #{tag}
                   </div>

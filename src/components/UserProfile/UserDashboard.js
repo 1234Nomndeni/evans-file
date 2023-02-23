@@ -217,6 +217,7 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
                               editBlogBody={userPost.blogBody}
                               editBackgroundImage={userPost.backgroundImage}
                               editCurrentTask={userPost.currentTask}
+                              editSelectedTag={userPost.selectedTag}
                             />
                           </div>
 

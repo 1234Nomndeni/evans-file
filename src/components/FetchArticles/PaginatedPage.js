@@ -150,16 +150,16 @@ const PaginatedPage = () => {
 
               <section className="mt-2">
                 <Link to={`/${post.name_slug}/${post.id}`}>
-                  <h1 className="leading-9 text-2xl text-gray-900 hover:text-purple-900 cursor-pointer">
+                  <h1 className="md:leading-9 text-lg md:text-2xl text-gray-900 hover:text-purple-900 cursor-pointer">
                     {post.blogHeader}{" "}
                   </h1>
                 </Link>
               </section>
-              <section className="flex gap-3 mt-4">
+              <section className="flex gap-1 text-xs md:text-sm md:flex md:gap-3 mt-4 flex-wrap w-full">
                 {post.hashTags?.map((tag) => (
                   <div
                     key={tag}
-                    className="flex items-center gap-1 rounded-md bg-green-50 hover:bg-green-100 py-1 px-2 cursor-pointer"
+                    className="rounded-md max-w-min bg-green-50 hover:bg-green-100 py-1 px-2 border cursor-pointer"
                   >
                     #{tag}
                   </div>

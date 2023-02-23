@@ -1,5 +1,6 @@
 import { useState, useEffect, Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
+import { Helmet } from "react-helmet";
 import { HeartIcon, ChatIcon, ShareIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
 import { db } from "../../utils/firebase";
@@ -68,15 +69,6 @@ const PaginatedPage = () => {
   };
 
   const filteredPosts = filterPosts(posts, searchTerm);
-
-  // const filteredPosts = searchText
-  //   ? posts.filter(
-  //       (post) =>
-  //         post.blogHeader.toLowerCase().includes(searchText.toLowerCase()) ||
-  //         post.blogBody.toLowerCase().includes(searchText.toLowerCase()) ||
-  //         post.displayName.toLowerCase().includes(searchText.toLowerCase())
-  //     )
-  //   : posts;
 
   const handleScroll = () => {
     if (

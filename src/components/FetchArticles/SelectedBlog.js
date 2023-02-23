@@ -209,26 +209,15 @@ const SelectedBlog = () => {
     }
   };
 
-  // SEO hack
-  const meta = {
-    title: blogHeader,
-    description: blogBody,
-    slugName: slug_name,
-    image: backgroundImage,
-    type: "website",
-  };
-
   return (
     <main
       // onLoad={window.scroll(0, 0)}
       className="max-w-7xl pt-24 mx-wd1 mx-auto flex justify-between pb-24 wd-screen3"
     >
       <Helmet>
-        <title>{`${blogHeader}`}</title>
-        <meta name="description" content={meta.title} />
-        <meta name="description" description={meta.description} />
-        <meta name="keywords" content={meta.title} />
-        <meta name="keywords" content={meta.slugName} />
+        <title>{blogHeader}</title>
+        <meta name="description" content={blogBody} />
+        <meta name="keywords" content={blogHeader} />
       </Helmet>
       <section className="hidden w-28 mt-4 md:fixed lg:block flex-col md:block">
         <span className="flex flex-col items-center mt-10">
@@ -374,12 +363,12 @@ const SelectedBlog = () => {
               {!user ? (
                 <HeartIcon
                   onClick={loginToLike}
-                  className="h-6 cursor-pointer hover:bg-pink-100 duration-150 rounded-full p-1 hover:text-pink-600"
+                  className="h-4 cursor-pointer hover:bg-pink-100 duration-150 rounded-full p-1 hover:text-pink-600"
                 />
               ) : (
                 <div>
                   {user && (
-                    <LikePost className="h-6" id={blogId} likes={likes} />
+                    <LikePost className="h-4" id={blogId} likes={likes} />
                   )}
                 </div>
               )}
@@ -395,7 +384,10 @@ const SelectedBlog = () => {
             >
               <span>
                 {isCopied ? (
-                  <ContentCopyIcon className="text-pink-600" />
+                  <div className="flex flex-col items-center">
+                    <ContentCopyIcon className="text-pink-600 absolute" />
+                    <p className="text-xs relative mt-6">Copied</p>
+                  </div>
                 ) : (
                   <ContentCopyIcon className="cursor-pointer block text-gray-700" />
                 )}

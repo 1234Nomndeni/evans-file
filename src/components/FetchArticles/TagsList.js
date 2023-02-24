@@ -34,10 +34,10 @@ const TagsList = () => {
     <main className="max-w-7xl mt-3 mx-auto mx-wd1 pt-20">
       <section className="rounded-md bg-white border shadow-sm py-5 px-3 items-center text-center">
         <h1 className="text-purple-800">#{tag}</h1>
-        <p>
+        {/* <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
           doloremque provident iste?
-        </p>
+        </p> */}
         <div className="flex gap-5 justify-center">
           <button className="flex items-center mt-5 border border-purple-600 text-white px-5 hover:ease-in-out duration-150 py-1 rounded-full transform hover:scale-105 bg-purple-800">
             <AddIcon /> Follow

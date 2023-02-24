@@ -39,23 +39,17 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
   const [articlesCount, setArticlesCount] = useState(0);
 
   const fetchData = async () => {
-    try {
-      await db
-        .collection("posts")
-        .where("uid", "==", user.uid)
-        .orderBy("timestamp", "desc")
-        .onSnapshot((snapshot) =>
-          setUserPosts(
-            snapshot.docs.map((doc) => ({
-              id: doc.id,
-              ...doc.data(),
-            }))
-          )
-        );
-    } catch (error) {
-      console.log(error);
-    }
+    db.collection("posts")
+      .where("uid", "==", user.uid)
+      .onSnapshot((querySnapshot) => {
+        const newPosts = [];
+        querySnapshot.forEach((doc) => {
+          newPosts.push({ id: doc.id, ...doc.data() });
+        });
+        setUserPosts(newPosts);
+      });
   };
+
   const fetchArticleCount = async () => {
     await db
       .collection("posts")
@@ -66,6 +60,7 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
   useEffect(() => {
     fetchData();
   }, []);
+
   useEffect(() => {
     fetchArticleCount();
   }, []);

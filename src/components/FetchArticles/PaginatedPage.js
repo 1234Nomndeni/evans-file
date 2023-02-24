@@ -1,6 +1,5 @@
 import { useState, useEffect, Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { Helmet } from "react-helmet";
 import { HeartIcon, ChatIcon, ShareIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
 import { db } from "../../utils/firebase";
@@ -14,7 +13,6 @@ const PaginatedPage = () => {
   const [posts, setPosts] = useState([]);
   const [lastVisible, setLastVisible] = useState(null);
   const [loading, setLoading] = useState(false);
-  // const [searchText, setSearchText] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
   const perPage = 7;
@@ -149,12 +147,13 @@ const PaginatedPage = () => {
               </section>
               <section className="flex gap-1 text-xs md:text-sm md:flex md:gap-3 mt-4 flex-wrap w-full">
                 {post.hashTags?.map((tag) => (
-                  <div
+                  <Link
                     key={tag}
+                    to={`/tags/${tag}`}
                     className="rounded-md max-w-min bg-green-50 hover:bg-green-100 py-1 px-2 border cursor-pointer"
                   >
                     #{tag}
-                  </div>
+                  </Link>
                 ))}
               </section>
               <section className="flex justify-between">

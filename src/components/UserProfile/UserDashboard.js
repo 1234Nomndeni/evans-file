@@ -236,6 +236,18 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
                         </Link>
                       </section>
 
+                      <section className="flex gap-1 text-xs md:text-sm md:flex md:gap-3 mt-4 flex-wrap w-full">
+                        {userPost.hashTags?.map((tag) => (
+                          <Link
+                            key={tag}
+                            to={`/tags/${tag}`}
+                            className="rounded-md max-w-min bg-green-50 hover:bg-green-100 py-1 px-2 border cursor-pointer"
+                          >
+                            #{tag}
+                          </Link>
+                        ))}
+                      </section>
+
                       <section className="flex justify-between mt-4">
                         <span className="flex items-center w-2/5 justify-between text-gray-400">
                           <Link

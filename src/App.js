@@ -27,8 +27,9 @@ import ProfilePreview from "./components/UserProfile/ProfilePreview";
 import Notifications from "./components/UserProfile/Notifications";
 import DashboardNavigator from "./components/UserProfile/DashboardNavigator";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
-import OtherUserProfile from "./components/UserProfile/OtherUserProfile";
+import UserProfile from "./components/UserProfile/UserProfile";
 import TagsList from "./components/FetchArticles/TagsList";
+import Article from "./components/UserProfile/UserProfile";
 
 ReactGA.initialize(process.env.TRACK_ID);
 function App() {
@@ -79,7 +80,6 @@ function App() {
         {/* Melbite Premiers */}
         {/* <Route path="/register" element={<WritingChallenge />} /> */}
         <Route path="/tags/:tag" element={<TagsList />} />
-        <Route path="/user/:username" component={<OtherUserProfile />} />
         {user && <Route path="/adminDash" element={<AdminDashboard />} />}
         <Route path="/dashNavigator" element={<DashboardNavigator />} />
 

@@ -352,12 +352,10 @@ const SelectedBlog = () => {
             </span>
             <span className="ml-2">
               <h3 className="text-md">{displayName}</h3>
-              {/* <p className="text-sm text-gray-500 -mt-1">
+              <p className="text-sm text-gray-500 -mt-1">
                 Published{" "}
-                <ReactTimeago
-                  date={new Date(timestamp.timestamp.toDate()).toUTCString()}
-                />
-              </p> */}
+                {new Date(timestamp.seconds * 1000).toLocaleDateString()}
+              </p>
             </span>
             <span className="md:hidden flex flex-wrap items-center space-x-1 ml-7">
               {!user ? (

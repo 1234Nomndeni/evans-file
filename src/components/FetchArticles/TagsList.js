@@ -8,13 +8,17 @@ import { Menu, Transition } from "@headlessui/react";
 import { HeartIcon, ChatIcon, ShareIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
 import ReactTimeago from "react-timeago";
+import FetchMostRead from "../FilterCategory/FetchMostRead";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 const TagsList = () => {
   const [posts, setPosts] = useState([]);
+  const [tagArticlesCount, setTagArticlesCount] = useState(0);
   const { tag } = useParams();
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [followers, setFollowers] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,26 +34,75 @@ const TagsList = () => {
       });
     return unsubscribe;
   }, [tag]);
+
+  const fetchTagCount = async () => {
+    await db
+      .collection("posts")
+      .where("hashTags", "array-contains", tag)
+      .onSnapshot((snapshot) => setTagArticlesCount(snapshot.size));
+  };
+
+  // useEffect(() => {
+  //   const unsubscribe = db
+  //     .collection("tagFollowers")
+  //     .doc(tag)
+  //     .onSnapshot((snapshot) => {
+  //       if (snapshot.exists) {
+  //         const data = snapshot.data();
+  //         setFollowers(data.followers || []);
+  //       }
+  //     });
+
+  //   return () => unsubscribe();
+  // }, [tag]);
+
+  // const handleFollow = () => {
+  //   db.collection("tagFollowers")
+  //     .doc(tag)
+  //     .set(
+  //       {
+  //         followers: db.firestore.FieldValue.arrayUnion(currentUser.uid),
+  //       },
+  //       { merge: true }
+  //     );
+  // };
+
+  useEffect(() => {
+    fetchTagCount();
+  }, []);
+
   return (
     <main className="max-w-7xl mt-3 mx-auto mx-wd1 pt-20">
       <section className="rounded-md bg-white border shadow-sm py-5 px-3 items-center text-center">
-        <h1 className="text-purple-800">#{tag}</h1>
-        {/* <p>
+        <h1 className="text-purple-800 text-2xl md:text-4xl">#{tag}</h1>
+        <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
           doloremque provident iste?
-        </p> */}
-        <div className="flex gap-5 justify-center">
-          <button className="flex items-center mt-5 border border-purple-600 text-white px-5 hover:ease-in-out duration-150 py-1 rounded-full transform hover:scale-105 bg-purple-800">
+        </p>
+        {/* <button onClick={handleFollow}>Follow</button>
+        {followers.length > 0 && (
+          <div>
+            <h3>Followers:</h3>
+            <ul>
+              {followers.map((follower) => (
+                <li key={follower}>{follower}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <p>Followers: {followers.length}</p> */}
+        <div className="flex gap-5 justify-center flex-wrap-reverse">
+          <button className="flex items-center mt-5 border border-purple-600 text-white px-5 hover:ease-in-out duration-150 md:py-1 rounded-full transform hover:scale-105 bg-purple-800">
             <AddIcon /> Follow
           </button>
           <button
             onClick={() => navigate("/new")}
-            className="mt-5 border border-purple-600 text-purple-800 px-5 hover:ease-in-out duration-150 py-1 rounded-full transform hover:scale-105 "
+            className="mt-5 border border-purple-600 text-purple-800 px-5 hover:ease-in-out duration-150 md:py-1 rounded-full transform hover:scale-105 "
           >
             Start Writing
           </button>
         </div>
-        <div className="flex gap-8 justify-center mt-5">
+        <div className="flex gap-8 justify-center mt-5 flex-wrap">
           <span className="flex gap-1 font-semibold text-gray-600">
             <GroupsIcon />
             <p>199</p>
@@ -57,14 +110,14 @@ const TagsList = () => {
           </span>
           <span className="flex gap-1 font-semibold text-gray-600">
             <ArticleIcon />
-            <p>17</p>
+            <p>{tagArticlesCount}</p>
             <p>Articles</p>
           </span>
         </div>
       </section>
 
       <section className="flex gap-5 mt-10">
-        <article>
+        <article className="w-full">
           {posts.map((post) => (
             <article
               className="w-full border-2 rounded-md bg-white p-5 mb-2 hover:border-purple-800 duration-150"
@@ -213,7 +266,9 @@ const TagsList = () => {
             </article>
           ))}
         </article>
-        <article></article>
+        <article className="hidden md:block pl-4 w-2/4 ">
+          <FetchMostRead />
+        </article>
       </section>
     </main>
   );

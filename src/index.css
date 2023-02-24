@@ -208,6 +208,11 @@ code{
   padding-right: 4px;
 }
 
+p > img{
+  width: 100vw;
+  height: 350px;
+}
+
 blockquote {
   background: #f9f9f9;
   border-left: 10px solid rgb(189, 185, 185);

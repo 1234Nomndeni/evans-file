@@ -32,7 +32,7 @@ function Article() {
       <h1>{article.blogHeader}</h1>
       <p>{article.content}</p>
       <ul>
-        {article.tags.map((tag) => (
+        {article?.map((tag) => (
           <li key={tag} className="tag">
             {tag}
           </li>

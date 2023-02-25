@@ -19,17 +19,12 @@ const Header = () => {
   const location = useLocation();
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const [active] = useState(false);
 
   const { pathname } = location;
   const getLocation = pathname.split("/");
 
   const toogle = () => {
     setIsOpen(!isOpen);
-  };
-
-  const closeOnNavigate = () => {
-    setIsOpen(isOpen);
   };
 
   const transitionNavBar = () => {

@@ -29,7 +29,6 @@ import DashboardNavigator from "./components/UserProfile/DashboardNavigator";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import UserProfile from "./components/UserProfile/UserProfile";
 import TagsList from "./components/FetchArticles/TagsList";
-import Article from "./components/UserProfile/UserProfile";
 
 ReactGA.initialize(process.env.TRACK_ID);
 function App() {

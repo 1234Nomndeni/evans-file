@@ -63,11 +63,14 @@ const EditMyArticle = ({
   editBlogBody,
   editBackgroundImage,
   editCurrentTask,
+  editSelectedTag,
 }) => {
   const [blogHeader, setBlogHeader] = useState(editBlogHeader);
   const [blogBody, setBlogBody] = useState(editBlogBody);
   const [backgroundImage, setBackgroundImage] = useState(editBackgroundImage);
   const [currentTask, setCurrentTask] = useState(editCurrentTask);
+  const [tags, setTags] = useState([]);
+  const [selectedTag, setSelectedTag] = useState(editSelectedTag);
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -79,6 +82,19 @@ const EditMyArticle = ({
 
   const handleBackgroundChange = (value, delta, source, editor) => {
     setBackgroundImage(value);
+  };
+
+  const handleAddTag = (event) => {
+    // event.preventDefault();
+    if (selectedTag && !tags.includes(selectedTag)) {
+      setTags([...tags, selectedTag]);
+      setSelectedTag("");
+    }
+  };
+  handleAddTag();
+
+  const handleRemoveTag = (tagToRemove) => {
+    setTags(tags.filter((tag) => tag !== tagToRemove));
   };
 
   const handleUpdate = async (e) => {
@@ -93,6 +109,7 @@ const EditMyArticle = ({
             backgroundImage: backgroundImage,
             blogHeader: blogHeader,
             slug_name: blogHeader.replace(/\s/g, "-"),
+            hashTags: tags,
             blogBody: blogBody,
             currentTask: currentTask,
             description: user.email,
@@ -105,6 +122,8 @@ const EditMyArticle = ({
       setBlogHeader("");
       setBlogBody("");
       setCurrentTask("");
+      setTags([]);
+      setSelectedTag("");
       toast("Article Updated Successfully");
     } catch (err) {
       alert(err);
@@ -187,6 +206,51 @@ const EditMyArticle = ({
                 required
                 placeholder="Type your title here . . ."
               />
+            </section>
+            <section className="border mx-wd2 mx-auto p-3 rounded-lg">
+              <div>
+                <select
+                  id="tag"
+                  // className="w-28 p-1 cursor-pointer hover:bg-gray-100"
+                  className="w-40 p-2 cursor-pointer bg-white border rounded-md shadow-sm outline-none focus:border-indigo-600"
+                  value={selectedTag}
+                  onChange={(e) => setSelectedTag(e.target.value)}
+                >
+                  <option value="">Select a tag</option>
+                  <option value="MentalHealth">MentalHealth</option>
+                  <option value="General">General</option>
+                  <option value="Programming">Programming</option>
+                  <option value="Javascript">Javascript</option>
+                  <option value="Typescript">Typescript</option>
+                  <option value="Python">Python</option>
+                  <option value="React">React</option>
+                  <option value="NextJs">NextJs</option>
+                  <option value="Firebase">Firebase</option>
+                  <option value="PHP">PHP</option>
+                  <option value="Productivity">Productivity</option>
+                  <option value="Beginners">Beginners</option>
+                  <option value="Career">Career</option>
+                  <option value="MachineLearning" title="">
+                    MachineLearning
+                  </option>
+                </select>
+              </div>
+              <div className="flex gap-3 mt-1">
+                {tags.map((tag) => (
+                  <div
+                    key={tag}
+                    className="flex items-center gap-1 rounded-md bg-green-100 py-1 px-2"
+                  >
+                    #{tag}
+                    <span
+                      className="text-sm ml-1 hover:text-red-500 cursor-pointer font-semibold"
+                      onClick={() => handleRemoveTag(tag)}
+                    >
+                      X
+                    </span>
+                  </div>
+                ))}
+              </div>
             </section>
 
             <section className="mx-wd2 mt-10 pb-12 mx-auto">

@@ -6,9 +6,9 @@ import { ChatIcon, ShareIcon, HeartIcon } from "@heroicons/react/outline";
 import ReplyIcon from "@mui/icons-material/Reply";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 // import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { db } from "../utils/firebase";
+import { db } from "../../utils/firebase";
 import ReactTimeago from "react-timeago";
-import { selectUser } from "../features/userSlice";
+import { selectUser } from "../../features/userSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import { useSelector } from "react-redux";
@@ -18,9 +18,8 @@ import LikePost from "./LikePost";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import MoreFromUser from "./FilterCategory/MoreFromUser";
-import contentLoading from "./images/content-loading.gif";
+import contentLoading from "../images/content-loading.gif";
 // import MoreFromUser from "./SuperActions/MoreFromUser";
-import { useLocation } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -34,6 +33,8 @@ const SelectedBlog = () => {
   const [blogBody, setBlogBody] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
   const [currentTask, setCurrentTask] = useState("");
+  const [tags, setTags] = useState([]);
+  const [hashTags, setHashTags] = useState("");
   const [timestamp, setTimestamp] = useState("");
   const [slug_name, setSlugName] = useState("");
   const [uid, setUid] = useState("");
@@ -46,7 +47,6 @@ const SelectedBlog = () => {
   const [subcommentCount, setSubCommentCount] = useState(0);
   const [isCopied, setIsCopied] = useState(false);
   const [showReply, setShowReply] = useState(false);
-  const [userPosts, setUserPosts] = useState([]);
 
   useEffect(() => {
     if (blogId) {
@@ -61,6 +61,8 @@ const SelectedBlog = () => {
             setTimestamp(snapshot.data().timestamp),
             setSlugName(snapshot.data().slug_name),
             setNameSlug(snapshot.data().name_slug),
+            setTags(snapshot.data().tags),
+            setHashTags(snapshot.data().hashTags),
             setLikes(snapshot.data().likes),
             setUid(snapshot.data().uid)
           )
@@ -79,7 +81,6 @@ const SelectedBlog = () => {
       .onSnapshot((snapshot) => {
         setComments(
           snapshot.docs.map((doc) => {
-            // getSubComments(blogId, doc.id);
             getSubComments(blogId, doc.id);
             return {
               id: doc.id,
@@ -187,22 +188,6 @@ const SelectedBlog = () => {
       });
   };
 
-  // Get more posts/articles from a user's profile
-  useEffect(() => {
-    db.collection("posts")
-      .where("displayName", "==", displayName)
-      .orderBy("timestamp", "desc")
-      .limit(6)
-      .onSnapshot((snapshot) =>
-        setUserPosts(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
-        )
-      );
-  }, []);
-
   // Return/Render the commnets below
   useEffect(() => {
     fetchCommentsCount();
@@ -224,26 +209,15 @@ const SelectedBlog = () => {
     }
   };
 
-  // SEO hack
-  const meta = {
-    title: blogHeader,
-    description: blogBody,
-    slugName: slug_name,
-    image: backgroundImage,
-    type: "website",
-  };
-
   return (
     <main
       // onLoad={window.scroll(0, 0)}
       className="max-w-7xl pt-24 mx-wd1 mx-auto flex justify-between pb-24 wd-screen3"
     >
       <Helmet>
-        <title>{`${blogHeader}`}</title>
-        <meta name="description" content={meta.title} />
-        <meta name="description" description={meta.description} />
-        <meta name="keywords" content={meta.title} />
-        <meta name="keywords" content={meta.slugName} />
+        <title>{blogHeader}</title>
+        <meta name="description" content={blogBody} />
+        <meta name="keywords" content={blogHeader} />
       </Helmet>
       <section className="hidden w-28 mt-4 md:fixed lg:block flex-col md:block">
         <span className="flex flex-col items-center mt-10">
@@ -377,24 +351,22 @@ const SelectedBlog = () => {
               {displayName?.[0]}
             </span>
             <span className="ml-2">
-              <p className="text-md">{displayName}</p>
-              {/* <p className="text-sm text-gray-500 -mt-1">
-              Published{" "}
-              <ReactTimeago
-                date={new Date(timestamp.timestamp?.toDate()).toUTCString()}
-              />
-            </p> */}
+              <h3 className="text-md">{displayName}</h3>
+              <p className="text-sm text-gray-500 -mt-1">
+                Published{" "}
+                {new Date(timestamp.seconds * 1000).toLocaleDateString()}
+              </p>
             </span>
             <span className="md:hidden flex flex-wrap items-center space-x-1 ml-7">
               {!user ? (
                 <HeartIcon
                   onClick={loginToLike}
-                  className="h-6 cursor-pointer hover:bg-pink-100 duration-150 rounded-full p-1 hover:text-pink-600"
+                  className="h-4 cursor-pointer hover:bg-pink-100 duration-150 rounded-full p-1 hover:text-pink-600"
                 />
               ) : (
                 <div>
                   {user && (
-                    <LikePost className="h-6" id={blogId} likes={likes} />
+                    <LikePost className="h-4" id={blogId} likes={likes} />
                   )}
                 </div>
               )}
@@ -410,7 +382,10 @@ const SelectedBlog = () => {
             >
               <span>
                 {isCopied ? (
-                  <ContentCopyIcon className="text-pink-600" />
+                  <div className="flex flex-col items-center">
+                    <ContentCopyIcon className="text-pink-600 absolute" />
+                    <p className="text-xs relative mt-6">Copied</p>
+                  </div>
                 ) : (
                   <ContentCopyIcon className="cursor-pointer block text-gray-700" />
                 )}
@@ -422,6 +397,16 @@ const SelectedBlog = () => {
           <h2 className="text-lg lg:text-4xl md:text-2xl sm:text-md text-gray-900 md:leading-10">
             {blogHeader}
           </h2>
+          {/* <section className="flex gap-3 mt-4">
+            {blogId.hashTags?.map((tag) => (
+              <div
+                key={tag}
+                className="flex items-center gap-1 rounded-md bg-green-50 hover:bg-green-100 py-1 px-2 cursor-pointer"
+              >
+                #{tag}
+              </div>
+            ))}
+          </section> */}
           <span>
             {!blogBody ? (
               <section className="flex flex-col items-center justify-center w-full mx-auto -mt-16 h-48">
@@ -482,8 +467,6 @@ const SelectedBlog = () => {
               message.name === displayName && "chat__reciever"
             }`}
           >
-            {/* */}
-            {console.log("subComments: ", subComments)}
             <div className="flex">
               <span className="bg-yellow-300 w-8 h-8 md:w-10 md:h-10 font-mono p-1 md:pl-3 md:pr-3 pl-2 uppercase md:text-xl text-gray-800 border-2 border-yellow-300 rounded-full">
                 {message.name?.[0]}
@@ -584,19 +567,13 @@ const SelectedBlog = () => {
         </section>
 
         {/* <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
-          Follow
-        </button> */}
-        {/* <section className="mt-4 bg-white pl-2 pr-2 rounded-sm border">
-          <h2 className="text-lg md:text-xl text-gray-900">More from <span className="text-purple-700">{displayName}</span></h2>
-
-          <MoreFromUser/>
-
-          {userPosts?.map(userPosts) => {
-            <section></section>
-          }}
-        </section>
-        
-          <MoreFromUser/> */}
+          View Profile
+        </button>
+        <section className="mt-10 pl-2 pr-2 ">
+          <h2 className="text-lg md:text-xl text-gray-900">
+            More from <span className="text-purple-700">{displayName}</span>
+          </h2>
+        </section> */}
       </section>
     </main>
   );

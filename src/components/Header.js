@@ -1,21 +1,12 @@
 import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import {
-  MenuIcon,
-  XIcon,
-  BellIcon,
-  MoonIcon,
-  SunIcon,
-} from "@heroicons/react/outline";
+import { MenuIcon, XIcon, BellIcon } from "@heroicons/react/outline";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, login, logout } from "../features/userSlice";
 import { auth } from "../utils/firebase";
-import brandLogo from "./images/melbiteLogo.png";
 import brandLogo1 from "./images/melbite.jpg";
-import SearchBar from "./SuperActions/SearchBar";
-import LatestUpdates from "./LatestUpdates";
-// import Ether from "../tests/Ether";
+import LatestUpdates from "./StaticPages/LatestUpdates";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -121,30 +112,11 @@ const Header = () => {
                       src={brandLogo1}
                       alt="melbite Logo"
                     />
-                    {/* <h2 onClick={() => navigate("/")} className="text-2xl text-purple-900 cursor-pointer">Melbite</h2> */}
                   </div>
                 </div>
-                <div className="hidden lg:block ml-10 w-4/5 ">
-                  {/* <SearchBar /> */}
-                  {/* <SearchBar /> */}
-                </div>
+                <div className="hidden lg:block ml-10 w-4/5 "></div>
               </div>
               <div className="absolute space-x-5 inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {/* <li
-                  className={
-                    getLocation[2] === "workspace"
-                      ? "list-none text-purple-900 font-bold"
-                      : "list-none"
-                  }
-                >
-                  <Link
-                    to="/workspace"
-                    className="hidden md:block text-md pl-2 cursor-pointer mr-10  p-2  "
-                  >
-                    Workspace
-                  </Link>
-                </li> */}
-
                 <li
                   className={
                     getLocation[1] === "about"
@@ -166,38 +138,6 @@ const Header = () => {
                 >
                   Start Writing
                 </p>
-                {/* <Ether/> */}
-                {/* <span
-                  onClick={() => navigate("/notifications")}
-                  className="hidden cursor-pointer transform hover:scale-105  ml-12 mr-10 sm:block"
-                >
-                  <p className="absolute animate-pulse bg-c text-md text-center h-6 w-6 text-white rounded-full font-bold -mt-3 ml-4 z-50 ">
-                    0
-                  </p>
-                  <BellIcon className="text-sm h-8 relative text-gray-700 " />
-                </span> */}
-
-                {/* Dark/Light Mode */}
-
-                <div>
-                  {/* {active ? (
-                    <>
-                      {" "}
-                      <MoonIcon className="w-7 cursor-pointer text-gray-600 " />
-                    </>
-                  ) : (
-                    <>
-                      <SunIcon className="w-7 cursor-pointer text-gray-600 " />
-                    </>
-                  )} */}
-                  {/* <MoonIcon className="w-7 cursor-pointer text-gray-600 "/> */}
-                  {/* <SunIcon className="w-7 cursor-pointer text-gray-600 "/> */}
-                </div>
-                {/* <div>
-                  {active ? (<> <MoonIcon className="w-7 cursor-pointer text-gray-600 "/></>) : (<><SunIcon className="w-7 cursor-pointer text-gray-600 "/></>)}
-                  <MoonIcon className="w-7 cursor-pointer text-gray-600 "/>
-                  <SunIcon className="w-7 cursor-pointer text-gray-600 "/>
-                </div> */}
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative">
@@ -275,32 +215,7 @@ const Header = () => {
                             </Link>
                           )}
                         </Menu.Item>
-                        {/* <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="/profile"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Settings
-                            </a>
-                          )}
-                        </Menu.Item> */}
-                        {/* <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="/dashboard"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              My Dashboard
-                            </a>
-                          )}
-                        </Menu.Item> */}
+
                         <Menu.Item>
                           {({ active }) => (
                             <a

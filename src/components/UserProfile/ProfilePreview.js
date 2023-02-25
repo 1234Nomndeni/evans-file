@@ -105,11 +105,17 @@ const ProfilePreview = () => {
           </div>
         </section>
         <section>
-          <div onClick={() => navigate("/contact-us")} className="flex items-between gap-2 cursor-pointer mb-4 font-semibold">
+          <div
+            onClick={() => navigate("/contact-us")}
+            className="flex items-between gap-2 cursor-pointer mb-4 font-semibold"
+          >
             <ContactSupportIcon className="text-green-500" />
             <p>Support</p>
           </div>
-          <div onClick={signOutOfApp} className="flex items-between gap-2 cursor-pointer mb-4 font-semibold">
+          <div
+            onClick={signOutOfApp}
+            className="flex items-between gap-2 cursor-pointer mb-4 font-semibold"
+          >
             <LogoutIcon className="text-purple-600" />
             <p className="">Log Out</p>
           </div>
@@ -131,8 +137,8 @@ const ProfilePreview = () => {
                   <div className="ml-12">
                     <h1 className="text-md md:text-2xl">{user.displayName}</h1>
                     <p className="font-semibold">{userData?.workExperience}</p>
-                    <p className="text-purple-600 font-semibold mt-4 flex items-center">#
-                    {userData?.tagName}
+                    <p className="text-purple-600 font-semibold mt-4 flex items-center">
+                      #{userData?.tagName}
                     </p>
                   </div>
                 </article>
@@ -158,17 +164,14 @@ const ProfilePreview = () => {
                         href="https://melbite.com"
                         className="text-purple-500 underlined"
                         target="_blank"
+                        rel="noreferrer"
                       >
                         {userData.website}
                       </a>
                       <p>{userData.location}</p>
                       <p>{userData.workExperience}</p>
-                      <p>
-                        {userData.skills}
-                      </p>
-                      <p>
-                      {userData.biography}
-                      </p>
+                      <p>{userData.skills}</p>
+                      <p>{userData.biography}</p>
                     </div>
                   </div>
                 </article>

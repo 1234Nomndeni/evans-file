@@ -1,27 +1,17 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import Feed from "./Feed";
-import { db } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
-import "react-loading-skeleton/dist/skeleton.css";
-import WelcomeNote from "./StaticPages/WelcomeNote";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import loader from "./images/dark-loader.gif";
 import PageLinks from "./StaticPages/PageLinks";
 import { useStickyBox } from "react-sticky-box";
 import FetchMostRead from "./FilterCategory/FetchMostRead";
 import FilterCategory from "./FilterCategory/FilterCategory";
-import PostCard from "./FetchArticles/PostCard";
-import PaginatedPage from "../tests/PaginatedPage";
-// import { collection, getDocs } from "firebase/firestore";
+import PaginatedPage from "./FetchArticles/PaginatedPage";
 
 const HomePage = () => {
-  const [articles, setArticles] = useState([]);
   const navigate = useNavigate();
-  const { slug } = useParams();
   const user = useSelector(selectUser);
   const stickyRef = useStickyBox({ offsetTop: 100, offsetBottom: 20 });
   const stickyRightRef = useStickyBox({ offsetTop: 80, offsetBottom: 20 });
@@ -29,27 +19,6 @@ const HomePage = () => {
   /******************************************************** */
   /*Make the blog visible from the firebase to the front-end*/
   /******************************************************** */
-
-  useEffect(() => {
-    const unsubscribe = db
-      .collection("posts")
-      .orderBy("timestamp", "desc")
-      // .limit(1)
-      // .limitToLast(3)
-      .onSnapshot((snapshot) =>
-        setArticles(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
-        )
-      );
-    // .filter((doc) => doc.slug === slug)
-
-    return () => {
-      unsubscribe();
-    };
-  }, []);
 
   return (
     <main className="">
@@ -110,40 +79,7 @@ const HomePage = () => {
             </div>
 
             <div className=" lg:w-3/5 sm:w-full">
-              <WelcomeNote />
-              {/* <PostCard /> */}
-
-              {/* 
-              {!articles || articles.length === 0 ? (
-                <div className="flex flex-col items-center justify-center w-full mx-auto">
-                  <img
-                    className="w-16"
-                    src={loader}
-                    alt="Loading articles . . ."
-                  />
-                  <p className="mt-2 text-sm">Loading articles. . .</p>
-                </div>
-              ) : (
-                articles.map((article) => (
-                  <Feed
-                    key={article.slug_name}
-                    id={article.id}
-                    blogHeader={article.data.blogHeader}
-                    blogBody={article.data.blogBody}
-                    displayName={article.data.displayName}
-                    backgroundImage={article.data.backgroundImage}
-                    timestamp={article.data.timestamp}
-                    slug_name={article.data.slug_name}
-                    name_slug={article.data.name_slug}
-                    currentTask={article.data.currentTask}
-                    description={article.data.description}
-                    skills={article.data.skills}
-                    likes={article.data.likes}
-                    uid={article.data.uid}
-                  />
-                ))
-              )} */}
-
+              {/* <WelcomeNote /> */}
               <PaginatedPage />
             </div>
 

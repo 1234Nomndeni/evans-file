@@ -39,23 +39,17 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
   const [articlesCount, setArticlesCount] = useState(0);
 
   const fetchData = async () => {
-    try {
-      await db
-        .collection("posts")
-        .where("uid", "==", user.uid)
-        .orderBy("timestamp", "desc")
-        .onSnapshot((snapshot) =>
-          setUserPosts(
-            snapshot.docs.map((doc) => ({
-              id: doc.id,
-              ...doc.data(),
-            }))
-          )
-        );
-    } catch (error) {
-      console.log(error);
-    }
+    db.collection("posts")
+      .where("uid", "==", user.uid)
+      .onSnapshot((querySnapshot) => {
+        const newPosts = [];
+        querySnapshot.forEach((doc) => {
+          newPosts.push({ id: doc.id, ...doc.data() });
+        });
+        setUserPosts(newPosts);
+      });
   };
+
   const fetchArticleCount = async () => {
     await db
       .collection("posts")
@@ -66,6 +60,7 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
   useEffect(() => {
     fetchData();
   }, []);
+
   useEffect(() => {
     fetchArticleCount();
   }, []);
@@ -217,6 +212,7 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
                               editBlogBody={userPost.blogBody}
                               editBackgroundImage={userPost.backgroundImage}
                               editCurrentTask={userPost.currentTask}
+                              editSelectedTag={userPost.selectedTag}
                             />
                           </div>
 
@@ -238,6 +234,18 @@ const UserDashboard = ({ name_slug, open, setOpen }) => {
                             {userPost.blogHeader}{" "}
                           </h1>
                         </Link>
+                      </section>
+
+                      <section className="flex gap-1 text-xs md:text-sm md:flex md:gap-3 mt-4 flex-wrap w-full">
+                        {userPost.hashTags?.map((tag) => (
+                          <Link
+                            key={tag}
+                            to={`/tags/${tag}`}
+                            className="rounded-md max-w-min bg-green-50 hover:bg-green-100 py-1 px-2 border cursor-pointer"
+                          >
+                            #{tag}
+                          </Link>
+                        ))}
                       </section>
 
                       <section className="flex justify-between mt-4">

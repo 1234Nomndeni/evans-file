@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { XIcon } from "@heroicons/react/outline";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser, logout, login } from "../../features/userSlice";
-import { auth, db, storage } from "../../utils/firebase";
+import { auth, db } from "../../utils/firebase";
 import SignUp from "../SignUp";
 import firebase from "firebase/compat/app";
 import brandLogo from "../images/melbite.jpg";
@@ -20,7 +20,6 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
-import TagsOptions from "./TagsOptions";
 // Text editor
 toast.configure({
   position: toast.POSITION.TOP_CENTER,
@@ -48,7 +47,7 @@ const modules = {
     [{ color: [] }, { background: [] }],
     [{ script: "sub" }, { script: "super" }],
     [{ align: [] }],
-    ["image","video", "code-block", "blockquote", "link", "formula", "strike"],
+    ["image", "video", "code-block", "blockquote", "link", "formula", "strike"],
     ["clean"],
   ],
 };
@@ -60,24 +59,62 @@ const modules2 = {
   toolbar: [["image"]],
 };
 
-const CreatePost = ({value}) => {
+const CreatePost = () => {
   const [blogHeader, setBlogHeader] = useState("");
   const [blogBody, setBlogBody] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
   const [currentTask, setCurrentTask] = useState("");
-  const [addtags, setAddTags] = useState("")
+  const [tags, setTags] = useState([]);
+  const [selectedTag, setSelectedTag] = useState("");
   const [open, setOpen] = useState(true);
 
   const navigate = useNavigate();
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
-  const handleChange = (value, delta, source, editor) => {
+  const handleChange = (value) => {
     setBlogBody(value);
   };
 
-  const handleBackgroundChange = (value, delta, source, editor) => {
+  const handleBackgroundChange = (value) => {
     setBackgroundImage(value);
+  };
+
+  useEffect(() => {
+    const storedValues = JSON.parse(localStorage.getItem("blogPostValues"));
+    if (storedValues) {
+      setBlogHeader(storedValues.blogHeader);
+      setBlogBody(storedValues.blogBody);
+      setBackgroundImage(storedValues.backgroundImage);
+      setCurrentTask(storedValues.currentTask);
+      setSelectedTag(storedValues.selectedTag);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "blogPostValues",
+      JSON.stringify({
+        blogHeader,
+        blogBody,
+        backgroundImage,
+        currentTask,
+        selectedTag,
+      })
+    );
+  }, [blogHeader, blogBody, backgroundImage, currentTask, selectedTag]);
+
+  const handleAddTag = (event) => {
+    // event.preventDefault();
+    if (selectedTag && !tags.includes(selectedTag)) {
+      setTags([...tags, selectedTag]);
+      setSelectedTag("");
+    }
+  };
+  handleAddTag();
+
+  const handleRemoveTag = (tagToRemove) => {
+    setTags(tags.filter((tag) => tag !== tagToRemove));
   };
 
   const publishBlog = (e) => {
@@ -88,8 +125,8 @@ const CreatePost = ({value}) => {
         backgroundImage: backgroundImage,
         blogHeader: blogHeader,
         slug_name: blogHeader.replace(/\s/g, "-"),
+        hashTags: tags,
         blogBody: blogBody,
-        addtags: addtags,
         currentTask: currentTask,
         description: user.email,
         displayName: user.displayName,
@@ -102,8 +139,10 @@ const CreatePost = ({value}) => {
       setBlogHeader("");
       setBlogBody("");
       setCurrentTask("");
-      setAddTags("");
+      setTags([]);
+      setSelectedTag("");
       toast("Article Published Successfully");
+      localStorage.removeItem("blogPostValues");
     }
   };
 
@@ -206,9 +245,49 @@ const CreatePost = ({value}) => {
                   placeholder="Type your title here . . ."
                 />
               </section>
-              {/* <section className="mx-wd2 mx-auto mt-5">
-                <TagsOptions value={addtags} onChange={(e) => setAddTags(e.target.value)} />
-              </section> */}
+              <section className="border mx-wd2 mx-auto p-3 rounded-lg">
+                <div>
+                  <select
+                    id="tag"
+                    // className="w-28 p-1 cursor-pointer hover:bg-gray-100"
+                    className="w-40 p-2 cursor-pointer bg-white border rounded-md shadow-sm outline-none focus:border-indigo-600"
+                    value={selectedTag}
+                    onChange={(e) => setSelectedTag(e.target.value)}
+                  >
+                    <option value="">Select a tag</option>
+                    <option value="MentalHealth">MentalHealth</option>
+                    <option value="General">General</option>
+                    <option value="Programming">Programming</option>
+                    <option value="Javascript">JavaScript</option>
+                    <option value="Python">Python</option>
+                    <option value="React">React</option>
+                    <option value="NextJs">NextJs</option>
+                    <option value="Firebase">Firebase</option>
+                    <option value="Productivity">Productivity</option>
+                    <option value="Beginners">Beginners</option>
+                    <option value="Career">Career</option>
+                    <option value="MachineLearning" title="">
+                      MachineLearning
+                    </option>
+                  </select>
+                </div>
+                <div className="flex gap-3 mt-1">
+                  {tags.map((tag) => (
+                    <div
+                      key={tag}
+                      className="flex items-center gap-1 rounded-md bg-green-100 py-1 px-2"
+                    >
+                      #{tag}
+                      <span
+                        className="text-sm ml-1 hover:text-red-500 cursor-pointer font-semibold"
+                        onClick={() => handleRemoveTag(tag)}
+                      >
+                        X
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </section>
 
               <section className="mx-wd2 mt-10 pb-12 mx-auto">
                 <ReactQuill

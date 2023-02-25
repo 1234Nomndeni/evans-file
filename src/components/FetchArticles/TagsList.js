@@ -1,112 +1,162 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useEffect, useState, Fragment } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { db } from "../../utils/firebase";
+import ArticleIcon from "@mui/icons-material/Article";
+import GroupsIcon from "@mui/icons-material/Groups";
+import AddIcon from "@mui/icons-material/Add";
 import { Menu, Transition } from "@headlessui/react";
 import { HeartIcon, ChatIcon, ShareIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
-// import Feed from "../components/Feed";
-import { db } from "../utils/firebase";
 import ReactTimeago from "react-timeago";
-// import firebase from "firebase/app";
-// import "firebase/firestore";
+import FetchMostRead from "../FilterCategory/FetchMostRead";
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-
-const PaginatedPage = () => {
+const TagsList = () => {
   const [posts, setPosts] = useState([]);
-  const [lastVisible, setLastVisible] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  const perPage = 7;
-
-  console.log("This is a test");
-
-  const loadMorePosts = () => {
-    setLoading(true);
-    const postsRef = db.collection("posts");
-    let query = postsRef.orderBy("timestamp", "desc").limit(perPage);
-    if (lastVisible) {
-      query = query.startAfter(lastVisible);
-    }
-    query
-      .get()
-      .then((snapshot) => {
-        const newPosts = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        console.log("newPosts: ", newPosts);
-
-        setPosts([...posts, ...newPosts]);
-        setLastVisible(snapshot.docs[snapshot.docs.length - 1]);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error loading posts:", error);
-        ``;
-        setLoading(false);
-      });
-  };
+  const [tagArticlesCount, setTagArticlesCount] = useState(0);
+  const { tag } = useParams();
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [followers, setFollowers] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    loadMorePosts();
+    const unsubscribe = db
+      .collection("posts")
+      .where("hashTags", "array-contains", tag)
+      .onSnapshot((querySnapshot) => {
+        const newPosts = [];
+        querySnapshot.forEach((doc) => {
+          newPosts.push({ id: doc.id, ...doc.data() });
+        });
+        setPosts(newPosts);
+      });
+    return unsubscribe;
+  }, [tag]);
+
+  const fetchTagCount = async () => {
+    await db
+      .collection("posts")
+      .where("hashTags", "array-contains", tag)
+      .onSnapshot((snapshot) => setTagArticlesCount(snapshot.size));
+  };
+
+  // useEffect(() => {
+  //   const unsubscribe = db
+  //     .collection("tagFollowers")
+  //     .doc(tag)
+  //     .onSnapshot((snapshot) => {
+  //       if (snapshot.exists) {
+  //         const data = snapshot.data();
+  //         setFollowers(data.followers || []);`
+  //       }
+  //     });
+
+  //   return () => unsubscribe();
+  // }, [tag]);
+
+  // const handleFollow = () => {
+  //   db.collection("tagFollowers")
+  //     .doc(tag)
+  //     .set(
+  //       {
+  //         followers: db.firestore.FieldValue.arrayUnion(currentUser.uid),
+  //       },
+  //       { merge: true }
+  //     );
+  // };
+
+  useEffect(() => {
+    fetchTagCount();
   }, []);
 
-  const handleScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop ===
-        document.documentElement.offsetHeight &&
-      !loading
-    ) {
-      loadMorePosts();
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  });
-
   return (
-    <main>
-      {
-        //   !posts || posts.length === 0 ? (
-        //     <div className="flex flex-col items-center justify-center w-full mx-auto">
-        //       {/* <img className="w-16" src={loader} alt="Loading articles . . ." /> */}
-        //       <p className="mt-2 text-sm">Loading articles. . .</p>
-        //     </div>
-        //   ) : (
-        posts.map((post) => {
-          return (
-            <section
+    <main className="max-w-7xl mt-3 mx-auto mx-wd1 pt-20">
+      <section className="rounded-md bg-white border shadow-sm py-5 px-3 items-center text-center">
+        <h1 className="text-purple-800 text-2xl md:text-4xl">#{tag}</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
+          doloremque provident iste?
+        </p>
+        {/* <button onClick={handleFollow}>Follow</button>
+        {followers.length > 0 && (
+          <div>
+            <h3>Followers:</h3>
+            <ul>
+              {followers.map((follower) => (
+                <li key={follower}>{follower}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <p>Followers: {followers.length}</p> */}
+        <div className="flex gap-5 justify-center flex-wrap-reverse">
+          <button className="flex items-center mt-5 border border-purple-600 text-white px-5 hover:ease-in-out duration-150 md:py-1 rounded-full transform hover:scale-105 bg-purple-800">
+            <AddIcon /> Follow
+          </button>
+          <button
+            onClick={() => navigate("/new")}
+            className="mt-5 border border-purple-600 text-purple-800 px-5 hover:ease-in-out duration-150 md:py-1 rounded-full transform hover:scale-105 "
+          >
+            Start Writing
+          </button>
+        </div>
+        <div className="flex gap-8 justify-center mt-5 flex-wrap">
+          <span className="flex gap-1 font-semibold text-gray-600">
+            <GroupsIcon />
+            <p>199</p>
+            <p>Followers</p>
+          </span>
+          <span className="flex gap-1 font-semibold text-gray-600">
+            <ArticleIcon />
+            <p>{tagArticlesCount}</p>
+            <p>Articles</p>
+          </span>
+        </div>
+      </section>
+
+      <section className="flex gap-5 mt-10">
+        <article className="w-full">
+          {posts.map((post) => (
+            <article
               className="w-full border-2 rounded-md bg-white p-5 mb-2 hover:border-purple-800 duration-150"
               key={post.id}
             >
               <section className="flex items-center ">
-                {/* <span className="bg-yellow-300 w-10 font-mono p-1 pl-3 uppercase text-xl text-gray-800 h-10 border-2 border-yellow-300 rounded-full">
+                <span className="bg-yellow-300 w-10 font-mono p-1 pl-3 uppercase text-xl text-gray-800 h-10 border-2 border-yellow-300 rounded-full">
                   {post.displayName?.[0]}
-                </span> */}
-                {/* <span className="ml-2">
-                  <Link to={`/Users/${post.uid}`}>{post.displayName}</Link>
+                </span>
+                <span className="ml-2">
                   <h3 className="text-sm">{post.displayName}</h3>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 -mt-1">
                     Published{" "}
                     <ReactTimeago
                       date={new Date(post.timestamp?.toDate()).toUTCString()}
                     />
                   </p>
-                </span> */}
+                </span>
               </section>
 
               <section className="mt-2">
                 <Link to={`/${post.name_slug}/${post.id}`}>
-                  <h1 className="leading-9 text-2xl text-gray-900 hover:text-purple-900 cursor-pointer">
+                  <h1 className="md:leading-9 text-lg md:text-2xl text-gray-900 hover:text-purple-900 cursor-pointer">
                     {post.blogHeader}{" "}
                   </h1>
                 </Link>
               </section>
-              <section className="flex justify-between mt-4">
+              <section className="flex gap-1 text-xs md:text-sm md:flex md:gap-3 mt-4 flex-wrap w-full">
+                {post.hashTags?.map((tag) => (
+                  <Link
+                    key={tag}
+                    to={`/tags/${tag}`}
+                    className="rounded-md max-w-min bg-green-50 hover:bg-green-100 py-1 px-2 border cursor-pointer"
+                  >
+                    #{tag}
+                  </Link>
+                ))}
+              </section>
+              <section className="flex justify-between">
                 <span className="flex items-center w-2/5 gap-3 justify-between text-gray-400">
                   <Link
                     to={`/${post.name_slug}/${post.id}`}
@@ -213,21 +263,15 @@ const PaginatedPage = () => {
                   </Transition>
                 </Menu>
               </section>
-            </section>
-          );
-        })
-        //   )
-      }
-      {loading && (
-        <div>
-          <p className="text-center mt-3">Loading posts . . . </p>
-          <p className="text-center mt-3 text-sm">
-            You may scroll down to see the articles{" "}
-          </p>
-        </div>
-      )}
+            </article>
+          ))}
+        </article>
+        <article className="hidden md:block pl-4 w-2/4 ">
+          <FetchMostRead />
+        </article>
+      </section>
     </main>
   );
 };
 
-export default PaginatedPage;
+export default TagsList;

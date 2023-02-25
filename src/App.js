@@ -80,6 +80,7 @@ function App() {
         {/* Melbite Premiers */}
         {/* <Route path="/register" element={<WritingChallenge />} /> */}
         <Route path="/tags/:tag" element={<TagsList />} />
+        <Route path="/users/:displayName" element={<UserProfile />} />
         {user && <Route path="/adminDash" element={<AdminDashboard />} />}
         <Route path="/dashNavigator" element={<DashboardNavigator />} />
 

@@ -49,7 +49,7 @@ const TagsList = () => {
   //     .onSnapshot((snapshot) => {
   //       if (snapshot.exists) {
   //         const data = snapshot.data();
-  //         setFollowers(data.followers || []);
+  //         setFollowers(data.followers || []);`
   //       }
   //     });
 

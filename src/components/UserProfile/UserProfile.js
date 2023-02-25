@@ -3,15 +3,17 @@ import { useParams } from "react-router-dom";
 import { db } from "../../utils/firebase";
 
 function Article() {
-  const { slug_name } = useParams();
+  const { displayName } = useParams();
   const [article, setArticle] = useState(null);
 
   useEffect(() => {
+    console.log("displayName: ", displayName);
+
     const fetchArticle = async () => {
       const db1 = db;
       const querySnapshot = await db1
         .collection("posts")
-        .where("slug_name", "==", slug_name)
+        .where("displayName", "==", displayName)
         .get();
       if (!querySnapshot.empty) {
         const doc = querySnapshot.docs[0];
@@ -19,7 +21,7 @@ function Article() {
       }
     };
     fetchArticle();
-  }, [slug_name]);
+  }, [displayName]);
 
   if (!article) {
     return <div>Loading article...</div>;

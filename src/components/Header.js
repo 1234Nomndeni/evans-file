@@ -94,13 +94,6 @@ const Header = () => {
               <div className=" flex-1 p-2 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
                   <div className=" hidden lg:block w-auto ">
-                    {/* <img
-                      className="h-10 w-40 cursor-pointer"
-                      onClick={() => navigate("/")}
-                      src={brandLogo}
-                      alt="melbite Logo"
-                    /> */}
-
                     <img
                       className="h-11 w-36 cursor-pointer"
                       onClick={() => navigate("/")}

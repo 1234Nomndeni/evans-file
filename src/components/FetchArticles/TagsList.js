@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../../utils/firebase";
 import ArticleIcon from "@mui/icons-material/Article";
@@ -9,6 +9,11 @@ import { HeartIcon, ChatIcon, ShareIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
 import ReactTimeago from "react-timeago";
 import FetchMostRead from "../FilterCategory/FetchMostRead";
+import DoneIcon from "@mui/icons-material/Done";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../features/userSlice";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -17,6 +22,7 @@ const TagsList = () => {
   const [posts, setPosts] = useState([]);
   const [tagArticlesCount, setTagArticlesCount] = useState(0);
   const { tag } = useParams();
+  const user = useSelector(selectUser);
   const [isFollowing, setIsFollowing] = useState(false);
   const [followers, setFollowers] = useState([]);
   const navigate = useNavigate();
@@ -42,30 +48,39 @@ const TagsList = () => {
       .onSnapshot((snapshot) => setTagArticlesCount(snapshot.size));
   };
 
-  // useEffect(() => {
-  //   const unsubscribe = db
-  //     .collection("tagFollowers")
-  //     .doc(tag)
-  //     .onSnapshot((snapshot) => {
-  //       if (snapshot.exists) {
-  //         const data = snapshot.data();
-  //         setFollowers(data.followers || []);`
-  //       }
-  //     });
+  useEffect(() => {
+    const tagRef = db.collection("tagsFollowers").doc(tag);
 
-  //   return () => unsubscribe();
-  // }, [tag]);
+    // Get the current list of followers for this tag
+    const unsubscribe = tagRef.onSnapshot((doc) => {
+      if (doc.exists) {
+        setFollowers(doc.data().followers || []);
+        setIsFollowing(doc.data().followers?.includes(user?.uid));
+      }
+    });
 
-  // const handleFollow = () => {
-  //   db.collection("tagFollowers")
-  //     .doc(tag)
-  //     .set(
-  //       {
-  //         followers: db.firestore.FieldValue.arrayUnion(currentUser.uid),
-  //       },
-  //       { merge: true }
-  //     );
-  // };
+    return unsubscribe;
+  }, [tag]);
+
+  const handleFollow = () => {
+    if (!user) {
+      toast("Please Login To follow This tag");
+    } else {
+      const tagRef = db.collection("tagsFollowers").doc(tag);
+
+      if (isFollowing) {
+        const updatedFollowers = followers.filter(
+          (follower) => follower !== user?.uid
+        );
+        tagRef.set({ followers: updatedFollowers }, { merge: true });
+        setIsFollowing(false);
+      } else {
+        const updatedFollowers = [...followers, user?.uid];
+        tagRef.set({ followers: updatedFollowers }, { merge: true });
+        setIsFollowing(true);
+      }
+    }
+  };
 
   useEffect(() => {
     fetchTagCount();
@@ -79,21 +94,21 @@ const TagsList = () => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
           doloremque provident iste?
         </p>
-        {/* <button onClick={handleFollow}>Follow</button>
-        {followers.length > 0 && (
-          <div>
-            <h3>Followers:</h3>
-            <ul>
-              {followers.map((follower) => (
-                <li key={follower}>{follower}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-        <p>Followers: {followers.length}</p> */}
+
         <div className="flex gap-5 justify-center flex-wrap-reverse">
-          <button className="flex items-center mt-5 border border-purple-600 text-white px-5 hover:ease-in-out duration-150 md:py-1 rounded-full transform hover:scale-105 bg-purple-800">
-            <AddIcon /> Follow
+          <button
+            onClick={handleFollow}
+            className="flex items-center mt-5 border border-purple-600 text-white px-5 hover:ease-in-out duration-150 md:py-1 rounded-full transform hover:scale-105 bg-purple-800"
+          >
+            {isFollowing ? (
+              <>
+                <DoneIcon className="mr-1 h-1 w-4" /> Following
+              </>
+            ) : (
+              <>
+                <AddIcon /> Follow
+              </>
+            )}
           </button>
           <button
             onClick={() => navigate("/new")}
@@ -105,7 +120,7 @@ const TagsList = () => {
         <div className="flex gap-8 justify-center mt-5 flex-wrap">
           <span className="flex gap-1 font-semibold text-gray-600">
             <GroupsIcon />
-            <p>199</p>
+            <p>{followers.length}</p>
             <p>Followers</p>
           </span>
           <span className="flex gap-1 font-semibold text-gray-600">

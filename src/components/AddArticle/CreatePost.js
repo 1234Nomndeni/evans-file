@@ -269,6 +269,7 @@ const CreatePost = () => {
                     <option value="MachineLearning" title="">
                       MachineLearning
                     </option>
+                    <option value="Melbite">Melbite</option>
                   </select>
                 </div>
                 <div className="flex gap-3 mt-1">

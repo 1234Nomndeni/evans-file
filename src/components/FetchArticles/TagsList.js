@@ -90,10 +90,10 @@ const TagsList = () => {
     <main className="max-w-7xl mt-3 mx-auto mx-wd1 pt-20">
       <section className="rounded-md bg-white border shadow-sm py-5 px-3 items-center text-center">
         <h1 className="text-purple-800 text-2xl md:text-4xl">#{tag}</h1>
-        <p>
+        {/* <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil
           doloremque provident iste?
-        </p>
+        </p> */}
 
         <div className="flex gap-5 justify-center flex-wrap-reverse">
           <button

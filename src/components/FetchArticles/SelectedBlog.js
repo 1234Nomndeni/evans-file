@@ -17,6 +17,8 @@ import ReplyComment from "./ReplyComment";
 import LikePost from "./LikePost";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AddIcon from "@mui/icons-material/Add";
+import DoneIcon from "@mui/icons-material/Done";
 // import MoreFromUser from "./FilterCategory/MoreFromUser";
 import contentLoading from "../images/content-loading.gif";
 // import MoreFromUser from "./SuperActions/MoreFromUser";
@@ -28,6 +30,7 @@ function classNames(...classes) {
 const SelectedBlog = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUser);
+  // const { displayName } = useParams();
   const { blogId, displayName } = useParams();
   const [blogHeader, setBlogHeader] = useState("");
   const [blogBody, setBlogBody] = useState("");
@@ -47,6 +50,9 @@ const SelectedBlog = () => {
   const [subcommentCount, setSubCommentCount] = useState(0);
   const [isCopied, setIsCopied] = useState(false);
   const [showReply, setShowReply] = useState(false);
+
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [followers, setFollowers] = useState([]);
 
   useEffect(() => {
     if (blogId) {
@@ -206,6 +212,40 @@ const SelectedBlog = () => {
   const loginToLike = () => {
     if (!user) {
       toast("Please Login To Like This Article");
+    }
+  };
+
+  useEffect(() => {
+    const userRef = db.collection("UsersFollowers").doc(displayName);
+
+    // Get the current list of followers for this displayName
+    const unsubscribe = userRef.onSnapshot((doc) => {
+      if (doc.exists) {
+        setFollowers(doc.data().followers || []);
+        setIsFollowing(doc.data().followers?.includes(user?.uid));
+      }
+    });
+
+    return unsubscribe;
+  }, [displayName]);
+
+  const handleFollowWriter = () => {
+    if (!user) {
+      toast("Please Login To follow This Writer");
+    } else {
+      const tagRef = db.collection("UsersFollowers").doc(displayName);
+
+      if (isFollowing) {
+        const updatedFollowers = followers.filter(
+          (follower) => follower !== user?.uid
+        );
+        tagRef.set({ followers: updatedFollowers }, { merge: true });
+        setIsFollowing(false);
+      } else {
+        const updatedFollowers = [...followers, user?.uid];
+        tagRef.set({ followers: updatedFollowers }, { merge: true });
+        setIsFollowing(true);
+      }
     }
   };
 
@@ -556,9 +596,32 @@ const SelectedBlog = () => {
           </div>
         </section>
 
+        <section className="mt-4 text-center">
+          <p className="mb-2 text-gray-600 font-semibold">
+            {followers.length} Followers
+          </p>
+          <button
+            onClick={handleFollowWriter}
+            className="border-2 border-purple-600 w-full  rounded-lg"
+          >
+            {isFollowing ? (
+              <div className=" p-2 text-white bg-purple-800 ">
+                <DoneIcon className="mr-1 h-1 w-4" />
+                Following
+              </div>
+            ) : (
+              <div className="p-2 flex justify-center text-purple-800">
+                <AddIcon />
+                <p className="ml-1">Follow</p>
+              </div>
+            )}
+          </button>
+        </section>
+
         {/* <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
           View Profile
-        </button>
+        </button> */}
+        {/*
         <section className="mt-10 pl-2 pr-2 ">
           <h2 className="text-lg md:text-xl text-gray-900">
             More from <span className="text-purple-700">{displayName}</span>

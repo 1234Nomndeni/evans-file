@@ -128,6 +128,9 @@ const PaginatedPage = () => {
                   {post.displayName?.[0]}
                 </span>
                 <span className="ml-2">
+                  <Link to={`/users/${post.name_slug}`}>
+                    <h3 className="text-sm">{post.displayName}</h3>
+                  </Link>
                   <h3 className="text-sm">{post.displayName}</h3>
                   <p className="text-sm text-gray-500 -mt-1">
                     Published{" "}
@@ -176,7 +179,7 @@ const PaginatedPage = () => {
                     <ChatIcon className="w-6 cursor-pointer text-gray-500 " />
                     <p className="hidden sm:block ml-2 text-sm text-gray-600">
                       Comment
-                      {posts.commentCount}
+                      {/* {commentCount} */}
                     </p>
                   </Link>
                 </span>

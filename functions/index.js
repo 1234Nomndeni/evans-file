@@ -22,3 +22,6 @@ export const welcomeEmail = functions.auth.user().onCreate((user) => {
 
   return sgMail.send(msg);
 });
+
+
+

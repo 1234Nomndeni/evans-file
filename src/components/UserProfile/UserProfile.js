@@ -3,41 +3,68 @@ import { useParams } from "react-router-dom";
 import { db } from "../../utils/firebase";
 
 function Article() {
-  const { displayName } = useParams();
-  const [article, setArticle] = useState(null);
+  const { name_slug } = useParams();
+  const [userProfile, setUserProfile] = useState(null);
+  const [userPosts, setUserPosts] = useState([]);
+
+  const fetchUserProfile = async () => {
+    db.collection("Users")
+      .where("name_slug", "==", name_slug)
+      .onSnapshot((querySnapshot) => {
+        const userData = [];
+        querySnapshot.forEach((doc) => {
+          userData.push({ id: doc.id, ...doc.data() });
+        });
+        setUserProfile(userData);
+      });
+  };
+
+  const fetchUserPosts = async () => {
+    db.collection("posts")
+      .where("name_slug", "==", name_slug)
+      .onSnapshot((querySnapshot) => {
+        const postData = [];
+        querySnapshot.forEach((doc) => {
+          postData.push({ id: doc.id, ...doc.data() });
+        });
+        setUserPosts(postData);
+      });
+  };
 
   useEffect(() => {
-    console.log("displayName: ", displayName);
-
-    const fetchArticle = async () => {
-      const db1 = db;
-      const querySnapshot = await db1
-        .collection("posts")
-        .where("displayName", "==", displayName)
-        .get();
-      if (!querySnapshot.empty) {
-        const doc = querySnapshot.docs[0];
-        setArticle({ id: doc.id, ...doc.data() });
-      }
-    };
-    fetchArticle();
-  }, [displayName]);
-
-  if (!article) {
-    return <div>Loading article...</div>;
-  }
+    fetchUserPosts();
+    fetchUserProfile();
+  }, [name_slug]);
 
   return (
-    <div className="h-screen">
-      <h1>{article.blogHeader}</h1>
-      <p>{article.content}</p>
-      <ul>
-        {article?.map((tag) => (
-          <li key={tag} className="tag">
-            {tag}
-          </li>
-        ))}
-      </ul>
+    <div className="mt-20">
+      {userProfile ? (
+        <div>
+          <h2>{userProfile.displayName}'s Profile</h2>
+          <p>Email: {userProfile.skills}</p>
+          <p>Bio: {userProfile.biography}</p>
+        </div>
+      ) : (
+        <p>Loading user profile...</p>
+      )}
+      <h1>Posts</h1>
+      <h3>{userPosts.length} Posts</h3>
+      <div>
+        {userPosts &&
+          userPosts?.map((post) => (
+            <li key={post.id}>
+              <h4>{post.blogHeader}</h4>
+              <p>{post.content}</p>
+              {/* <ul>
+                {post.tags.map((tag) => (
+                  <li key={tag} className="tag">
+                    {tag}
+                  </li>
+                ))}
+              </ul> */}
+            </li>
+          ))}
+      </div>
     </div>
   );
 }

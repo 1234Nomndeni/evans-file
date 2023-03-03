@@ -8,15 +8,12 @@ function Article() {
   const [userPosts, setUserPosts] = useState([]);
 
   const fetchUserProfile = async () => {
-    db.collection("Users")
+    const snapshot = await db
+      .collection("Users")
       .where("name_slug", "==", name_slug)
-      .onSnapshot((querySnapshot) => {
-        const userData = [];
-        querySnapshot.forEach((doc) => {
-          userData.push({ id: doc.id, ...doc.data() });
-        });
-        setUserProfile(userData);
-      });
+      .get();
+    const userData = snapshot.docs.map((doc) => doc.data())[0];
+    setUserProfile(userData);
   };
 
   const fetchUserPosts = async () => {

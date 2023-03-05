@@ -34,16 +34,34 @@ function Article() {
   }, [name_slug]);
 
   return (
-    <div className="mt-20">
-      {userProfile ? (
-        <div>
-          <h2>{userProfile.displayName}'s Profile</h2>
-          <p>Email: {userProfile.skills}</p>
-          <p>Bio: {userProfile.biography}</p>
-        </div>
-      ) : (
-        <p>Loading user profile...</p>
-      )}
+    <main className="pt-16">
+      <section className="flex justify-between items-center bg-white md:mt-8 mx-auto max-w-7xl p-4 shadow-md">
+        {userProfile ? (
+          <section className="flex justify-between items-center">
+            <div className="flex gap-3">
+              <div className="">
+                <h1 className="bg-yellow-300 font-mono py-10 px-12 uppercase font-bold text-2xl text-gray-800  border-2 border-yellow-300 rounded-full">
+                  {userProfile.displayName?.[0]}
+                </h1>
+              </div>
+              <div>
+                <h2>{userProfile.displayName}</h2>
+                <p>{userProfile.proffesion}</p>
+              </div>
+            </div>
+            <div>
+              <p>Bio: {userProfile.biography}</p>
+            </div>
+
+            {/* 
+            <p>Email: {userProfile.skills}</p>
+            */}
+          </section>
+        ) : (
+          <p>Loading user profile...</p>
+        )}
+      </section>
+
       <h1>Posts</h1>
       <h3>{userPosts.length} Posts</h3>
       <div>
@@ -62,7 +80,7 @@ function Article() {
             </li>
           ))}
       </div>
-    </div>
+    </main>
   );
 }
 

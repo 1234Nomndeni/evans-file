@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { Menu, Transition } from "@headlessui/react";
 import { selectUser } from "../../features/userSlice";
 import { db } from "../../utils/firebase";
+import ReactTimeago from "react-timeago";
 import AddIcon from "@mui/icons-material/Add";
 import DoneIcon from "@mui/icons-material/Done";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -89,7 +91,7 @@ function Article() {
         {userProfile ? (
           <>
             <section className="flex justify-between w-full flex-wrap">
-              <div className="flex gap-3 flex-wrap">
+              <div className="flex gap-5 flex-wrap">
                 <div className="">
                   {userProfile.profileImage ? (
                     <img
@@ -219,7 +221,7 @@ function Article() {
                       <ChatIcon className="w-6 cursor-pointer text-gray-500 " />
                       <p className="hidden sm:block ml-2 text-sm text-gray-600">
                         Comment
-                        {posts.commentCount}
+                        {/* {posts.commentCount} */}
                       </p>
                     </Link>
                   </span>

@@ -37,6 +37,7 @@ function Article() {
   const fetchUserPosts = async () => {
     db.collection("posts")
       .where("name_slug", "==", name_slug)
+
       .onSnapshot((querySnapshot) => {
         const postData = [];
         querySnapshot.forEach((doc) => {
@@ -151,7 +152,7 @@ function Article() {
             </section>
             <section className="ml-3 mt-3">
               <h2 className="text-2xl">About</h2>
-              <p>{userProfile.biography}</p>
+              <p className="leading-7">{userProfile.biography}</p>
             </section>
           </>
         ) : (
@@ -159,8 +160,10 @@ function Article() {
         )}
       </section>
 
-      <section className="mx-auto max-w-7xl mt-3">
-        <h1>Posts</h1>
+      <h1 className="mx-auto max-w-7xl mt-7 text-gray-900 text-2xl">
+        Recent Activity ( {userPosts.length} ) posts
+      </h1>
+      <section className="mx-auto max-w-7xl mt-3 flex gap-6">
         <article className="w-full">
           {userPosts &&
             userPosts.map((post) => (
@@ -311,25 +314,8 @@ function Article() {
               </article>
             ))}
         </article>
+        <section className=" w-2/6"></section>
       </section>
-
-      <h3>{userPosts.length} Posts</h3>
-      {/* <div>
-        {userPosts &&
-          userPosts?.map((post) => (
-            <li key={post.id}>
-              <h4>{post.blogHeader}</h4>
-              <p>{post.content}</p>
-              <ul>
-                {post.tags.map((tag) => (
-                  <li key={tag} className="tag">
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-      </div> */}
     </main>
   );
 }

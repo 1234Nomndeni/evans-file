@@ -9,7 +9,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { db } from "../../utils/firebase";
 import ReactTimeago from "react-timeago";
 import { selectUser } from "../../features/userSlice";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import { useSelector } from "react-redux";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -391,7 +391,9 @@ const SelectedBlog = () => {
               {displayName?.[0]}
             </span>
             <span className="ml-2">
-              <h3 className="text-md">{displayName}</h3>
+              <Link to={`/users/${name_slug}`}>
+                <h3 className="text-sm">{displayName}</h3>
+              </Link>
               <p className="text-sm text-gray-500 -mt-1">
                 Published{" "}
                 {new Date(timestamp.seconds * 1000).toLocaleDateString()}

@@ -75,7 +75,7 @@ const Footer = () => {
         </p>
         <span className="flex items-center mr-2 mb-2">
           <p className="mt-1 text-xl pr-1 ">©</p>
-          melbite 2022, All rights reserved
+          Melbite 2023, All rights reserved
         </span>
       </section>
     </div>

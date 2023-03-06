@@ -86,6 +86,32 @@ function Article() {
     }
   };
 
+  //call functions in order
+  first("hello", function () {
+    second("my", function () {
+      third("friend", endFunction);
+    });
+  });
+  //Define the functions used below:
+  // the first function to be executed
+  function first(data, cb) {
+    console.log(data);
+    cb();
+  }
+  //second function to be executed
+  function second(data, cb) {
+    console.log(data);
+    cb();
+  }
+  //third function to be executed
+  function third(data, cb) {
+    console.log(data);
+    cb();
+  } //Last function to be executed
+  function endFunction() {
+    console.log("ended");
+  }
+
   return (
     <main className="pt-16">
       <section className="bg-white md:mt-8 mx-auto max-w-7xl p-4 shadow-md">
@@ -156,7 +182,7 @@ function Article() {
             </section>
           </>
         ) : (
-          <p>Loading user profile...</p>
+          <p>No profile</p>
         )}
       </section>
 

@@ -59,7 +59,7 @@ const Footer = () => {
           </span>
         </span>
       </section>
-      <section className="text-gray-400 mt-4 text-sm flex items-center justify-between flex-wrap w-3/6 mx-auto">
+      <section className="text-gray-400 mt-4 text-xs md:text-sm flex items-center justify-between flex-wrap w-5/6 md:w-3/6 mx-auto">
         <p
           onClick={() => navigate("/privacy-policy")}
           className="hover:text-orange-500 cursor-pointer mr-2 mb-2"
@@ -74,7 +74,7 @@ const Footer = () => {
           Code of Conduct
         </p>
         <span className="flex items-center mr-2 mb-2">
-          <p className="mt-1 text-xl pr-1 ">©</p>
+          <p className="-mt-1 text-xl pr-1 ">©</p>
           Melbite 2023, All rights reserved
         </span>
       </section>

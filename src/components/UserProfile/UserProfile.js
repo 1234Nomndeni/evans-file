@@ -153,6 +153,9 @@ function Article() {
               </div>
             </section>
             <section className="ml-3 mt-3">
+              <h2 className="text-2xl">Skills</h2>
+              <p className="mb-1">{userProfile.skills}</p>
+
               <h2 className="text-2xl">About</h2>
               <p className="leading-7">{userProfile.biography}</p>
             </section>

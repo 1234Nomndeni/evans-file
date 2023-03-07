@@ -654,12 +654,12 @@ const SelectedBlog = () => {
             userPosts.map((post) => (
               <article
                 key={post.id}
-                className="bg-white p-2 mb-3 border hover:border-purple-900 rounded-sm"
+                className="bg-white py-2 px-3 mb-3 border hover:border-purple-900 rounded-sm"
               >
                 <Link to={`/${post.name_slug}/${post.id}`} target="_blank">
-                  <h2 className="md:leading-6 text-gray-700 hover:text-purple-900 cursor-pointer">
+                  <h4 className="md:leading-6 text-gray-800 hover:text-purple-900 cursor-pointer font-semibold">
                     {post.blogHeader}{" "}
-                  </h2>
+                  </h4>
                   <div className="flex items-center gap-5 mt-3 text-gray-500">
                     <p className="text-sm">
                       <ReactTimeago

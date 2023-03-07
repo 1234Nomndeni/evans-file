@@ -22,6 +22,8 @@ import DoneIcon from "@mui/icons-material/Done";
 // import MoreFromUser from "./FilterCategory/MoreFromUser";
 import contentLoading from "../images/content-loading.gif";
 // import MoreFromUser from "./SuperActions/MoreFromUser";
+import partner1 from "../images/partnerUS.png";
+import partner2 from "../images/PostMelbite.png";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -52,6 +54,7 @@ const SelectedBlog = () => {
   const [showReply, setShowReply] = useState(false);
 
   const [isFollowing, setIsFollowing] = useState(false);
+  const [userPosts, setUserPosts] = useState([]);
   const [followers, setFollowers] = useState([]);
 
   useEffect(() => {
@@ -214,6 +217,24 @@ const SelectedBlog = () => {
       toast("Please Login To Like This Article");
     }
   };
+
+  const fetchUserPosts = async () => {
+    db.collection("posts")
+      .where("name_slug", "==", name_slug)
+      .limit(4)
+
+      .onSnapshot((querySnapshot) => {
+        const postData = [];
+        querySnapshot.forEach((doc) => {
+          postData.push({ id: doc.id, ...doc.data() });
+        });
+        setUserPosts(postData);
+      });
+  };
+
+  useEffect(() => {
+    fetchUserPosts();
+  }, [name_slug]);
 
   useEffect(() => {
     const userRef = db.collection("UsersFollowers").doc(displayName);
@@ -584,8 +605,8 @@ const SelectedBlog = () => {
             </span>
           </div>
           <div className="flex flex-col text-start p-3 mt-6">
-            <h3 className="mt-4 text-center mb-3 text-purple-800">
-              Currently Working On{" "}
+            <h3 className="mt-2 text-center mb-3 text-purple-800">
+              {displayName}
             </h3>
             <span className="text-gray-800 text-md">
               {!currentTask ? (
@@ -597,40 +618,53 @@ const SelectedBlog = () => {
                 <p className="text-center mb-3 text-gray-800">{currentTask}</p>
               )}
             </span>
+            <p className="mb-2 text-gray-600 font-semibold text-center">
+              {followers.length} Followers
+            </p>
           </div>
+          <section className="mt-4 text-center">
+            <button
+              onClick={handleFollowWriter}
+              className="border-2 border-purple-900 w-full  rounded-lg"
+            >
+              {isFollowing ? (
+                <div className=" p-2 text-white bg-c">
+                  <DoneIcon className="mr-1 h-1 w-4" />
+                  Following
+                </div>
+              ) : (
+                <div className="p-2 flex justify-center text-purple-800">
+                  <AddIcon />
+                  <p className="ml-1">Follow</p>
+                </div>
+              )}
+            </button>
+          </section>
         </section>
 
-        <section className="mt-4 text-center">
-          <p className="mb-2 text-gray-600 font-semibold">
-            {followers.length} Followers
-          </p>
-          <button
-            onClick={handleFollowWriter}
-            className="border-2 border-purple-600 w-full  rounded-lg"
-          >
-            {isFollowing ? (
-              <div className=" p-2 text-white bg-purple-800 ">
-                <DoneIcon className="mr-1 h-1 w-4" />
-                Following
-              </div>
-            ) : (
-              <div className="p-2 flex justify-center text-purple-800">
-                <AddIcon />
-                <p className="ml-1">Follow</p>
-              </div>
-            )}
+        <Link to={`/users/${name_slug}`}>
+          <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
+            View Profile
           </button>
+        </Link>
+
+        <section className="w-72 mt-8">
+          <h2 className="text-md">More from {displayName}</h2>
+          {userPosts &&
+            userPosts.map((post) => (
+              <article key={post.id}>
+                <h1 className="md:leading-9 text-lg md:text-2xl text-gray-900 hover:text-purple-900 cursor-pointer">
+                  {post.blogHeader}{" "}
+                </h1>
+              </article>
+            ))}
         </section>
 
-        {/* <button className="bg-c text-white hover:bg-purple-800 w-full mt-4 p-2 rounded-md">
-          View Profile
-        </button> */}
-        {/*
-        <section className="mt-10 pl-2 pr-2 ">
-          <h2 className="text-lg md:text-xl text-gray-900">
-            More from <span className="text-purple-700">{displayName}</span>
-          </h2>
-        </section> */}
+        {/* <div className="w-72 mt-3">
+          <h2 className="text-xl">Sponsor melbite</h2>
+          <img src={partner1} alt="Partner with Us" /> <br />
+          <img src={partner2} alt="Sponsor Us" />
+        </div> */}
       </section>
     </main>
   );

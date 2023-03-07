@@ -94,7 +94,7 @@ function Article() {
         {userProfile ? (
           <>
             <section className="flex justify-between w-full flex-wrap">
-              <div className="flex gap-5 flex-wrap">
+              <div className="flex gap-5 flex-wrap mb-2">
                 <div className="">
                   {userProfile.profileImage ? (
                     <img
@@ -146,7 +146,7 @@ function Article() {
                   )}
                 </button>
                 <p>
-                  <p className="mt-3 text-center text-gray-600">
+                  <p className="mt-3 md:text-center text-gray-600">
                     {followers.length} Followers
                   </p>
                 </p>
@@ -162,10 +162,10 @@ function Article() {
         )}
       </section>
 
-      <h1 className="mx-auto max-w-7xl mt-7 text-gray-900 text-2xl">
+      <h1 className="mx-auto max-w-7xl mt-7 pl-3 text-gray-900 text-2xl">
         Recent Activity ( {userPosts.length} ) posts
       </h1>
-      <section className="mx-auto max-w-7xl mt-3 flex gap-6">
+      <section className="mx-auto max-w-7xl mt-3 p-1 flex gap-6">
         <article className="w-full">
           {userPosts &&
             userPosts.map((post) => (
@@ -316,7 +316,7 @@ function Article() {
               </article>
             ))}
         </article>
-        <section className=" w-2/6">
+        <section className=" hidden md:block w-2/6">
           <div>
             <h2 className="text-xl">Sponsor melbite</h2> <br />
             <img src={partner1} alt="Partner with Us" /> <br />

@@ -60,34 +60,6 @@ body {
 }
 
 
-/* ******************************** */
-/* ***** Styles for SearchBar ****** */
-/* ******************************** */
-.ais-SearchBox-form{
-  display: flex !important;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.ais-SearchBox-input{
-  padding: 0.5rem !important;
-  width: 95% !important;
-  border-radius: 9999px !important;
-  font-size: 0.875rem !important;
-  line-height: 1.25rem !important;
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-.ais-SearchBox-submitIcon{
-  display: none !important;
-}
-
-/* .ais-SearchBox-reset{
-  display: block !important;
-} */
-
-
 
 /* ******************************** */
 /* ***** Styles for TextEditor **** */
@@ -140,12 +112,13 @@ h1 {
   color: rgb(126, 208, 126) !important;
 }
 
-.font-sans > p > img {
+ p > img {
   max-height: 320px;
   min-width: 75%;
   width: auto;
   border-radius: 6px;
   margin: auto;
+
 }
 
 .font-sans > p {
@@ -324,8 +297,8 @@ blockquote p {
 
 @media screen and (max-width: 750px) {
   .wd-screen1 {
-    width: 90vw;
-    margin-left: 2px !important;
+    width: 100vw;
+    margin-left: 1px !important;
   }
 }
 

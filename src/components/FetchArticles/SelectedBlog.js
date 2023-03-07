@@ -381,7 +381,7 @@ const SelectedBlog = () => {
       </section>
       <section className="bg-white rounded-md mx-wd3 border border-gray-300 h-full ml-32 wd-screen1 xs:mt-8">
         <p
-          className="ml-0 w-full object-contain flex items-center justify-center rounded-t-lg"
+          className=" flex items-center justify-center rounded-t-lg"
           dangerouslySetInnerHTML={{ __html: backgroundImage }}
         />
 

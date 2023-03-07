@@ -392,7 +392,7 @@ const SelectedBlog = () => {
             </span>
             <span className="ml-2">
               <Link to={`/users/${name_slug}`}>
-                <h3 className="text-sm">{displayName}</h3>
+                <h3 className="text-sm hover:text-purple-900">{displayName}</h3>
               </Link>
               <p className="text-sm text-gray-500 -mt-1">
                 Published{" "}

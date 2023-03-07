@@ -125,12 +125,18 @@ const PaginatedPage = () => {
             >
               <section className="flex items-center ">
                 <span className="bg-yellow-300 w-10 font-mono p-1 pl-3 uppercase text-xl text-gray-800 h-10 border-2 border-yellow-300 rounded-full">
-                  <Link to={`/users/${post.name_slug}`}>
+                  <Link
+                    to={`/users/${post.name_slug}`}
+                    title="View this user profile"
+                  >
                     {post.displayName?.[0]}
                   </Link>
                 </span>
                 <span className="ml-2">
-                  <Link to={`/users/${post.name_slug}`}>
+                  <Link
+                    to={`/users/${post.name_slug}`}
+                    title="View this user profile"
+                  >
                     <h3 className="text-sm">{post.displayName}</h3>
                     <p className="text-sm text-gray-500 -mt-1">
                       Published{" "}

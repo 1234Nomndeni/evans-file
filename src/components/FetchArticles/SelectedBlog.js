@@ -388,16 +388,18 @@ const SelectedBlog = () => {
         <div className="mt-4 ml-6 mr-7 flex items-center justify-between">
           <div className="flex items-center justify-between">
             <span className="bg-yellow-300 w-10 font-mono p-1 pl-3 uppercase text-xl text-gray-800 h-10 border-2 border-yellow-300 rounded-full">
-              {displayName?.[0]}
+              <Link to={`/users/${name_slug}`} title="View this user profile">
+                {displayName?.[0]}
+              </Link>
             </span>
             <span className="ml-2">
-              <Link to={`/users/${name_slug}`}>
+              <Link to={`/users/${name_slug}`} title="View this user profile">
                 <h3 className="text-sm hover:text-purple-900">{displayName}</h3>
+                <p className="text-sm text-gray-500 -mt-1">
+                  Published{" "}
+                  {new Date(timestamp.seconds * 1000).toLocaleDateString()}
+                </p>
               </Link>
-              <p className="text-sm text-gray-500 -mt-1">
-                Published{" "}
-                {new Date(timestamp.seconds * 1000).toLocaleDateString()}
-              </p>
             </span>
             <span className="md:hidden flex flex-wrap items-center space-x-1 ml-7">
               {!user ? (

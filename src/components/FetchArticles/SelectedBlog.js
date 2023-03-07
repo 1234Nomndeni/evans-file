@@ -647,24 +647,36 @@ const SelectedBlog = () => {
             View Profile
           </button>
         </Link>
+        <h2 className="text-lg mt-8">More from {displayName}</h2>
 
-        <section className="w-72 mt-8">
-          <h2 className="text-md">More from {displayName}</h2>
+        <section className="w-72  ">
           {userPosts &&
             userPosts.map((post) => (
-              <article key={post.id}>
-                <h1 className="md:leading-9 text-lg md:text-2xl text-gray-900 hover:text-purple-900 cursor-pointer">
-                  {post.blogHeader}{" "}
-                </h1>
+              <article
+                key={post.id}
+                className="bg-white p-2 mb-3 border hover:border-purple-900 rounded-sm"
+              >
+                <Link to={`/${post.name_slug}/${post.id}`} target="_blank">
+                  <h2 className="md:leading-6 text-gray-700 hover:text-purple-900 cursor-pointer">
+                    {post.blogHeader}{" "}
+                  </h2>
+                  <div className="flex items-center gap-5 mt-3 text-gray-500">
+                    <p className="text-sm">
+                      <ReactTimeago
+                        date={new Date(post.timestamp?.toDate()).toUTCString()}
+                      />
+                    </p>
+                    <span className="flex items-center gap-1">
+                      <p className=" text-xs font-semibold">
+                        {post.likes?.length}
+                      </p>
+                      <p className="text-xs">Likes</p>
+                    </span>
+                  </div>
+                </Link>
               </article>
             ))}
         </section>
-
-        {/* <div className="w-72 mt-3">
-          <h2 className="text-xl">Sponsor melbite</h2>
-          <img src={partner1} alt="Partner with Us" /> <br />
-          <img src={partner2} alt="Sponsor Us" />
-        </div> */}
       </section>
     </main>
   );

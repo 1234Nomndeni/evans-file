@@ -16,7 +16,7 @@ const AboutUs = () => {
         />
         <meta
           name="keywords"
-          content="How to, Learning, Article, blogging, melbite"
+          content="How to, Learning, Article, blogging, melbite, Javascript"
         />
       </Helmet>
       <section className="bg mx-wd2">

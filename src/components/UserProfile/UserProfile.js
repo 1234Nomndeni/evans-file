@@ -12,13 +12,15 @@ import EditLocationIcon from "@mui/icons-material/EditLocation";
 import { HeartIcon, ChatIcon, ShareIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import partner1 from "../images/partnerUS.png";
+import partner2 from "../images/PostMelbite.png";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 function Article() {
-  const { name_slug, displayName } = useParams();
+  const { name_slug } = useParams();
   const user = useSelector(selectUser);
   const [userProfile, setUserProfile] = useState(null);
   const [userPosts, setUserPosts] = useState([]);
@@ -53,7 +55,7 @@ function Article() {
   }, [name_slug]);
 
   useEffect(() => {
-    const userRef = db.collection("UsersFollowers").doc(displayName);
+    const userRef = db.collection("UsersFollowers").doc(name_slug);
 
     // Get the current list of followers for this displayName
     const unsubscribe = userRef.onSnapshot((doc) => {
@@ -64,13 +66,13 @@ function Article() {
     });
 
     return unsubscribe;
-  }, [displayName]);
+  }, [name_slug]);
 
   const handleFollowWriter = () => {
     if (!user) {
       toast("Please Login To follow This Writer");
     } else {
-      const tagRef = db.collection("UsersFollowers").doc(displayName);
+      const tagRef = db.collection("UsersFollowers").doc(name_slug);
 
       if (isFollowing) {
         const updatedFollowers = followers.filter(
@@ -85,32 +87,6 @@ function Article() {
       }
     }
   };
-
-  //call functions in order
-  first("hello", function () {
-    second("my", function () {
-      third("friend", endFunction);
-    });
-  });
-  //Define the functions used below:
-  // the first function to be executed
-  function first(data, cb) {
-    console.log(data);
-    cb();
-  }
-  //second function to be executed
-  function second(data, cb) {
-    console.log(data);
-    cb();
-  }
-  //third function to be executed
-  function third(data, cb) {
-    console.log(data);
-    cb();
-  } //Last function to be executed
-  function endFunction() {
-    console.log("ended");
-  }
 
   return (
     <main className="pt-16">
@@ -152,7 +128,7 @@ function Article() {
                   </span>
                 </div>
               </div>
-              <div>
+              <div className="">
                 <button
                   onClick={handleFollowWriter}
                   className="border-2 border-purple-600 w-full  rounded-lg"
@@ -163,14 +139,14 @@ function Article() {
                       Following
                     </div>
                   ) : (
-                    <div className="p-2 px-5 flex justify-center text-purple-800">
+                    <div className=" p-2 px-5 flex justify-center text-purple-800">
                       <AddIcon />
                       <p className="ml-1">Follow</p>
                     </div>
                   )}
                 </button>
                 <p>
-                  <p className="mt-3 text-gray-600">
+                  <p className="mt-3 text-center text-gray-600">
                     {followers.length} Followers
                   </p>
                 </p>
@@ -340,7 +316,13 @@ function Article() {
               </article>
             ))}
         </article>
-        <section className=" w-2/6"></section>
+        <section className=" w-2/6">
+          <div>
+            <h2 className="text-xl">Sponsor melbite</h2> <br />
+            <img src={partner1} alt="Partner with Us" /> <br />
+            <img src={partner2} alt="Sponsor Us" />
+          </div>
+        </section>
       </section>
     </main>
   );

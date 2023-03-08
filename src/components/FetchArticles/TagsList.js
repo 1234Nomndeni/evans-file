@@ -143,13 +143,18 @@ const TagsList = () => {
                   {post.displayName?.[0]}
                 </span>
                 <span className="ml-2">
-                  <h3 className="text-sm">{post.displayName}</h3>
-                  <p className="text-sm text-gray-500 -mt-1">
-                    Published{" "}
-                    <ReactTimeago
-                      date={new Date(post.timestamp?.toDate()).toUTCString()}
-                    />
-                  </p>
+                  <Link
+                    to={`/users/${post.name_slug}`}
+                    title="View this user profile"
+                  >
+                    <h3 className="text-sm">{post.displayName}</h3>
+                    <p className="text-sm text-gray-500 -mt-1">
+                      Published{" "}
+                      <ReactTimeago
+                        date={new Date(post.timestamp?.toDate()).toUTCString()}
+                      />
+                    </p>
+                  </Link>
                 </span>
               </section>
 

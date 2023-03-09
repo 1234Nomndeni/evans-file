@@ -3,6 +3,9 @@ import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import CodeIcon from "@mui/icons-material/Code";
 import BorderAllIcon from "@mui/icons-material/BorderAll";
 import TheaterComedyIcon from "@mui/icons-material/TheaterComedy";
+import StartIcon from "@mui/icons-material/Start";
+import HealingIcon from "@mui/icons-material/Healing";
+import WorkspacesIcon from "@mui/icons-material/Workspaces";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +17,7 @@ const notifyUpdate = () =>
 
 const FilterCategory = () => {
   const navigate = useNavigate();
+
   return (
     <div className="mb-6">
       <h3 className="text-bold text-md mb-3">Reading Category</h3>
@@ -50,21 +54,21 @@ const FilterCategory = () => {
           onClick={() => navigate("/tags/Beginners")}
           className="flex space-x-2 text-sm items-center cursor-pointer hover:text-purple-800 mb-2"
         >
-          <TheaterComedyIcon className="w-8 h-6 text-green-600 font-bold" />
+          <StartIcon className="w-8 h-6 text-purple-600 font-bold" />
           <p>Beginners</p>
         </span>
         <span
           onClick={() => navigate("/tags/MentalHealth")}
           className="flex space-x-2 text-sm items-center cursor-pointer hover:text-purple-800 mb-2"
         >
-          <TheaterComedyIcon className="w-8 h-6 text-green-600 font-bold" />
+          <HealingIcon className="w-8 h-6 text-green-600 font-bold" />
           <p>Mental Health</p>
         </span>
         <span
           onClick={() => navigate("/tags/Career")}
           className="flex space-x-2 text-sm items-center cursor-pointer hover:text-purple-800 mb-2"
         >
-          <TheaterComedyIcon className="w-8 h-6 text-green-600 font-bold" />
+          <WorkspacesIcon className="w-8 h-6 text-yellow-600 font-bold" />
           <p>Career</p>
         </span>
       </section>

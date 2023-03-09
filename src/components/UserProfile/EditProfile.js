@@ -114,6 +114,7 @@ const EditProfile = ({ uid, editLocation }) => {
     }
   };
 
+  // This function calculates the sum of two numbers
   const fetchUserProfileDetails = async () => {
     await db
       .collection("Users")

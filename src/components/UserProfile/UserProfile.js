@@ -157,11 +157,15 @@ function Article() {
               <p className="mb-1">{userProfile.skills}</p>
 
               <h2 className="text-2xl">About</h2>
-              <p className="leading-7">{userProfile.biography}</p>
+              {!userProfile.biography ? (
+                <p>Bio Not Found!</p>
+              ) : (
+                <p className="leading-7">{userProfile.biography}</p>
+              )}
             </section>
           </>
         ) : (
-          <p>No profile</p>
+          <p>404 Bio not found</p>
         )}
       </section>
 

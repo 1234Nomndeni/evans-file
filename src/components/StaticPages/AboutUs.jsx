@@ -29,6 +29,32 @@ const AboutUs = () => {
           to share their thoughts about a particular topic of their expertise
           and help others learn.
         </p>
+
+        <h2 className="mt-7 mb-5 text-2xl leading-5 text-gray-800">Vision</h2>
+        <p className="leading-7 text-md text-gray-900">
+          Our vision is to create a hub for diverse, informative content that
+          educates and inspires.
+        </p>
+        <h2 className="mt-7 mb-5 text-2xl leading-5 text-gray-800">Our Goal</h2>
+        <div className="ml-4">
+          <li className="leading-7 text-md text-gray-900 mb-2">
+            Bridging the knowledge gap by providing a platform that empowers
+            people from all backgrounds to share their stories and perspectives,
+            while also providing high-quality, informative content that helps
+            readers better understand the world around them.
+          </li>
+          <li className="leading-7 text-md text-gray-900 mb-2">
+            To reate a space where everyone can learn and grow, by providing a
+            platform that combines diverse perspectives and high-quality
+            information to help readers expand their understanding of the world.
+          </li>
+          <li className="leading-7 text-md text-gray-900 mb-2">
+            Cultivating lifelong learnerning by creating a platform that
+            inspires curiosity and encourages lifelong learning, by providing a
+            space where people can explore new ideas, perspectives, and areas of
+            interest in a supportive and inclusive community.
+          </li>
+        </div>
         <h2 className="mt-7 mb-5 text-2xl leading-5 text-gray-800">
           Technologies
         </h2>

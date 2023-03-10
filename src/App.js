@@ -29,6 +29,7 @@ import DashboardNavigator from "./components/UserProfile/DashboardNavigator";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import UserProfile from "./components/UserProfile/UserProfile";
 import TagsList from "./components/FetchArticles/TagsList";
+import CreateCommunity from "./components/Community/CreateCommunity";
 
 ReactGA.initialize(process.env.TRACK_ID);
 function App() {
@@ -64,6 +65,7 @@ function App() {
         {user && <Route path="/previewprofile" element={<ProfilePreview />} />}
         {user && <Route path="/notifications" element={<Notifications />} />}
         {user && <Route path="/my-drafts" element={<MyDrafts />} />}
+        <Route path="/create-community" element={<CreateCommunity />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/donate" element={<Donate />} />
         <Route path="/contact-us" element={<Contacts />} />

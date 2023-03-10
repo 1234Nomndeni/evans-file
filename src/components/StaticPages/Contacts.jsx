@@ -17,7 +17,7 @@ const Contacts = () => {
         <p className="text-xl mb-3">We would love to hear from you 😂</p>
         <p className="text-lg">Location: Remote - Kenya</p>
         <p className="text-lg mt-3 flex">
-          Whats App us <p className="text-purple-800 ml-1">0791486125</p>
+          Whats App us <p className="text-purple-800 ml-1">+254791486125</p>
         </p>
         <p className="text-lg mt-3">
           Email:{" "}

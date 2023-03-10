@@ -116,7 +116,7 @@ const Header = () => {
                     to="/labs"
                     className="hidden md:block text-md pl-2 cursor-pointer  p-2  "
                   >
-                    Labs
+                    Communities
                   </Link>
                 </li> */}
 

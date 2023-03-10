@@ -8,6 +8,7 @@ import CodeOffOutlinedIcon from "@mui/icons-material/CodeOffOutlined";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import ForumIcon from "@mui/icons-material/Forum";
 
 const PageLinks = () => {
   const navigate = useNavigate();
@@ -16,6 +17,11 @@ const PageLinks = () => {
       <main className="mb-3">
         <h3 className="text-bold mb-3">Navigations</h3>
         <section className="space-y-3">
+        
+        <span className="flex space-x-2 text-sm items-center cursor-pointer hover:text-purple-800 mb-2">
+            <ForumIcon className="text-green-600" />
+            <p onClick={() => navigate("/create-community")}>Create Community</p>
+          </span>
           <span className="flex space-x-2 text-sm items-center cursor-pointer hover:text-purple-800 mb-2">
             <InfoOutlinedIcon className="text-green-600" />
             <p onClick={() => navigate("/about")}>About Us</p>

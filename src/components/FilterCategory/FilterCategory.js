@@ -1,6 +1,7 @@
 // import { CodeIcon } from '@heroicons/react/outline'
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import CodeIcon from "@mui/icons-material/Code";
+import ForumIcon from "@mui/icons-material/Forum";
 import BorderAllIcon from "@mui/icons-material/BorderAll";
 import TheaterComedyIcon from "@mui/icons-material/TheaterComedy";
 import StartIcon from "@mui/icons-material/Start";
@@ -28,6 +29,13 @@ const FilterCategory = () => {
         >
           <BorderAllIcon className="w-8 h-6 text-green-600 font-bold" />
           <p> All Categories</p>
+        </span>
+        <span
+          onClick={() => navigate("/communities")}
+          className="flex space-x-2 text-sm items-center cursor-pointer hover:text-purple-800 mb-2"
+        >
+          <ForumIcon className="w-8 h-6 text-green-600 font-bold" />
+          <p> Communities</p>
         </span>
         <span
           onClick={() => navigate("/tags/Programming")}

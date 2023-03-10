@@ -9,6 +9,8 @@ import { useStickyBox } from "react-sticky-box";
 import FetchMostRead from "./FilterCategory/FetchMostRead";
 import FilterCategory from "./FilterCategory/FilterCategory";
 import PaginatedPage from "./FetchArticles/PaginatedPage";
+import partner1 from "./images/partnerUS.png";
+import partner2 from "./images/PostMelbite.png";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -88,6 +90,16 @@ const HomePage = () => {
               <div ref={stickyRightRef} className="">
                 <div>
                   <FetchMostRead />
+                </div>
+                <div className="mt-4">
+                  <h2 className="text-xl ">Sponsor melbite</h2> <br />
+                  <img
+                    className="-mt-5"
+                    src={partner1}
+                    alt="Partner with Us"
+                  />{" "}
+                  <br />
+                  {/* <img src={partner2} alt="Sponsor Us" /> */}
                 </div>
               </div>
             </div>

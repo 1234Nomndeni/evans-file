@@ -10,7 +10,7 @@ const FetchMostRead = () => {
   useEffect(() => {
     const unsubscribe = db
       .collection("posts")
-      // .where(`likes`, ">", 3)
+      // .where("likes", ">=", 3)
       .orderBy("likes", "desc")
       .limit(5)
       .onSnapshot((snapshot) =>

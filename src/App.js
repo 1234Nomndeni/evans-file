@@ -65,7 +65,9 @@ function App() {
         {user && <Route path="/previewprofile" element={<ProfilePreview />} />}
         {user && <Route path="/notifications" element={<Notifications />} />}
         {user && <Route path="/my-drafts" element={<MyDrafts />} />}
-        <Route path="/create-community" element={<CreateCommunity />} />
+        {user && (
+          <Route path="/create-community" element={<CreateCommunity />} />
+        )}
         <Route path="/about" element={<AboutUs />} />
         <Route path="/donate" element={<Donate />} />
         <Route path="/contact-us" element={<Contacts />} />

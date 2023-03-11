@@ -30,6 +30,7 @@ import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import UserProfile from "./components/UserProfile/UserProfile";
 import TagsList from "./components/FetchArticles/TagsList";
 import CreateCommunity from "./components/Community/CreateCommunity";
+import Communities from "./components/Community/Communities";
 
 ReactGA.initialize(process.env.TRACK_ID);
 function App() {
@@ -68,6 +69,7 @@ function App() {
         {user && (
           <Route path="/create-community" element={<CreateCommunity />} />
         )}
+        <Route path="/communities" element={<Communities />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/donate" element={<Donate />} />
         <Route path="/contact-us" element={<Contacts />} />

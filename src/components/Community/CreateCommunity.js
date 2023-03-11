@@ -2,7 +2,22 @@ import React, { useState } from "react";
 import { db, storage } from "../../utils/firebase";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/userSlice";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
+toast.configure({
+  position: toast.POSITION.TOP_CENTER,
+  autoClose: 3000,
+  pauseOnFocusLoss: false,
+  className: {
+    backgroundColor: "red-red-200",
+  },
+  bodyClassName: {
+    backgroundColor: "blue",
+    height: "100%",
+    width: "100%",
+  },
+});
 const CreateCommunity = () => {
   const user = useSelector(selectUser);
   const [communityName, setCommunityName] = useState("");
@@ -47,12 +62,14 @@ const CreateCommunity = () => {
                 communityProfileImage: communityProfileImage,
                 communityWebsite: communityWebsite,
                 communityBio: communityBio,
+                creatorId: user.uid,
                 communityMembers: [user.uid],
               });
               setCommunityName("");
               setCommunityImage(null);
               setCommunityWebsite("");
               setCommunityBio("");
+              toast(`${communityName} Community Created Successfully`);
             });
         }
       );

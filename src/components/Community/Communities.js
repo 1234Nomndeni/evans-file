@@ -1,20 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../../utils/firebase";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../features/userSlice";
+import firebase from "firebase/compat/app";
 
 const Communities = () => {
+  const user = useSelector(selectUser);
   const [communities, setCommunities] = useState([]);
 
   useEffect(() => {
-    const fetchComm = db.collection("communities").onSnapshot((snapshot) => {
-      const communityData = [];
-      snapshot.forEach((doc) => {
-        const data = doc.data();
-        communityData.push({ id: doc.id, ...data });
+    const unsubscribe = db
+      .collection("communities")
+      .onSnapshot((querySnapshot) => {
+        const fetchedCommunities = [];
+        querySnapshot.forEach((doc) => {
+          fetchedCommunities.push({
+            id: doc.id,
+            data: doc.data(),
+          });
+        });
+        setCommunities(fetchedCommunities);
       });
-      setCommunities(communityData);
-    });
-    return () => fetchComm();
+    return unsubscribe;
   }, []);
+
+  const handleJoinCommunity = async (communityId) => {
+    // const userId = user?.uid;
+    await db
+      .collection("communities")
+      .doc(communityId)
+      .update({
+        pendingRequests: firebase.firestore.FieldValue?.arrayUnion(user.uid),
+      });
+    console.log(`Join request sent for community ${communityId}`);
+  };
+
+  const isRequested = (community) => {
+    return community.data.pendingRequests?.includes(user.uid);
+  };
+
   return (
     <main className="bg-white mt-24 mx-auto max-w-7xl px-5 py-7 border rounded-md">
       <h1>Available Communities</h1>
@@ -28,32 +52,50 @@ const Communities = () => {
               <div className="flex gap-4">
                 <div>
                   <img
-                    src={community.communityProfileImage}
+                    src={community.data.communityProfileImage}
                     className="w-28 h-28 rounded-md"
                     alt=""
                   />
                 </div>
                 <div>
-                  <h1>{community.communityName}</h1>
+                  <h1>{community.data.communityName}</h1>
                   <a
                     className="text-purple-900 hover:text-pink-700"
                     href={community.communityWebsite}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    {community.communityWebsite}
+                    {community.data.communityWebsite}
                   </a>
                   <p className="text-semibold mt-2">
-                    {community.communityMembers.length} Members
+                    {community.data.communityMembers.length} Members
                   </p>
                 </div>
               </div>
-              <button className="border-2 border-purple-600 h-12 py-2 px-5 rounded-lg hover:bg-purple-600 hover:text-white text-purple-600">
+              {/* <button
+                onClick={() => handleJoinCommunity(community.id)}
+                c
+              >
                 Join Community
-              </button>
+              </button> */}
+              {isRequested(community) ? (
+                <button
+                  disabled
+                  className="border-2 border-purple-600 h-12 py-2 px-5 rounded-lg bg-purple-600 hover:text-white text-white"
+                >
+                  Pending ...
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleJoinCommunity(community.id)}
+                  className="border-2 border-purple-600 h-12 py-2 px-5 rounded-lg hover:bg-purple-600 hover:text-white text-purple-600"
+                >
+                  Join Community
+                </button>
+              )}
             </section>
             <div className="mt-3 mb-3">
-              <p>{community.communityBio}</p>
+              <p>{community.data.communityBio}</p>
             </div>
           </section>
         </article>

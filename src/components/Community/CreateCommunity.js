@@ -64,6 +64,7 @@ const CreateCommunity = () => {
                 communityBio: communityBio,
                 creatorId: user.uid,
                 communityMembers: [user.uid],
+                pendingRequests: [],
               });
               setCommunityName("");
               setCommunityImage(null);

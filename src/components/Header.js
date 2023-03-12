@@ -105,21 +105,6 @@ const Header = () => {
                 <div className="hidden lg:block ml-10 w-4/5 "></div>
               </div>
               <div className="absolute space-x-5 inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                {/* <li
-                  className={
-                    getLocation[1] === "labs"
-                      ? "list-none text-purple-900 font-bold"
-                      : "list-none"
-                  }
-                >
-                  <Link
-                    to="/labs"
-                    className="hidden md:block text-md pl-2 cursor-pointer  p-2  "
-                  >
-                    Communities
-                  </Link>
-                </li> */}
-
                 <li
                   className={
                     getLocation[1] === "about"

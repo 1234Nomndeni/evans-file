@@ -6,6 +6,7 @@ import firebase from "firebase/compat/app";
 
 const Communities = () => {
   const user = useSelector(selectUser);
+
   const [communities, setCommunities] = useState([]);
 
   useEffect(() => {
@@ -32,7 +33,6 @@ const Communities = () => {
       .update({
         pendingRequests: firebase.firestore.FieldValue?.arrayUnion(user.uid),
       });
-    console.log(`Join request sent for community ${communityId}`);
   };
 
   const isRequested = (community) => {
@@ -72,12 +72,7 @@ const Communities = () => {
                   </p>
                 </div>
               </div>
-              {/* <button
-                onClick={() => handleJoinCommunity(community.id)}
-                c
-              >
-                Join Community
-              </button> */}
+
               {isRequested(community) ? (
                 <button
                   disabled

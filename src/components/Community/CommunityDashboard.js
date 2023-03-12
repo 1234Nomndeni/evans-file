@@ -52,7 +52,6 @@ const CommunityDashboard = () => {
             <li key={joinRequest.request.id}>
               <p>
                 <strong>{joinRequest.community.communityName}</strong>:{" "}
-                {/* {joinRequest.community.communityBio} */}
               </p>
               <p>
                 <em>{joinRequest.request.diplayName}</em> has requested to join

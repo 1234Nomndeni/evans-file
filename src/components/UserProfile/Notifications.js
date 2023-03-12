@@ -53,11 +53,11 @@ const Notifications = () => {
             <p className="text-md md:text-xl">Notifications</p>
           </div>
           <div
-            onClick={() => navigate("")}
+            onClick={() => navigate("/myCommunities")}
             className="flex items-center gap-2 mb-6 cursor-pointer"
           >
             <SettingsIcon className="text-pink-500" />
-            <p className="text-md md:text-xl">Settings</p>
+            <p className="text-md md:text-xl">Communities</p>
           </div>
           <div
             onClick={() => navigate("")}
@@ -88,7 +88,10 @@ const Notifications = () => {
           </div>
         </section>
         <section>
-          <div onClick={() => navigate("/contact-us")} className="flex items-between gap-2 cursor-pointer mb-4 font-semibold">
+          <div
+            onClick={() => navigate("/contact-us")}
+            className="flex items-between gap-2 cursor-pointer mb-4 font-semibold"
+          >
             <ContactSupportIcon className="text-green-500" />
             <p>Support</p>
           </div>
@@ -101,7 +104,6 @@ const Notifications = () => {
           </div>
         </section>
       </section>
-
 
       <section className="w-full ml-0 md:ml-20">
         <h1>Notifications</h1>

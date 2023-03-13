@@ -31,7 +31,10 @@ const ManageCommunities = () => {
     db.collection("communities")
       .doc(request.community.id)
       .update({
-        communityMembers: firebase.firestore.FieldValue.arrayUnion(user.uid),
+        communityMembers: firebase.firestore.FieldValue.arrayUnion({
+          userId: user.uid,
+          displayName: user.displayName,
+        }),
         pendingRequests: firebase.firestore.FieldValue.arrayRemove(
           request.request
         ),
@@ -55,7 +58,31 @@ const ManageCommunities = () => {
       </section>
       <section className="w-full ml-0 md:ml-20">
         <h1>My Communities</h1>
-        <p className="mt-20">Your will appear here</p>
+
+        <section className="mt-8">
+          {pendingRequests.length > 0 ? (
+            <section className="bg-white py-2 px-5 rounded-md">
+              {pendingRequests.map((joinRequest) => (
+                <div className="mb-8 " key={joinRequest.request.id}>
+                  <h1 className="text-2xl">
+                    Community: {joinRequest.community.communityName}{" "}
+                  </h1>
+                  <p className="mt-2 mb-3">
+                    Someone has requested to join your community
+                  </p>
+                  <button
+                    className="text-xs md:text-sm border border-purple-600 text-purple-800 hover:bg-purple-800 hover:text-white px-7 hover:ease-in-out duration-150 py-2 rounded-full transform hover:scale-105 cursor-pointer"
+                    onClick={() => handleApproveJoinRequest(joinRequest)}
+                  >
+                    Approve Request
+                  </button>
+                </div>
+              ))}
+            </section>
+          ) : (
+            <p className="mt-6">No join requests to approve</p>
+          )}
+        </section>
       </section>
     </main>
   );

@@ -26,7 +26,6 @@ const Communities = () => {
   }, []);
 
   const handleJoinCommunity = async (communityId) => {
-    // const userId = user?.uid;
     await db
       .collection("communities")
       .doc(communityId)

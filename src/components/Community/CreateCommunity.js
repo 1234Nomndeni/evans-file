@@ -63,6 +63,7 @@ const CreateCommunity = () => {
                 communityWebsite: communityWebsite,
                 communityBio: communityBio,
                 creatorId: user.uid,
+                displayName: user.displayName,
                 communityMembers: [user.uid],
                 pendingRequests: [],
               });

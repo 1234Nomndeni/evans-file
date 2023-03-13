@@ -67,6 +67,9 @@ const CreatePost = () => {
   const [tags, setTags] = useState([]);
   const [selectedTag, setSelectedTag] = useState("");
   const [open, setOpen] = useState(true);
+  // Selection to blog in a specific community
+  const [selectedCommunity, setSelectedCommunity] = useState(null);
+  const [joinedCommunities, setJoinedCommunities] = useState([]);
 
   const navigate = useNavigate();
   const user = useSelector(selectUser);
@@ -145,6 +148,19 @@ const CreatePost = () => {
       localStorage.removeItem("blogPostValues");
     }
   };
+
+  useEffect(() => {
+    db.collection("communities")
+      .where("communityMembers", "array-contains", user.uid)
+      .onSnapshot((snapshot) => {
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setJoinedCommunities(data);
+        console.log(data);
+      });
+  }, [user]);
 
   //validate and keep the user loggedIn
   useEffect(() => {
@@ -244,6 +260,28 @@ const CreatePost = () => {
                   required
                   placeholder="Type your title here . . ."
                 />
+              </section>
+              <section className="border mx-wd2 mx-auto p-3 rounded-lg">
+                {joinedCommunities.length > 0 && (
+                  <div>
+                    <select
+                      id="communitySelect"
+                      className=" p-2 cursor-pointer bg-white border rounded-md shadow-sm outline-none focus:border-indigo-600"
+                      onChange={(e) =>
+                        setSelectedCommunity(
+                          joinedCommunities.find((c) => c.id === e.target.value)
+                        )
+                      }
+                    >
+                      <option value="">Select a community</option>
+                      {joinedCommunities.map((community) => (
+                        <option key={community.id} value={community.id}>
+                          {community.communityName}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
               </section>
               <section className="border mx-wd2 mx-auto p-3 rounded-lg">
                 <div>

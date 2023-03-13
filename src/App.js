@@ -31,7 +31,6 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import TagsList from "./components/FetchArticles/TagsList";
 import CreateCommunity from "./components/Community/CreateCommunity";
 import Communities from "./components/Community/Communities";
-import CommunityDashboard from "./components/Community/CommunityDashboard";
 import ManageCommunities from "./components/UserProfile/ManageCommunities";
 
 ReactGA.initialize(process.env.TRACK_ID);

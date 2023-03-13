@@ -1,112 +1,61 @@
-import React from "react";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import SettingsIcon from "@mui/icons-material/Settings";
-import EditIcon from "@mui/icons-material/Edit";
-import PreviewIcon from "@mui/icons-material/Preview";
-import LogoutIcon from "@mui/icons-material/Logout";
-import AnalyticsIcon from "@mui/icons-material/Analytics";
-import ContactSupportIcon from "@mui/icons-material/ContactSupport";
-import { useNavigate } from "react-router-dom";
-import { logout, selectUser } from "../../features/userSlice";
-import { auth } from "../../utils/firebase";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import DashboardNavigator from "./DashboardNavigator";
+import DashboardLinks from "./DashboardLinks";
+import firebase from "firebase/compat/app";
+import { db } from "../../utils/firebase";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../features/userSlice";
 
 const ManageCommunities = () => {
-  const navigate = useNavigate();
   const user = useSelector(selectUser);
-  const dispatch = useDispatch();
+  const [pendingRequests, setPendingRequests] = useState([]);
 
-  const signOutOfApp = () => {
-    dispatch(logout);
-    auth.signOut();
-    window.location.reload(false);
+  useEffect(() => {
+    const unsubscribe = db
+      .collection("communities")
+      .where("creatorId", "==", user.uid)
+      .onSnapshot((querySnapshot) => {
+        const requests = [];
+        querySnapshot.forEach((doc) => {
+          const community = { id: doc.id, ...doc.data() };
+          community.pendingRequests?.forEach((request) => {
+            requests.push({ community, request });
+          });
+        });
+        setPendingRequests(requests);
+      });
+    return unsubscribe;
+  }, [user]);
 
-    if (user) {
-      auth.signOut();
-    }
-    navigate("/");
+  const handleApproveJoinRequest = (request) => {
+    db.collection("communities")
+      .doc(request.community.id)
+      .update({
+        communityMembers: firebase.firestore.FieldValue.arrayUnion(user.uid),
+        pendingRequests: firebase.firestore.FieldValue.arrayRemove(
+          request.request
+        ),
+      })
+      .then(() => {
+        console.log("Join request approved successfully!");
+      })
+      .catch((error) => {
+        console.error("Error approving join request: ", error);
+      });
   };
+
   return (
     <main className="md:pt-28 mx-wd1 flex justify-between md:flex-row flex-col mx-auto">
       <div className="block md:hidden">
         <DashboardNavigator />
       </div>
 
-      <section className="hidden md:flex flex-col justify-between mx-h bg-white py-5 px-8 shadow-md">
-        <section>
-          <div
-            onClick={() => navigate("/dashboard")}
-            className="flex items-center gap-2 mb-6 cursor-pointer"
-          >
-            <DashboardIcon className="text-green-400" />
-            <p className="text-md md:text-xl">Dashboard</p>
-          </div>
-          <div
-            onClick={() => navigate("/notifications")}
-            className="flex items-center gap-2 mb-6 cursor-pointer"
-          >
-            <NotificationImportantIcon className="text-yellow-400" />
-            <p className="text-md md:text-xl">Notifications</p>
-          </div>
-          <div
-            onClick={() => navigate("/myCommunities")}
-            className="flex items-center gap-2 mb-6 cursor-pointer"
-          >
-            <SettingsIcon className="text-pink-500" />
-            <p className="text-md md:text-xl">Communities</p>
-          </div>
-          <div
-            onClick={() => navigate("")}
-            className="flex items-center gap-2 mb-6 cursor-pointer"
-          >
-            <AnalyticsIcon className="text-blue-500" />
-            <p className="text-md md:text-xl">Analytics</p>
-          </div>
-          <div className="flex gap-2 mb-3">
-            <ManageAccountsIcon className="text-purple-600" />
-            <div>
-              <p className="text-md md:text-xl">Profile</p>
-              <span
-                onClick={() => navigate("/editprofile")}
-                className="flex ml-2 mt-2 cursor-pointer"
-              >
-                <EditIcon className="w-6 h-2 mr-1 text-green-400" />
-                <p className="">Edit</p>
-              </span>
-              <span
-                onClick={() => navigate("/previewprofile")}
-                className="flex ml-2 mt-2 cursor-pointer"
-              >
-                <PreviewIcon className="w-6 h-2 mr-1 text-yellow-600" />
-                <p>View</p>
-              </span>
-            </div>
-          </div>
-        </section>
-        <section>
-          <div
-            onClick={() => navigate("/contact-us")}
-            className="flex items-between gap-2 cursor-pointer mb-4 font-semibold"
-          >
-            <ContactSupportIcon className="text-green-500" />
-            <p>Support</p>
-          </div>
-          <div
-            onClick={signOutOfApp}
-            className="flex items-between gap-2 cursor-pointer mb-4 font-semibold"
-          >
-            <LogoutIcon className="text-purple-600" />
-            <p className="">Log Out</p>
-          </div>
-        </section>
+      <section>
+        <DashboardLinks />
       </section>
-
       <section className="w-full ml-0 md:ml-20">
         <h1>My Communities</h1>
-        <p className="mt-20">Your Notifications will appear here</p>
+        <p className="mt-20">Your will appear here</p>
       </section>
     </main>
   );

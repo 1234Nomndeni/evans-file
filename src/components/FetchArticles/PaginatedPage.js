@@ -14,6 +14,7 @@ const PaginatedPage = () => {
   const [lastVisible, setLastVisible] = useState(null);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [communities, setCommunities] = useState([]);
 
   const perPage = 7;
 
@@ -133,18 +134,38 @@ const PaginatedPage = () => {
                   </Link>
                 </span>
                 <span className="ml-2">
-                  <Link
-                    to={`/users/${post.name_slug}`}
-                    title="View this user profile"
-                  >
-                    <h3 className="text-sm">{post.displayName}</h3>
-                    <p className="text-sm text-gray-500 -mt-1">
-                      Published{" "}
-                      <ReactTimeago
-                        date={new Date(post.timestamp?.toDate()).toUTCString()}
-                      />
+                  <div className="flex gap-1 item-center text-sm">
+                    <Link
+                      to={`/users/${post.name_slug}`}
+                      title="View this user profile"
+                    >
+                      <h3 className="text-sm">{post.displayName}</h3>
+                    </Link>
+                    <p>
+                      {post.communityName ? (
+                        <>
+                          {post.displayName ? (
+                            <div className="flex gap-1">
+                              <p>for </p>{" "}
+                              <Link to={`/community/${post.communityName}`}>
+                                <h3>{post.communityName}</h3>
+                              </Link>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                        </>
+                      ) : (
+                        <></>
+                      )}
                     </p>
-                  </Link>
+                  </div>
+                  <p className="text-sm text-gray-500 -mt-1">
+                    Published{" "}
+                    <ReactTimeago
+                      date={new Date(post.timestamp?.toDate()).toUTCString()}
+                    />
+                  </p>
                 </span>
               </section>
 

@@ -38,6 +38,10 @@ const Communities = () => {
     return community.data.pendingRequests?.includes(user.uid);
   };
 
+  const isJoined = (community) => {
+    return community.data.communityMembers?.includes(user.uid);
+  };
+
   return (
     <main className="bg-white mt-24 mx-auto max-w-7xl px-5 py-7 border rounded-md">
       <h1>Available Communities</h1>
@@ -78,6 +82,13 @@ const Communities = () => {
                   className="border-2 border-purple-600 h-12 py-2 px-5 rounded-lg bg-purple-600 hover:text-white text-white"
                 >
                   Pending ...
+                </button>
+              ) : isJoined(community) ? (
+                <button
+                  disabled
+                  className="border-2 border-purple-600 h-12 py-2 px-5 rounded-lg bg-purple-600 hover:text-white text-white"
+                >
+                  Already a Member
                 </button>
               ) : (
                 <button

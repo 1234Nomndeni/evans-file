@@ -31,10 +31,9 @@ const ManageCommunities = () => {
     db.collection("communities")
       .doc(request.community.id)
       .update({
-        communityMembers: firebase.firestore.FieldValue.arrayUnion({
-          userId: user.uid,
-          displayName: user.displayName,
-        }),
+        communityMembers: firebase.firestore.FieldValue.arrayUnion(
+          request.request
+        ),
         pendingRequests: firebase.firestore.FieldValue.arrayRemove(
           request.request
         ),
@@ -63,7 +62,7 @@ const ManageCommunities = () => {
           {pendingRequests.length > 0 ? (
             <section className="bg-white py-2 px-5 rounded-md">
               {pendingRequests.map((joinRequest) => (
-                <div className="mb-8 " key={joinRequest.request.id}>
+                <div className="my-8 " key={joinRequest.request.id}>
                   <h1 className="text-2xl">
                     Community: {joinRequest.community.communityName}{" "}
                   </h1>

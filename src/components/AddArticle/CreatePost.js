@@ -136,6 +136,8 @@ const CreatePost = () => {
         name_slug: user.displayName.replace(/\s/g, "-"),
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         likes: [],
+        communityId: selectedCommunity?.id || null,
+        communityName: selectedCommunity?.communityName || null,
       });
 
       setBackgroundImage("");
@@ -264,6 +266,9 @@ const CreatePost = () => {
               <section className="border mx-wd2 mx-auto p-3 rounded-lg">
                 {joinedCommunities.length > 0 && (
                   <div>
+                    <label className="mr-5" htmlFor="communitySelect">
+                      Select Community
+                    </label>
                     <select
                       id="communitySelect"
                       className=" p-2 cursor-pointer bg-white border rounded-md shadow-sm outline-none focus:border-indigo-600"

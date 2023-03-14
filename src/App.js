@@ -32,6 +32,7 @@ import TagsList from "./components/FetchArticles/TagsList";
 import CreateCommunity from "./components/Community/CreateCommunity";
 import Communities from "./components/Community/Communities";
 import ManageCommunities from "./components/UserProfile/ManageCommunities";
+import CommunityProfile from "./components/Community/CommunityProfile";
 
 ReactGA.initialize(process.env.TRACK_ID);
 function App() {
@@ -88,6 +89,10 @@ function App() {
         {/* <Route path="/register" element={<WritingChallenge />} /> */}
         <Route path="/tags/:tag" element={<TagsList />} />
         <Route path="/users/:name_slug" element={<UserProfile />} />
+        <Route
+          path="/community/:communityName"
+          element={<CommunityProfile />}
+        />
         {user && <Route path="/adminDash" element={<AdminDashboard />} />}
         <Route path="/dashNavigator" element={<DashboardNavigator />} />
 

@@ -263,8 +263,8 @@ const CreatePost = () => {
                   placeholder="Type your title here . . ."
                 />
               </section>
-              <section className="border mx-wd2 mx-auto p-3 rounded-lg">
-                {joinedCommunities.length > 0 && (
+              {joinedCommunities.length > 0 ? (
+                <section className="border mx-wd2 mx-auto p-3 rounded-lg">
                   <div>
                     <label className="mr-5" htmlFor="communitySelect">
                       Select Community
@@ -286,8 +286,10 @@ const CreatePost = () => {
                       ))}
                     </select>
                   </div>
-                )}
-              </section>
+                </section>
+              ) : (
+                <></>
+              )}
               <section className="border mx-wd2 mx-auto p-3 rounded-lg">
                 <div>
                   <select

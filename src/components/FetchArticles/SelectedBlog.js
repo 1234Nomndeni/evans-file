@@ -22,8 +22,6 @@ import DoneIcon from "@mui/icons-material/Done";
 // import MoreFromUser from "./FilterCategory/MoreFromUser";
 import contentLoading from "../images/content-loading.gif";
 // import MoreFromUser from "./SuperActions/MoreFromUser";
-import partner1 from "../images/partnerUS.png";
-import partner2 from "../images/PostMelbite.png";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -46,6 +44,7 @@ const SelectedBlog = () => {
   const [name_slug, setNameSlug] = useState("");
   const [likes, setLikes] = useState("");
   const [addComment, setAddComment] = useState("");
+  const [communityName, setCommunityName] = useState("");
   const [comments, setComments] = useState([]);
   const [subComments, setSubComments] = useState([]);
   const [commentCount, setCommentCount] = useState(0);
@@ -72,6 +71,7 @@ const SelectedBlog = () => {
             setNameSlug(snapshot.data().name_slug),
             setTags(snapshot.data().tags),
             setHashTags(snapshot.data().hashTags),
+            setCommunityName(snapshot.data().communityName),
             setLikes(snapshot.data().likes),
             setUid(snapshot.data().uid)
           )
@@ -414,14 +414,35 @@ const SelectedBlog = () => {
               </Link>
             </span>
             <span className="ml-2">
-              <Link to={`/users/${name_slug}`} title="View this user profile">
-                <h3 className="text-sm hover:text-purple-900">{displayName}</h3>
-                <p className="text-sm text-gray-500 -mt-1">
-                  Published{" "}
-                  {new Date(timestamp.seconds * 1000).toLocaleDateString()}
+              <div className="flex gap-1 item-center text-sm">
+                <Link to={`/users/${name_slug}`} title="View this user profile">
+                  <h3 className="text-sm">{displayName}</h3>
+                </Link>
+                <p>
+                  {communityName ? (
+                    <>
+                      {displayName ? (
+                        <div className="flex gap-1">
+                          <p>for </p>{" "}
+                          <Link to={`/community/${communityName}`}>
+                            <h3>{communityName}</h3>
+                          </Link>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </p>
-              </Link>
+              </div>
+              <p className="text-sm text-gray-500 -mt-1">
+                Published{" "}
+                {new Date(timestamp.seconds * 1000).toLocaleDateString()}
+              </p>
             </span>
+
             <span className="md:hidden flex flex-wrap items-center space-x-1 ml-7">
               {!user ? (
                 <HeartIcon

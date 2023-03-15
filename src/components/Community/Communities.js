@@ -61,7 +61,9 @@ const Communities = () => {
                   />
                 </div>
                 <div>
-                  <h1>{community.data.communityName}</h1>
+                  <h1 className="hover:text-purple-900">
+                    {community.data.communityName}
+                  </h1>
                   <a
                     className="text-purple-900 hover:text-pink-700"
                     href={community.communityWebsite}

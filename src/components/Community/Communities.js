@@ -44,8 +44,8 @@ const Communities = () => {
   };
 
   return (
-    <main className="bg-white mt-24 mx-auto max-w-7xl px-5 py-7 border rounded-md">
-      <h1>Available Communities</h1>
+    <main className="bg-white mt-24 mx-auto max-w-7xl px-5 py-7 border rounded-md min-h-screen">
+      <h1 className="mb-7">Available Communities</h1>
       {communities.map((community) => (
         <article
           className="w-full border-2 rounded-md bg-white p-5 mb-2 hover:border-purple-800 duration-150"
@@ -53,7 +53,7 @@ const Communities = () => {
         >
           <section>
             <section className="flex justify-between flex-wrap">
-              <div className="flex gap-4 flex-wrap">
+              <div className="flex gap-4 flex-wrap mb-5">
                 <div>
                   <img
                     src={community.data.communityProfileImage}
@@ -68,7 +68,7 @@ const Communities = () => {
                     </h1>
                   </Link>
                   <a
-                    className="text-purple-900 hover:text-pink-700"
+                    className="text-purple-900 hover:text-pink-700 cursor-pointer"
                     href={community.communityWebsite}
                     target="_blank"
                     rel="noreferrer"

@@ -14,9 +14,8 @@ const PaginatedPage = () => {
   const [lastVisible, setLastVisible] = useState(null);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [communities, setCommunities] = useState([]);
 
-  const perPage = 7;
+  const perPage = 10;
 
   const loadMorePosts = () => {
     setLoading(true);

@@ -152,16 +152,19 @@ const CreatePost = () => {
   };
 
   useEffect(() => {
-    db.collection("communities")
-      .where("communityMembers", "array-contains", user.uid)
-      .onSnapshot((snapshot) => {
-        const data = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setJoinedCommunities(data);
-        console.log(data);
-      });
+    if (!user) {
+      navigate("/signIn");
+    } else {
+      db.collection("communities")
+        .where("communityMembers", "array-contains", user.uid)
+        .onSnapshot((snapshot) => {
+          const data = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setJoinedCommunities(data);
+        });
+    }
   }, [user]);
 
   //validate and keep the user loggedIn
@@ -171,7 +174,7 @@ const CreatePost = () => {
         dispatch(
           login({
             email: userAuth.email,
-            uid: userAuth.uid,
+            uid: userAuth?.uid,
             displayName: userAuth.displayName,
             profilePic: userAuth.photoURL,
           })
@@ -310,6 +313,8 @@ const CreatePost = () => {
                     <option value="Firebase">Firebase</option>
                     <option value="Productivity">Productivity</option>
                     <option value="Beginners">Beginners</option>
+                    <option value="Learning">Learning</option>
+                    <option value="Crypto">Crypto & Money</option>
                     <option value="Career">Career</option>
                     <option value="MachineLearning" title="">
                       MachineLearning

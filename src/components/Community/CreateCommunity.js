@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../features/userSlice";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 toast.configure({
   position: toast.POSITION.TOP_CENTER,
@@ -20,6 +21,7 @@ toast.configure({
 });
 const CreateCommunity = () => {
   const user = useSelector(selectUser);
+  const navigate = useNavigate();
   const [communityName, setCommunityName] = useState("");
   const [communityImage, setCommunityImage] = useState(null);
   const [communityProfileImage, setCommunityProfileImage] = useState("");
@@ -72,6 +74,7 @@ const CreateCommunity = () => {
               setCommunityWebsite("");
               setCommunityBio("");
               toast(`${communityName} Community Created Successfully`);
+              navigate("/communities");
             });
         }
       );

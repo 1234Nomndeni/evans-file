@@ -3,6 +3,7 @@ import { db } from "../../utils/firebase";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/userSlice";
 import firebase from "firebase/compat/app";
+import { Link } from "react-router-dom";
 
 const Communities = () => {
   const user = useSelector(selectUser);
@@ -51,8 +52,8 @@ const Communities = () => {
           key={community.id}
         >
           <section>
-            <section className="flex justify-between">
-              <div className="flex gap-4">
+            <section className="flex justify-between flex-wrap">
+              <div className="flex gap-4 flex-wrap">
                 <div>
                   <img
                     src={community.data.communityProfileImage}
@@ -61,9 +62,11 @@ const Communities = () => {
                   />
                 </div>
                 <div>
-                  <h1 className="hover:text-purple-900">
-                    {community.data.communityName}
-                  </h1>
+                  <Link to={`/community/${community.data.communityName}`}>
+                    <h1 className="text-sm hover:text-purple-900 md:text-2xl">
+                      {community.data.communityName}
+                    </h1>
+                  </Link>
                   <a
                     className="text-purple-900 hover:text-pink-700"
                     href={community.communityWebsite}
@@ -88,7 +91,7 @@ const Communities = () => {
               ) : isJoined(community) ? (
                 <button
                   disabled
-                  className="border-2 border-purple-600 h-12 py-2 px-5 rounded-lg bg-purple-600 hover:text-white text-white"
+                  className="text-sm md:text-lg border-2 border-purple-600 h-12 py-2 px-5 rounded-lg bg-purple-600 hover:text-white text-white"
                 >
                   Already a Member
                 </button>

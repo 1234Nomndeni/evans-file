@@ -354,7 +354,7 @@ const CommunityProfile = () => {
           <div>
             <h2 className="text-xl">Community Members</h2> <br />
             <p className="-mt-3 text-bold">
-              {communityProfile.communityMembers.length} Members
+              {communityProfile?.communityMembers.length} Members
             </p>
           </div>
         </section>

@@ -11,10 +11,12 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { login, selectUser } from "../features/userSlice";
 import HomePage from "./HomePage";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const navigate = useNavigate();
 
   // Google SignIn
   const googleSignIn = () => {
@@ -27,6 +29,10 @@ const SignUp = () => {
             email: result.user.email,
           })
         );
+      })
+      .then(() => {
+        navigate("/");
+        window.location.reload(false);
       })
       .catch((error) => {
         alert(error.message);
@@ -45,6 +51,10 @@ const SignUp = () => {
           })
         );
       })
+      .then(() => {
+        navigate("/");
+        window.location.reload(false);
+      })
       .catch((error) => {
         alert(error.message);
       });
@@ -61,6 +71,10 @@ const SignUp = () => {
             email: result.user.email,
           })
         );
+      })
+      .then(() => {
+        navigate("/");
+        window.location.reload(false);
       })
       .catch((error) => {
         alert(error.message);

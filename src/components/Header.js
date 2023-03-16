@@ -267,6 +267,18 @@ const Header = () => {
                 About Us
               </p>
               <p
+                onClick={() => navigate("/communities")}
+                className="text-gray-900 hover:text-purple-800  text-lg p-2 cursor-pointer rounded-md"
+              >
+                Communities
+              </p>
+              <p
+                onClick={() => navigate("/create-community")}
+                className="text-gray-900 hover:text-purple-800  text-lg p-2 cursor-pointer rounded-md"
+              >
+                Create Community
+              </p>
+              <p
                 onClick={() => navigate("/contact-us")}
                 className="text-gray-900 hover:text-purple-800 text-lg p-2 cursor-pointer rounded-md"
               >

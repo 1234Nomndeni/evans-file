@@ -257,7 +257,7 @@ const EditProfile = ({ uid, editLocation }) => {
               </button> */}
             </div>
           </div>
-          <div className="w-2/6 bg-white mt-5 px-5 py-3 shadow-md h-1/6">
+          <div className="hidden md:block w-2/6 bg-white mt-5 px-5 py-3 shadow-md h-1/6">
             <p className="font-semibold text-gray-700 mb-3">
               Choose your Main Interest
             </p>

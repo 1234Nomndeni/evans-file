@@ -133,12 +133,12 @@ const PaginatedPage = () => {
                   </Link>
                 </span>
                 <span className="ml-2">
-                  <div className="flex gap-1 item-center text-sm">
+                  <div className="flex flex-wrap gap-1 item-center text-xs md:text-sm">
                     <Link
                       to={`/users/${post.name_slug}`}
                       title="View this user profile"
                     >
-                      <h3 className="text-sm">{post.displayName}</h3>
+                      <h3 className="">{post.displayName}</h3>
                     </Link>
                     <p>
                       {post.communityName ? (
@@ -146,7 +146,10 @@ const PaginatedPage = () => {
                           {post.displayName ? (
                             <div className="flex gap-1">
                               <p>for </p>{" "}
-                              <Link to={`/community/${post.communityName}`}>
+                              <Link
+                                to={`/community/${post.communityName}`}
+                                title="View this community profile"
+                              >
                                 <h3>{post.communityName}</h3>
                               </Link>
                             </div>
@@ -159,7 +162,7 @@ const PaginatedPage = () => {
                       )}
                     </p>
                   </div>
-                  <p className="text-sm text-gray-500 -mt-1">
+                  <p className="text-xs md:text-sm text-gray-500 -mt-1">
                     Published{" "}
                     <ReactTimeago
                       date={new Date(post.timestamp?.toDate()).toUTCString()}

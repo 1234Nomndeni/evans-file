@@ -15,7 +15,7 @@ import Privacy from "./components/StaticPages/Privacy";
 import CodeOfConduct from "./components/StaticPages/CodeOfConduct";
 import HowToBlogHere from "./components/StaticPages/HowToBlogHere";
 import ReactGA from "react-ga";
-import WelcomeBlog from "./components/StaticPages/WelcomeBlog";
+// import WelcomeBlog from "./components/StaticPages/WelcomeBlog";
 import Donate from "./components/SuperActions/Donate";
 import PageNotFound from "./components/StaticPages/PageNotFound";
 // import Subscriptions from './components/StaticPages/Subscriptions';
@@ -80,10 +80,10 @@ function App() {
         <Route path="/code-of-conduct" element={<CodeOfConduct />} />
         <Route path="/how-to-blog-at-melbite" element={<HowToBlogHere />} />
         <Route path="*" element={<PageNotFound />} />
-        <Route
+        {/* <Route
           path="/Welcome-to-Melbite-the-official-blogging-site-or-the-world"
           element={<WelcomeBlog />}
-        />
+        /> */}
 
         {/* Melbite Premiers */}
         {/* <Route path="/register" element={<WritingChallenge />} /> */}

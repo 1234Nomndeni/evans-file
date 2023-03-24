@@ -406,7 +406,7 @@ const SelectedBlog = () => {
           dangerouslySetInnerHTML={{ __html: backgroundImage }}
         />
 
-        <div className="mt-4 ml-6 mr-7 flex items-center justify-between">
+        <div className="mt-4 ml-6 mr-7 flex items-center flex-wrap justify-between">
           <div className="flex items-center justify-between">
             <span className="bg-yellow-300 w-10 font-mono p-1 pl-3 uppercase text-xl text-gray-800 h-10 border-2 border-yellow-300 rounded-full">
               <Link to={`/users/${name_slug}`} title="View this user profile">
@@ -414,9 +414,9 @@ const SelectedBlog = () => {
               </Link>
             </span>
             <span className="ml-2">
-              <div className="flex gap-1 item-center text-sm">
+              <div className="flex flex-wrap item-center text-xs md:text-sm gap-1">
                 <Link to={`/users/${name_slug}`} title="View this user profile">
-                  <h3 className="text-sm">{displayName}</h3>
+                  <h3>{displayName}</h3>
                 </Link>
                 <p>
                   {communityName ? (
@@ -437,13 +437,31 @@ const SelectedBlog = () => {
                   )}
                 </p>
               </div>
-              <p className="text-sm text-gray-500 -mt-1">
+              <p className="text-xs md:text-sm text-gray-500 -mt-1">
                 Published{" "}
                 {new Date(timestamp.seconds * 1000).toLocaleDateString()}
               </p>
             </span>
-
-            <span className="md:hidden flex flex-wrap items-center space-x-1 ml-7">
+          </div>
+          <div className="hidden md:flex space-x-5 items-center">
+            <CopyToClipboard
+              text={`https://melbite.com/${name_slug}/${blogId} `}
+              onCopy={onArticleCopyLink}
+            >
+              <span>
+                {isCopied ? (
+                  <div className="flex flex-col items-center">
+                    <ContentCopyIcon className="text-pink-600 absolute" />
+                    <p className="text-xs relative mt-6">Copied</p>
+                  </div>
+                ) : (
+                  <ContentCopyIcon className="cursor-pointer block text-gray-700" />
+                )}
+              </span>
+            </CopyToClipboard>
+          </div>
+          <div className="md:hidden mt-3 flex justify-between w-full">
+            <span className="md:hidden flex flex-wrap items-center space-x-1">
               {!user ? (
                 <HeartIcon
                   onClick={loginToLike}
@@ -460,23 +478,23 @@ const SelectedBlog = () => {
               <p className="text-xs font-semibold">{likes?.length}</p>
               <p className="text-xs">Likes</p>
             </span>
-          </div>
-          <div className="flex space-x-5 items-center">
-            <CopyToClipboard
-              text={`https://melbite.com/${name_slug}/${blogId} `}
-              onCopy={onArticleCopyLink}
-            >
-              <span>
-                {isCopied ? (
-                  <div className="flex flex-col items-center">
-                    <ContentCopyIcon className="text-pink-600 absolute" />
-                    <p className="text-xs relative mt-6">Copied</p>
-                  </div>
-                ) : (
-                  <ContentCopyIcon className="cursor-pointer block text-gray-700" />
-                )}
-              </span>
-            </CopyToClipboard>
+            <div className="flex space-x-5 items-center">
+              <CopyToClipboard
+                text={`https://melbite.com/${name_slug}/${blogId} `}
+                onCopy={onArticleCopyLink}
+              >
+                <span>
+                  {isCopied ? (
+                    <div className="flex flex-col items-center">
+                      <ContentCopyIcon className="text-pink-600 absolute" />
+                      <p className="text-xs relative mt-6">Copied</p>
+                    </div>
+                  ) : (
+                    <ContentCopyIcon className="cursor-pointer block text-gray-700" />
+                  )}
+                </span>
+              </CopyToClipboard>
+            </div>
           </div>
         </div>
         <div className="ml-7 mr-7 mt-5 mb-4">
